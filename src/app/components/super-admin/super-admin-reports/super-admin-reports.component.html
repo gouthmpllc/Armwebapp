@@ -17,8 +17,15 @@
       <!-- <div class="col-lg-2" style="padding: 3px;">
           <a class="btn text-center btn-horizontal createadmin-btn" (click)="setDateWise()">Date Wise</a>
       </div> -->
+      <!-- <div class="col-lg-2 pull-right" style="padding: 3px;">
+          <a class="btn text-center btn-horizontal createadmin-btn" (click)="generateCsv()">Test Type Wise</a>
+      </div> -->
+      <div class="col-lg-2 col-md-2 col-xs-6 padding0 pull-right" style="margin-top:10px;">
+        <button class="btn" (click)="generateCsv()" style="background:#2a2420;color:#fff;">Export Reports(CSV)</button>
+      </div>
+
       <div class="clearfix"></div>
-      <!-- <button class="generateCsv()">
+      <!-- <button (click)="generateCsv()">
         Csv
       </button> -->
       <div class="category" *ngIf="categoryStatus">

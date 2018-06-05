@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminListService } from '../../../services/superAdmin/admin-list-service/admin-list.service';
 import { SuperAdminSettingsService } from '../../../services/superAdmin/settings-service/super-admin-settings.service';
+import { Angular5Csv } from 'angular5-csv/Angular5-csv';
 
 @Component({
   selector: 'app-super-admin-reports',
@@ -232,6 +233,19 @@ export class SuperAdminReportsComponent implements OnInit {
   }
 
   generateCsv() {
+    alert('.....');
+    let options = {
+      fieldSeparator: ',',
+      quoteStrings: '"',
+      decimalseparator: '.',
+      showLabels: true,
+      showTitle: false,
+      useBom: true,
+      noDownload: false,
+      headers: ['armyNumber', 'Name', 'gender', 'age', 'sNo',
+      'rank', 'subunit', 'catogiryName', 'testName', 'testResult', 'candTestDate', 'createdAt']
+    };
+    new Angular5Csv(this.data, 'report', options);
   }
 
 }
