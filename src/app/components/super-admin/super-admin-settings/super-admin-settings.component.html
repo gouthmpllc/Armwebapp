@@ -62,7 +62,7 @@
           <div><h5 class="font_weight600">Test Type Name</h5></div>
           <form #AddTestTypeForm="ngForm">
           <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">
-            <select class="custom-select" id="inputGroupSelect01" name="categoryObj" [(ngModel)]="testType.catogiryId" style="width:90%;padding:10px;" required>
+            <select class="custom-select" id="inputGroupSelect01" name="categoryObj" [(ngModel)]="testType.catogiryId" (change)="setCategory(testType.catogiryId)" style="width:90%;padding:10px;" required>
               <option selected [value]="null">Select Test Category</option>
               <option *ngFor="let category of testCategories" [value]="category.id">
                 {{category.catogiryName}}

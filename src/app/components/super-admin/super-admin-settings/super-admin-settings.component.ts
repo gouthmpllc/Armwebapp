@@ -8,6 +8,8 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./super-admin-settings.component.css']
 })
 export class SuperAdminSettingsComponent implements OnInit {
+  CatId: any;
+  CatName: any;
   displayCategoryUpdateBtn: boolean;
   category: any = {};
   testType: any = {};
@@ -86,12 +88,28 @@ export class SuperAdminSettingsComponent implements OnInit {
     // console.log(JSON.stringify(this.ageGroup));
   }
 
+
+  setCategory(id) {
+    for (let i = 0; i < this.testCategories.length; i++) {
+      if (id === this.testCategories[i].id ) {
+        this.CatName = this.testCategories[i].catogiryName;
+        this.CatId = this.testCategories[i].id;
+        return;
+      }
+    }
+  }
+
   createTestType(addTestTypeForm: NgForm) {
+    this.testType.catogiryName  = this.CatName;
+    this.testType.catogiryId = this.CatId;
     this.testType.ageGroup = this.ageGroup;
     console.log(JSON.stringify(this.testType));
     this.superAdminSettingsService.createTestTypes(this.testType).subscribe(
       (data: any) => {
         alert('TestType Created Successfully');
+        this.ageGroup = [];
+        this.CatId  = '';
+        this.ageGroup = '';
         addTestTypeForm.resetForm();
         this.loadTestTypes();
       },

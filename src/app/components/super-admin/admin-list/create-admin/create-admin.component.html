@@ -25,6 +25,12 @@
           </option>
         </select>
       </div>
+
+      <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">
+        <input type="file" (change)="uploadDatasource($event)" name="datasourcelistdata" class="inputfile" 
+          id="datasourcelistdata" accept=".png" />
+      </div>
+
       <div *ngIf="!userName" class="input-group sign-in-input" style="width:100%;margin-bottom:10px;">
         <input type="text" class="form-control" name="password" [(ngModel)]="newAdmin.password" placeholder="Enter Password" required>
       </div>
@@ -41,3 +47,9 @@
       </div>
   </form>
 </div>
+
+<div *ngIf="newAdmin.profilePic" class="col-lg-6 col-md-6 col-xs-12" style="padding: 100px 0px 0px 25px;;">
+    <div class="col-lg-6 col-lg-offset-3" style="margin-top:30px;" >
+      <img [src]="newAdmin.profilePic" style="width:200px;height:150px;">
+    </div>
+  </div>

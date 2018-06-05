@@ -8,12 +8,15 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./create-admin.component.css']
 })
 export class CreateAdminComponent implements OnInit {
+  candidateUploadLocResp: any;
+  fileName: any;
   newAdmin: any = {};
   allRanks: any = [];
   userName: string;
   ranObj: any = {};
 
   @Output() displayListChanged = new EventEmitter<boolean>();
+  formData: FormData = new FormData();
   constructor(private adminListService: AdminListService, private route: ActivatedRoute, private router: Router) {
     this.route.params.subscribe( params => {
       if (params) {
@@ -63,19 +66,35 @@ export class CreateAdminComponent implements OnInit {
       }
     });
   }
+  
+  uploadDatasource(fileInput: any) {
+    const fileDetails = fileInput.target.files[0];
+    this.fileName = fileDetails.name;
+    this.formData.append('file', fileDetails);
+  }
 
   createAdmin() {
-    this.newAdmin['rank'] = this.ranObj.name;
-    this.newAdmin['rankId'] = this.ranObj.id;
-    console.log(JSON.stringify(this.newAdmin));
-    this.adminListService.createAdmin(this.newAdmin).subscribe(
+    this.adminListService.uploadPic(this.formData).subscribe(
       (data: any) => {
-        alert('created successfully');
-        this.displayListChanged.emit(true);
+        console.log(JSON.stringify(data));
+        this.candidateUploadLocResp = data.data.result.files.file[0].providerResponse.location;
+        this.newAdmin['rank'] = this.ranObj.name;
+        this.newAdmin['rankId'] = this.ranObj.id;
+        this.newAdmin['profilePic'] = this.candidateUploadLocResp;
+        console.log(JSON.stringify(this.newAdmin));
+        this.adminListService.createAdmin(this.newAdmin).subscribe(
+          (data1: any) => {
+            alert('created successfully');
+            this.displayListChanged.emit(true);
+          },
+          error1 => {
+            console.log(JSON.stringify(error1));
+        });
       },
       error => {
         console.log(JSON.stringify(error));
     });
+
   }
 
   updateAdmin() {
