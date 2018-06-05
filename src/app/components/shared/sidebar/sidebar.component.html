@@ -1,0 +1,20 @@
+<div class="row font_robotoregular sidebarmenu flexcroll sidebar_scroll_css sidebar sidebar-nav-fixed affix">
+    <ul class="nav padding0" *ngIf="loginData" style="list-style: none;">
+        <li class=" padding-15 sidebar_css"
+        *ngFor="let list of sideValues;let i = index"
+        id="{{list.urlLink}}"
+        (click)="sideMenuActiveFun(list.urlLink,list,i)"
+         [ngClass]="{'active123': selectedMenuActive==list.urlLink}">
+
+         <span>
+            <a class="textdecoration-none active-#ffffff"  routerLink={{list.urlLink}}>
+              
+              <img class="oneEnabled" style="width:40px" src="{{list.img_icon}}">
+              <span id="{{list.urlName}}" style="padding-left:15px;">
+                  {{list.urlName}}
+              </span>
+            </a>
+          </span>
+         </li>
+    </ul>
+</div>

@@ -1,0 +1,28 @@
+<div class="container">
+  <div class="row">
+    <div class="content-form col-lg-4 col-lg-offset-4 col-xs-12" style="border:1px solid silver;padding:20px">
+      <div id="admin-form-content" class="sign-form">
+        <h4 class="text-center">SUPER ADMIN | ADMIN</h4>
+        <form #SignForm="ngForm">
+
+          <div class="input-group sign-in-input" style="width:100%">
+            <input type="text" class="form-control" name="username" [(ngModel)]="user.username" placeholder="Username">
+          </div>
+
+          <div class="input-group sign-in-input" style="width:100%">
+            <input type="password" class="form-control" name="password" [(ngModel)]="user.password" placeholder="Password">
+          </div>
+
+          <div class="pull-right">
+            <button class="btn btn-default sign-btn" type="reset">
+                Cancel
+              </button>
+            <button class="btn btn-primary sign-btn" type="submit" (click)="signIn()">
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

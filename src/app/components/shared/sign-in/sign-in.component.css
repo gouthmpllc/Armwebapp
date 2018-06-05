@@ -1,0 +1,13 @@
+.content-form {
+    margin-top: 15%;
+}
+
+.sign-in-input{
+    width: 100%;
+    padding: 10px 0px 10px 0px;
+}
+
+.sign-btn {
+    padding: 5px 30px;
+    border-radius: 0px;
+}

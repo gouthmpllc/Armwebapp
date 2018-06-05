@@ -1,0 +1,13 @@
+.createadmin-btn{
+    padding: 6px 30px;
+    background: #415438;
+    border-radius: 0px;
+    color: #fff;
+    font-size: 14px;
+}
+.table>thead>tr>th {
+    border-bottom: 0;
+}
+.table>tbody>tr>td {
+    border-top:0;
+}

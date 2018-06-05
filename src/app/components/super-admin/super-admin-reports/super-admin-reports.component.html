@@ -1,0 +1,201 @@
+<div class="mTop30 mBottom20">
+    <div class="col-lg-12 col-md-12" >
+      <div class="col-lg-6">
+        <h4>Reports</h4>
+      </div> <br />
+      </div>
+      <div class="col-lg-12 col-md-12" >
+      <div class="col-lg-2" style="padding: 3px;">
+          <a class="btn text-center btn-horizontal createadmin-btn" (click)="setCategoryWiseReports()">Rank Category Wise</a>
+      </div>
+      <div class="col-lg-2" style="padding: 3px;">
+          <a class="btn text-center btn-horizontal createadmin-btn" (click)="setWingWiseReports()">Wing Wise</a>
+      </div>
+      <div class="col-lg-2" style="padding: 3px;">
+          <a class="btn text-center btn-horizontal createadmin-btn" (click)="setTestTypeWiseReports()">Test Type Wise</a>
+      </div>
+      <!-- <div class="col-lg-2" style="padding: 3px;">
+          <a class="btn text-center btn-horizontal createadmin-btn" (click)="setDateWise()">Date Wise</a>
+      </div> -->
+      <div class="clearfix"></div>
+      <div class="category" *ngIf="categoryStatus">
+        <!-- <div class="row">
+            <h5 class="col-lg-6 col-md-6 col-xs-12 reportHead" >Selected Category Wise Reports</h5>
+        </div> -->
+        <div class="col-lg-12 col-md-12 col-xs-12 padding0">
+            <div class="col-lg-5">
+              <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">
+                  <mat-form-field style="display:block;">
+                      <mat-select placeholder="Select Rank Category" [(ngModel)]="rankCategory" (change)="setRanks(rankCategory)">
+                        <mat-option *ngFor="let categoryRank of allRankCategories;let i = index" [value]="categoryRank.id">
+                            {{categoryRank.name}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">
+                    <mat-form-field style="display:block;">
+                        <mat-select multiple placeholder="Select Ranks" [(ngModel)]="rankArray" required>
+                          <mat-option *ngFor="let rank of allRanks;let i = index" [value]="rank.id" checked>
+                              {{rank.name}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                  </div>
+              </div>
+            <div class="col-lg-2 col-md-2 col-xs-6 padding0" style="margin-top:10px;">
+              <button class="btn" (click)="geneeateCategoryWiseFilterArray()">Generate Reports</button>
+            </div>
+          </div>
+      </div>
+      <div class="category" *ngIf="wingStatus">
+        <!-- <div class="row margin0">
+            <h5 class="col-lg-6 col-md-6 col-xs-12 reportHead" >Selected Wing Wise Reports</h5>
+        </div> -->
+        <div class="col-lg-9 col-md-9 col-xs-12 padding0">
+          <div class="col-lg-6">
+            <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">
+                <mat-form-field style="display:block;">
+                    <mat-select multiple placeholder="Select SubUnits" [(ngModel)]="subArray">
+                      <mat-option *ngFor="let subunit of allSubUnits;let i = index" [value]="subunit.id">
+                          {{subunit.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+              </div>
+          </div>
+          <div class="col-lg-3 col-md-3 col-xs-6 padding0" style="margin-top:10px;">
+            <button class="btn" (click)="geneeateWingWiseFilterArray()">Generate Reports</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="category" *ngIf="typeStatus">
+        <!-- <div class="row margin0">
+            <h5 class="col-lg-6 col-md-6 col-xs-12 reportHead" >Selected Wing Wise Reports</h5>
+        </div> -->
+        <div class="col-lg-12 col-md-12 col-xs-12 padding0">
+            <div class="col-lg-5">
+              <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">
+                  <mat-form-field style="display:block;">
+                      <mat-select placeholder="Select Rank Category" [(ngModel)]="selectedcCategoryId" (change)="setTestTypes(selectedcCategoryId)">
+                        <mat-option *ngFor="let category of testCategories;let i = index" [value]="category.id">
+                            {{category.catogiryName}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                </div>
+              </div>
+            
+          <div class="col-lg-5">
+            <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">
+                <mat-form-field style="display:block;">
+                    <mat-select multiple placeholder="Select Test Type" [(ngModel)]="typeArray">
+                      <mat-option *ngFor="let type of testTypes;let i = index" [value]="type.id">
+                          {{type.testName}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+              </div>
+          </div>
+          <div class="col-lg-2 col-md-2 col-xs-6 padding0" style="margin-top:10px;">
+            <button class="btn" (click)="geneeateTestTypeWiseFilterArray()">Generate Reports</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-lg-12 col-md-12 padding0 mTop10">
+      <!-- table starts-->
+      <div class="box-border">
+          <div class="flexcroll table-scroll">
+              <table class="table table-striped" id="myProgram" [mfData]="data" #mf="mfDataTable"
+              [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+                <thead>               
+                    <tr>
+                      <th colspan="2">
+                        <mfDefaultSorter by="candTestDate">Test Date</mfDefaultSorter>
+                      </th>
+                      <th colspan="2">
+                        <mfDefaultSorter by="armyNumber">Army Number</mfDefaultSorter>
+                      </th>
+                      <th colspan="2">
+                        <mfDefaultSorter by="name">Name</mfDefaultSorter>
+                      </th>
+                      <th colspan="2">
+                        <mfDefaultSorter by="testName">Test Name</mfDefaultSorter>
+                      </th>
+                      <th colspan="2">
+                        <mfDefaultSorter by="rank">Rank</mfDefaultSorter>
+                      </th>
+                      <th colspan="2">
+                          <mfDefaultSorter by="subunit">Sub Unit</mfDefaultSorter>
+                        </th>
+                      <th colspan="2">
+                        <mfDefaultSorter by="testResult">Test Result</mfDefaultSorter>
+                      </th>
+                      <th colspan="2">
+                        <mfDefaultSorter by="age">Age</mfDefaultSorter>
+                      </th>
+                      <th colspan="2">
+                        <mfDefaultSorter by="catogiryName">Category Name</mfDefaultSorter>
+                      </th>
+                      <th colspan="2">
+                        <mfDefaultSorter by="createdAt">Created Date</mfDefaultSorter>
+                      </th>
+                    </tr>
+                    <tr>
+                    </tr>
+                  </thead>
+  
+                  <tbody>
+                      <tr *ngFor="let admin of mf.data" class="notfirst cursor-pointer">
+                          <td colspan="2">
+                              {{admin.candTestDate | date}}
+                            </td>
+                          <td colspan="2">
+                            {{admin.armyNumber}}
+                          </td>
+                          <td colspan="2">
+                            {{admin.name}} 
+                          </td>
+                          <td colspan="2">
+                            {{admin.testName}} 
+                          </td>
+                          <td colspan="2">
+                              {{admin.rank}}
+                          </td>
+                          <td colspan="2">
+                              {{admin.subunit}}
+                          </td>
+                          <td colspan="2">
+                              {{admin.testResult}} 
+                            </td>
+                            <td colspan="2">
+                              {{admin.age}} 
+                            </td>
+                            <td colspan="2">
+                              {{admin.catogiryName}}
+                            </td>
+                            <td colspan="2">
+                              {{admin.createdAt | date}}
+                            </td>
+                        </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td colspan="20">
+                        <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+                      </td>
+                    </tr>
+                  </tfoot>
+              </table>
+          </div>
+      </div>
+      <!-- table ends-->
+    </div>
+  </div>
+  

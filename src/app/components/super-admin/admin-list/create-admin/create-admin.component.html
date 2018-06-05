@@ -1,0 +1,43 @@
+<div class="col-lg-6 col-md-6 col-xs-12 panel panel-default" style="padding:10px;">
+  <form #CreateadminForm="ngForm">
+      <div class="input-group sign-in-input" style="width:100%;margin-bottom:10px;">
+        <label *ngIf="userName">Enter Army Number</label><input type="text" class="form-control" name="username" [(ngModel)]="newAdmin.username" placeholder="Enter Army Number" required>
+      </div>
+      <div class="input-group sign-in-input" style="width:100%;margin-bottom:10px;">
+          <label *ngIf="userName">Enter Admin Name</label> <input type="text" class="form-control" name="name" [(ngModel)]="newAdmin.name" placeholder="Enter Admin Name" required>
+      </div>
+      <div class="input-group sign-in-input" style="width:100%;margin-bottom:10px;">
+          <label *ngIf="userName">Enter Position</label> <input type="text" class="form-control" name="appointment" [(ngModel)]="newAdmin.appointment" placeholder="Enter Position" required>
+        </div>
+      <!-- <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">
+        <select class="custom-select" id="inputGroupSelect01" name="appointment" [(ngModel)]="newAdmin.appointment" style="width:100%;padding:10px;" required>
+          <option selected [value]="null">Select Position</option>
+          <option *ngFor="let category of testCategories" [value]="category.id">
+            {{category.catogiryName}}
+          </option>
+        </select>
+      </div> -->
+      <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">
+          <label *ngIf="userName">Select Rank</label> <select class="custom-select" id="inputGroupSelect01" name="rankid" [(ngModel)]="newAdmin.rankid" (change)="setSelectedRank(newAdmin.rankid)" style="width:100%;padding:10px;" required>
+          <option [value]="null || '' || undefined">Select Rank</option>
+          <option *ngFor="let rank of allRanks" [value]="rank.id">
+            {{rank.name}}
+          </option>
+        </select>
+      </div>
+      <div *ngIf="!userName" class="input-group sign-in-input" style="width:100%;margin-bottom:10px;">
+        <input type="text" class="form-control" name="password" [(ngModel)]="newAdmin.password" placeholder="Enter Password" required>
+      </div>
+      <div *ngIf="!userName" class="input-group sign-in-input" style="width:100%;margin-bottom:10px;">
+        <input type="text" class="form-control" name="credential" [(ngModel)]="newAdmin.credential" placeholder="Confirm Password" required>
+      </div>
+      <div class="col-lg-6 col-lg-offset-3 col-xs-12"> 
+        <button *ngIf="!userName" class="btn text-center add-catbtn btn-fullwidth" [disabled]="!CreateadminForm.form.valid" (click)="createAdmin()">
+          Add Admin
+        </button>
+        <button *ngIf="userName" class="btn text-center add-catbtn btn-fullwidth" [disabled]="!CreateadminForm.form.valid" (click)="updateAdmin()">
+          Update Admin
+        </button>
+      </div>
+  </form>
+</div>

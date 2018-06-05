@@ -1,0 +1,36 @@
+.nav>li>span>a {
+    padding: 6px 13px !important;
+    position: relative;
+    display: block;
+}
+
+.sidebarmenu a{
+    color: #fff;
+    text-decoration: none;
+}
+.sidebar ul li.active123{
+    /* background:#ea9215; */
+    background:#2a2420;
+    /* border-bottom:3px solid #ea9215 !important; */
+    color: #fff !important; 
+}
+/* .sidebar ul li.active{
+    background:#ea9215;
+    color: #ffffff !important; 
+} */
+.sidebar ul li a.active{
+    color: #ea9215 !important; 
+    background:#ffffff;
+    border-bottom:3px solid #ea9215 !important;
+}
+.sidebar_css{
+    /* max-width: 115px; */
+    word-wrap: break-word;
+}
+
+.sidebar_scroll_css{
+    /* overflow-y: scroll; */
+    height: 550px;
+    width: 16.7%;
+    background: #41533b;
+}
