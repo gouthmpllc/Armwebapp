@@ -16,6 +16,11 @@ export class SuperAdminSettingsService {
     .map((res: Response) => res);
   }
 
+  getAllDashboardData() {
+    return this.httpClient.get(AppSettings.API_ENDPOINT + `Canditates/getDashBoardDetails`)
+    .map((res: Response) => res);
+  }
+
   createTestCategories(newCategory) {
     return this.httpClient.post(AppSettings.API_ENDPOINT + `TestCatogiries`, newCategory)
     .map((res: Response) => res);

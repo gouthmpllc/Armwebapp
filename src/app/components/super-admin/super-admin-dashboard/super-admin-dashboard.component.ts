@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {single} from '../../admin/admin-dashboard/data';
+import { SuperAdminSettingsService } from '../../../services/superAdmin/settings-service/super-admin-settings.service';
 declare var AmCharts: any;
 
 @Component({
@@ -8,10 +9,11 @@ declare var AmCharts: any;
   styleUrls: ['./super-admin-dashboard.component.css']
 })
 export class SuperAdminDashboardComponent implements OnInit {
+  allData: any;
 
   single: any[];
   multi: any[];
-
+  testBarChartData: any = [];
   view: any[] = [500, 300];
 
   // options
@@ -20,15 +22,15 @@ export class SuperAdminDashboardComponent implements OnInit {
   gradient = false;
   showLegend = true;
   showXAxisLabel = true;
-  xAxisLabel = 'Country';
+  xAxisLabel = 'Test Name';
   showYAxisLabel = true;
-  yAxisLabel = 'Population';
+  yAxisLabel = 'Test Results';
 
   colorScheme = {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
   };
 
-  constructor() {
+  constructor(private superAdminSettingsService: SuperAdminSettingsService) {
     Object.assign(this, {single});
 
     AmCharts.makeChart('chartdiv', {
@@ -65,6 +67,40 @@ export class SuperAdminDashboardComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loadDashBoardData();
   }
 
+
+
+  // formatting;
+  loadDashBoardData() {
+    this.superAdminSettingsService.getAllDashboardData().subscribe(
+      (data: any) => {
+        console.log(JSON.stringify(data));
+        this.allData = data.data.data;
+        this.formatTobarChart(this.allData.resultWithQualifier);
+      },
+      error => {
+        console.log(JSON.stringify(error));
+        // this.toastr.error('Invalid Login Credentials!', 'Oops!');
+      });
+  }
+
+  formatTobarChart(resultWiseData) {
+
+    let groups = {};
+    for (let i = 0; i < resultWiseData.length; i++) {
+      const groupName = resultWiseData[i].testName;
+      if (!groups[groupName]) {
+        groups[groupName] = [];
+      }
+      groups[groupName].push({'name': resultWiseData[i].testResult, 'value': resultWiseData[i].count});
+    }
+    resultWiseData = [];
+    for (let groupName in groups) {
+      resultWiseData.push({name: groupName, series: groups[groupName]});
+    }
+    console.log(JSON.stringify(resultWiseData));
+    this.testBarChartData = resultWiseData;
+  }
 }
