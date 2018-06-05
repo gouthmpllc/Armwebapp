@@ -34,16 +34,36 @@
               </option>
             </select>
           </div>
-        <div class="input-group sign-in-input" style="width:100%;margin-bottom:10px;">
-            <label *ngIf="userName">Enter Age</label><input type="text" class="form-control" name="age" [(ngModel)]="newCandidate.age" placeholder="Enter Age" required>
+        <div *ngIf="userName" class="input-group sign-in-input" style="width:100%;margin-bottom:10px;">
+            <label>Enter Age</label><input type="text" class="form-control" name="age" [(ngModel)]="newCandidate.age" placeholder="Enter Age" readonly>
         </div>
-        <div class="input-group" style="margin-bottom:10px;">
-            <label *ngIf="userName">Select Gender</label>
-          <div *ngFor="let gender of genders">
-              <input type="radio" class="form-control" name="genderq" [(ngModel)]="newCandidate.genderCode" (change)="onSelectionChange(gender)" [value]="gender.value">{{gender.name}}
+        <div class="col-lg-6">
+          <div  class="input-group sign-in-input" style="width:100%;margin-bottom:10px;">
+              <!-- <label *ngIf="userName">Select Date Of Birth</label> -->
+              <mat-form-field class="width100 ">
+                <input matInput [matDatepicker]="picker" placeholder="Select Date Of Birth"
+                name="establishedDate" [max]="maxDate"
+                [(ngModel)]="newCandidate.candDob" id="candDob" #candDob='ngModel'>
+                <mat-datepicker-toggle matSuffix [for]="picker" ></mat-datepicker-toggle>
+                <mat-datepicker touchUi="true" [disabled]="disableDate" #picker></mat-datepicker>
+              </mat-form-field>
+          </div>
+          <div style="margin-bottom:10px;">
+              <label *ngIf="userName">Select Gender</label>
+            <div *ngFor="let gender of genders">
+                <span>{{gender.name}} <input type="radio" class="" name="genderq" [(ngModel)]="newCandidate.genderCode" (change)="onSelectionChange(gender)" [value]="gender.value"></span>
+            </div>
           </div>
         </div>
-        <div class="col-lg-6 col-lg-offset-3 col-xs-12"> 
+        <div class="col-lg-6">
+          <div *ngIf="newCandidate.barcodeUrl" class="col-lg-4 col-md-4 col-xs-6">
+            <img style="width:200px;height:150px;" [src]="newCandidate.barcodeUrl">
+          </div>
+        </div>
+        <div>
+
+        </div>
+        <div class="col-lg-6 col-lg-offset-3 col-xs-12" style="margin-top:15px;"> 
           <button *ngIf="!userName" class="btn text-center add-catbtn btn-fullwidth" [disabled]="!CreateadminForm.form.valid" (click)="createCandidate()">
             Add Candidate
           </button>
@@ -53,4 +73,3 @@
         </div>
     </form>
   </div>
-  
