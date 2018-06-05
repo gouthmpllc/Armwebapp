@@ -29,8 +29,8 @@ export class CreateCandidateComponent implements OnInit {
   rankId: any;
   userName: string;
   genders: any = [
-    {name: 'Male', value: '1'},
-    {name: 'Female', value: '2'},
+    {name: 'Male', value: 1},
+    {name: 'Female', value: 2},
   ];
   @Output() displayListChanged = new EventEmitter<boolean>();
   formData: FormData = new FormData();
