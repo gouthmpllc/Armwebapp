@@ -26,8 +26,11 @@ export class AdminDashboardComponent implements OnInit {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
   };
   constructor() { 
-    Object.assign(this, {single})   
-    
+    Object.assign(this, {single})      
+  
+  }
+
+  ngOnInit() {
     AmCharts.makeChart("chartdiv", {
       "type": "pie",
       "theme": "light",
@@ -59,9 +62,6 @@ export class AdminDashboardComponent implements OnInit {
       "innerRadius": "60%",
       "labelText": ""
     });
-  }
-
-  ngOnInit() {
   }
 
 }
