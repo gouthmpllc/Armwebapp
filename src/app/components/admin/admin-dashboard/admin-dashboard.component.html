@@ -1,3 +1,226 @@
-<p>
-  admin-dashboard works!
-</p>
+<div>
+  <div class="candidateCntr">
+    <div class="">
+      <img src="../assets/images/candidates.png" class="img-responsive dtcell">
+    </div>
+    <div class="tcell12">
+      <div class="f-size24">1,250</div>
+      <div class="color-ccc f-size18">
+        Total Candidates
+      </div>
+    </div>
+  </div>
+  <div class="candidateCntr">
+    <div class="">
+      <img src="../assets/images/admin_icon.png" class="img-responsive dtcell">
+    </div>
+    <div class="tcell12">
+      <div class="f-size24">112</div>
+      <div class="color-ccc f-size18">
+        No. of Admins
+      </div>
+    </div>
+  </div>
+  <div class="candidateCntr">
+    <div class="">
+      <img src="../assets/images/test results.png" class="img-responsive dtcell">
+    </div>
+    <div class="tcell12">
+      <div class="f-size24">48%</div>
+      <div class="color-ccc f-size18">
+       Test Results
+      </div>
+    </div>
+  </div>
+  <div class="candidateCntr">
+    <div class="tcell12">
+      <div class="f-size24">16 : 58</div>
+      <div>
+        Monday, 4th June, 2018
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mtop40">
+  <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+    <div class="col-lg-12">
+      <div class="f-size20">
+        Tests Completed
+      </div>
+        <div>
+          <div id="chartdiv"></div>								
+        </div>
+    </div>
+    
+    <div class="col-lg-12">
+      <div class="f-size20">
+        Test Reports Graphs
+      </div>
+      <div>
+        <ngx-charts-bar-vertical-stacked
+        [view]="view"
+        [scheme]="colorScheme"
+        [results]="single"
+        [gradient]="gradient"
+        [xAxis]="showXAxis"
+        [yAxis]="showYAxis"
+        [legend]="showLegend"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxisLabel]="xAxisLabel"
+        [yAxisLabel]="yAxisLabel"
+        (select)="onSelect($event)">
+      </ngx-charts-bar-vertical-stacked>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+    <div class="f-size20 m-btm20">
+      Admin List
+    </div>
+    <div>
+      <table class="table table-responsive armytable">
+        <thead>
+          <tr>
+            <th>
+              Army number
+            </th>
+            <th>
+              Age
+            </th>
+            <th>
+              Sex
+            </th>
+            <th>
+              Name
+            </th>
+            <th>
+              Location
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              SMBY124
+            </td>
+            <td>
+              28
+            </td>
+            <td>
+              M
+            </td>
+            <td>
+              Samyodha G Gill
+            </td>
+            <td>
+              Hyderabad, TS
+            </td>
+          </tr>
+          <tr>
+            <td>
+              SMBY124
+            </td>
+            <td>
+              28
+            </td>
+            <td>
+              M
+            </td>
+            <td>
+              Samyodha G Gill
+            </td>
+            <td>
+              Hyderabad, TS
+            </td>
+          </tr>
+          <tr>
+            <td>
+              SMBY124
+            </td>
+            <td>
+              28
+            </td>
+            <td>
+              M
+            </td>
+            <td>
+              Samyodha G Gill
+            </td>
+            <td>
+              Hyderabad, TS
+            </td>
+          </tr>
+          <tr>
+            <td>
+              SMBY124
+            </td>
+            <td>
+              28
+            </td>
+            <td>
+              M
+            </td>
+            <td>
+              Samyodha G Gill
+            </td>
+            <td>
+              Hyderabad, TS
+            </td>
+          </tr>
+          <tr>
+            <td>
+              SMBY124
+            </td>
+            <td>
+              28
+            </td>
+            <td>
+              M
+            </td>
+            <td>
+              Samyodha G Gill
+            </td>
+            <td>
+              Hyderabad, TS
+            </td>
+          </tr>
+          <tr>
+            <td>
+              SMBY124
+            </td>
+            <td>
+              28
+            </td>
+            <td>
+              M
+            </td>
+            <td>
+              Samyodha G Gill
+            </td>
+            <td>
+              Hyderabad, TS
+            </td>
+          </tr>
+          <tr>
+            <td>
+              SMBY124
+            </td>
+            <td>
+              28
+            </td>
+            <td>
+              M
+            </td>
+            <td>
+              Samyodha G Gill
+            </td>
+            <td>
+              Hyderabad, TS
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

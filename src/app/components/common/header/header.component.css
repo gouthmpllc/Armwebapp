@@ -53,22 +53,23 @@
   #custom-bootstrap-menu.navbar-default {
     /* background-color: #ffffff !important; */
     /* IE10+ */ 
-  background-image: -ms-linear-gradient(top, #F9F9F9 0%, #F9F9F9 90%);
+  /* background-image: -ms-linear-gradient(top, #F9F9F9 0%, #F9F9F9 90%); */
   
   /* Mozilla Firefox */ 
-  background-image: -moz-linear-gradient(top, #F9F9F9 0%, #F9F9F9 90%);
+  /* background-image: -moz-linear-gradient(top, #F9F9F9 0%, #F9F9F9 90%); */
   
   /* Opera */ 
-  background-image: -o-linear-gradient(top, #F9F9F9 0%, #F9F9F9 90%);
+  /* background-image: -o-linear-gradient(top, #F9F9F9 0%, #F9F9F9 90%); */
   
   /* Webkit (Safari/Chrome 10) */ 
-  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #F9F9F9), color-stop(90, #F9F9F9));
+  /* background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #F9F9F9), color-stop(90, #F9F9F9)); */
   
   /* Webkit (Chrome 11+) */ 
-  background-image: -webkit-linear-gradient(top, #F9F9F9 0%, #F9F9F9 90%);
+  /* background-image: -webkit-linear-gradient(top, #F9F9F9 0%, #F9F9F9 90%); */
   
   /* W3C Markup */ 
-  background-image: linear-gradient(to bottom, #F9F9F9 0%, #F9F9F9 90%);
+  /* background-image: linear-gradient(to bottom, #F9F9F9 0%, #F9F9F9 90%); */
+  background-image: url('/../assets/images/header_bg.jpg');
   }
   
   .navbar-default {
