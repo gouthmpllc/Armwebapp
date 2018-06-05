@@ -32,6 +32,11 @@ export class AdminListService {
     .map((res: Response) => res);
   }
 
+  uploadPic(formData) {
+    return this.httpClient.post(AppSettings.API_ENDPOINT + `awsS3s/jawaan/upload`, formData)
+    .map((res: Response) => res);
+  }
+
   getAllSubUnits() {
     return this.httpClient.get(AppSettings.API_ENDPOINT + `SubUnits`)
     .map((res: Response) => res);

@@ -1,3 +1,9 @@
+<div *ngIf="userName" class="col-lg-12 col-md-12" style="margin-top:20px;">
+  <div class="col-lg-6">
+    <h4>Update Candidate</h4>
+  </div>
+</div>
+
 <div class="col-lg-6 col-md-6 col-xs-12 panel panel-default" style="padding:10px;">
     <form #CreateadminForm="ngForm">
         <div class="input-group sign-in-input" style="width:100%;margin-bottom:10px;">
@@ -18,7 +24,17 @@
           </select>
         </div> -->
         <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">
-            <label *ngIf="userName">Select Rank</label><select class="custom-select" id="inputGroupSelect01" name="rank" [(ngModel)]="newCandidate.rankId" style="width:100%;padding:10px;" required>
+            <label *ngIf="userName">Select Rank Category</label>
+            <select class="custom-select" id="inputGroupSelect01" name="rankCat" [(ngModel)]="newCandidate.rankCat" style="width:100%;padding:10px;" (change)="onRankCatChange(newCandidate.rankCat)" required>
+            <option [value]="null || '' || undefined">Select Rank Category</option>
+            <option *ngFor="let rakCat of allRankCategories" [value]="rakCat.id">
+              {{rakCat.name}}
+            </option>
+          </select>
+        </div>
+
+        <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">
+            <label *ngIf="userName">Select Rank</label><select class="custom-select" id="inputGroupSelect01" name="rank" [(ngModel)]="newCandidate.rankId" style="width:100%;padding:10px;" (change)="onRankChange(newCandidate.rankId)" required>
             <option [value]="null || '' || undefined">Select Rank</option>
             <option *ngFor="let rank of allRanks" [value]="rank.id">
               {{rank.name}}
@@ -27,7 +43,7 @@
         </div>
         <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">
             <label *ngIf="userName">Select Subunits</label>
-            <select class="custom-select" id="inputGroupSelect01" name="subunitId" [(ngModel)]="newCandidate.subunitId" style="width:100%;padding:10px;" required>
+            <select class="custom-select" id="inputGroupSelect01" name="subunitId" [(ngModel)]="newCandidate.subunitId" style="width:100%;padding:10px;"  (change)="onSubUnitChange(newCandidate.subunitId)" required>
               <option [value]="null || '' || undefined">Select Subunits</option>
               <option *ngFor="let subUnit of allSubUnits" [value]="subUnit.id">
                 {{subUnit.name}}
@@ -60,9 +76,13 @@
             <img style="width:200px;height:150px;" [src]="newCandidate.barcodeUrl">
           </div>
         </div>
-        <div>
 
+        <div class="col-lg-6 col-md-6 upload-box">
+            <input type="file" (change)="uploadDatasource($event)" name="datasourcelistdata" class="inputfile" 
+            id="datasourcelistdata" accept=".png" />
+            <!-- <span *ngIf="fileName">{{fileName}}</span> -->
         </div>
+
         <div class="col-lg-6 col-lg-offset-3 col-xs-12" style="margin-top:15px;"> 
           <button *ngIf="!userName" class="btn text-center add-catbtn btn-fullwidth" [disabled]="!CreateadminForm.form.valid" (click)="createCandidate()">
             Add Candidate
@@ -72,4 +92,10 @@
           </button>
         </div>
     </form>
+  </div>
+
+  <div *ngIf="newCandidate.profilePic" class="col-lg-6 col-md-6 col-xs-12" style="padding: 200px 0px 0px 25px;;">
+    <div class="col-lg-6 col-lg-offset-3" style="margin-top:30px;" >
+      <img [src]="newCandidate.profilePic" style="width:200px;height:150px;">
+    </div>
   </div>
