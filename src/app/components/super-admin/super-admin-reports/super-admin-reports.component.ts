@@ -233,7 +233,6 @@ export class SuperAdminReportsComponent implements OnInit {
   }
 
   generateCsv() {
-    alert('.....');
     let options = {
       fieldSeparator: ',',
       quoteStrings: '"',

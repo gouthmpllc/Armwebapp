@@ -4,7 +4,7 @@
         <img src="../assets/images/candidates.png" class="img-responsive dtcell">
       </div>
       <div class="tcell12">
-        <div class="f-size24">1,250</div>
+        <div *ngIf="allData" class="f-size24">{{allData.totalCanditates}}</div>
         <div class="color-ccc f-size18">
           Total Candidates
         </div>
@@ -15,7 +15,7 @@
         <img src="../assets/images/admin_icon.png" class="img-responsive dtcell">
       </div>
       <div class="tcell12">
-        <div class="f-size24">112</div>
+        <div *ngIf="allData" class="f-size24">{{allData.totalAdmins}}</div>
         <div class="color-ccc f-size18">
           No. of Admins
         </div>
@@ -26,7 +26,7 @@
         <img src="../assets/images/test results.png" class="img-responsive dtcell">
       </div>
       <div class="tcell12">
-        <div class="f-size24">48%</div>
+        <div *ngIf="allData" class="f-size24">{{allData.totaAvg}}%</div>
         <div class="color-ccc f-size18">
          Test Results
         </div>
@@ -42,14 +42,24 @@
     </div>
   </div>
   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mtop40">
-    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-      <div class="col-lg-12">
+    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12" >
+      <div class="col-lg-12" *ngIf="allData">
         <div class="f-size20">
           Tests Completed
         </div>
-          <div>
+          <!-- <div>
             <div id="chartdiv"></div>								
+          </div> -->
+          <span class="" *ngFor="let test of allData.testsData">
+            <div class="inner-content text-center" style="width: 100px;display:inline;float:left;">
+              <div class="c100 p{{test.perecntage}} small center green">
+                  <span *ngIf="test">{{test.perecntage}}%</span>
+                  <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+              </div>
+              <p *ngIf="test">{{test.testName}}</p>
           </div>
+          </span>
+
       </div>
       
       <div class="col-lg-12">
@@ -78,8 +88,55 @@
       <div class="f-size20 m-btm20">
         Admin List
       </div>
-      <div>
-        <table class="table table-responsive armytable">
+      <div >
+          <div class="flexcroll table-scroll">
+              <table class="table table-striped" id="myProgram" [mfData]="data" #mf="mfDataTable"
+              [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+                <thead>               
+                    <tr>
+                      <th colspan="2">
+                        <mfDefaultSorter by="name">Army Number</mfDefaultSorter>
+                      </th>
+                      <th colspan="2">
+                        <mfDefaultSorter by="shortName">Admin Name</mfDefaultSorter>
+                      </th>
+                      <th colspan="2">
+                        <mfDefaultSorter by="description">Rank</mfDefaultSorter>
+                      </th>
+                      <th colspan="2">
+                        <mfDefaultSorter by="description">Appointment</mfDefaultSorter>
+                      </th>
+                    </tr>
+                    <tr>
+                    </tr>
+                  </thead>
+  
+                  <tbody>
+                      <tr *ngFor="let admin of mf.data" class="notfirst">
+                          <td colspan="2">
+                            {{admin.username}}
+                          </td>
+                          <td colspan="2">
+                            {{admin.name}} 
+                          </td>
+                          <td colspan="2">
+                            {{admin.rank}} 
+                          </td>
+                          <td colspan="2">
+                              {{admin.appointment}}
+                          </td>
+                        </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td colspan="8">
+                        <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+                      </td>
+                    </tr>
+                  </tfoot>
+              </table>
+          </div>
+        <!-- <table class="table table-responsive armytable">
           <thead>
             <tr>
               <th>
@@ -220,7 +277,7 @@
               </td>
             </tr>
           </tbody>
-        </table>
+        </table> -->
       </div>
     </div>
   </div>

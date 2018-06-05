@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {single} from '../../admin/admin-dashboard/data';
 import { SuperAdminSettingsService } from '../../../services/superAdmin/settings-service/super-admin-settings.service';
+import { AdminListService } from '../../../services/superAdmin/admin-list-service/admin-list.service';
 declare var AmCharts: any;
 
 @Component({
@@ -10,11 +11,11 @@ declare var AmCharts: any;
 })
 export class SuperAdminDashboardComponent implements OnInit {
   allData: any;
-
+  data: any = [];
   single: any[];
   multi: any[];
   testBarChartData: any = [];
-  view: any[] = [500, 300];
+  view: any[] = [600, 300];
 
   // options
   showXAxis = true;
@@ -27,12 +28,20 @@ export class SuperAdminDashboardComponent implements OnInit {
   yAxisLabel = 'Test Results';
 
   colorScheme = {
-    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
+    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA', '#FF0000']
   };
 
-  constructor(private superAdminSettingsService: SuperAdminSettingsService) {
-    Object.assign(this, {single});
+  public rowsOnPage = 10;
+  public sortBy = 'createdAt';
+  public sortOrder = 'desc';
 
+  constructor(private superAdminSettingsService: SuperAdminSettingsService, private adminListService: AdminListService) {
+    Object.assign(this, {single});
+  }
+
+  ngOnInit() {
+    this.loadDashBoardData();
+    this.loadAllAdmins();
     AmCharts.makeChart('chartdiv', {
       'type': 'pie',
       'theme': 'light',
@@ -61,16 +70,10 @@ export class SuperAdminDashboardComponent implements OnInit {
       'valueField': 'value',
       'labelRadius': -130,
       'radius': '42%',
-      'innerRadius': '60%',
+      'innerRadius': '0%',
       'labelText': ''
     });
   }
-
-  ngOnInit() {
-    this.loadDashBoardData();
-  }
-
-
 
   // formatting;
   loadDashBoardData() {
@@ -102,5 +105,16 @@ export class SuperAdminDashboardComponent implements OnInit {
     }
     console.log(JSON.stringify(resultWiseData));
     this.testBarChartData = resultWiseData;
+  }
+
+  loadAllAdmins() {
+    this.adminListService.getAllAdminList().subscribe(
+      (data: any) => {
+        // console.log(JSON.stringify(data));
+        this.data = data.data;
+      },
+      error => {
+        console.log(JSON.stringify(error));
+    });
   }
 }
