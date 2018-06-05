@@ -10,6 +10,8 @@ import { CandidateListService } from '../../../../services/admin/candidate-list-
   styleUrls: ['./create-candidate.component.css']
 })
 export class CreateCandidateComponent implements OnInit {
+  maxDate = new Date();
+
   newCandidate: any = {};
   loginData: any;
   allRanks: any = [];
@@ -91,19 +93,27 @@ export class CreateCandidateComponent implements OnInit {
     this.newCandidate.createdBy = this.loginData.data.userId;
     this.newCandidate.createdStatus = 'NEW';
     this.newCandidate.status = 'active';
-    this.newCandidate.candDob = '18-03-1990';
-    this.newCandidate.age = +this.newCandidate.age;
-    // console.log(JSON.stringify(this.newCandidate));
+    this.newCandidate.age = this.calculateAge(this.newCandidate.candDob);
+    // this.newCandidate.candDob = new Date(new Date(this.newCandidate.candDob).getDate() +
+    // this.newCandidate.candDob).getMonth() + 1 + '-' +
+    // + '-' + new Date(this.newCandidate.candDob).getFullYear();
+    // this.newCandidate.candDob = '18-03-1990';
+    // this.newCandidate.age = +this.newCandidate.age;
+    console.log(JSON.stringify(this.newCandidate));
     this.adminListService.createCandidate(this.newCandidate).subscribe(
       (data: any) => {
         this.displayListChanged.emit(true);
-        // console.log(JSON.stringify(data));
       },
       error => {
         console.log(JSON.stringify(error));
-        // this.toastr.error('Invalid Login Credentials!', 'Oops!');
     });
 
+  }
+
+  calculateAge(dob) {
+    let ageDifMs = Date.now() - dob.getTime();
+    let ageDate = new Date(ageDifMs); // miliseconds from epoch
+    return Math.abs(ageDate.getUTCFullYear() - 1970);
   }
 
   updateCandidate() {

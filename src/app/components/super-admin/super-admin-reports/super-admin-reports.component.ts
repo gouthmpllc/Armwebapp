@@ -231,4 +231,7 @@ export class SuperAdminReportsComponent implements OnInit {
     this.loadTestTypewiseReports(this.selectedcCategoryId, this.typeArray);
   }
 
+  generateCsv() {
+  }
+
 }
