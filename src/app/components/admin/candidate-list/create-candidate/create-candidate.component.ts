@@ -145,17 +145,6 @@ export class CreateCandidateComponent implements OnInit {
     this.formData.append('file', fileDetails);
   }
 
-  uploadPic() {
-    this.adminListService.uploadPic(this.formData).subscribe(
-      (data: any) => {
-        console.log(JSON.stringify(data));
-        this.candidateUploadLocResp = data.data.result.files.file[0].providerResponse.location;
-      },
-      error => {
-        console.log(JSON.stringify(error));
-    });
-  }
-
   createCandidate() {
     this.adminListService.uploadPic(this.formData).subscribe(
       (data: any) => {
@@ -177,6 +166,7 @@ export class CreateCandidateComponent implements OnInit {
         this.newCandidate.createdBy = this.loginData.data.userId;
         this.newCandidate.createdStatus = 'NEW';
         this.newCandidate.status = 'active';
+        delete this.newCandidate.rankCat;
         this.newCandidate.age = this.calculateAge(this.newCandidate.candDob);
         console.log(JSON.stringify(this.newCandidate));
         this.adminListService.createCandidate(this.newCandidate).subscribe(

@@ -1,0 +1,38 @@
+.candidateCntr{
+    width: 322px;
+    /* margin: auto; */
+    float: left;
+    border-right: 4px solid #ddd;
+    margin-top: 20px;
+    display: table;
+}
+.dtcell{
+    left: 0;
+    right: 0;
+    margin: auto;
+    /* display: table; */
+    text-align: center;
+}
+.tcell12{
+    text-align: center;
+    /* right: 0; */
+    /* margin: auto; */
+    /* display: table; */
+    display: table-cell;
+    vertical-align: middle;
+}
+.candidateCntr:last-child{
+    border-right: 0px;
+}
+.armytable{
+    box-shadow: 1px 7px 19px 4px #DDD;
+    border-radius: 8px;
+}
+.armytable>thead>tr>th, .armytable>tbody>tr>td{
+    border-bottom: 0px;
+    border-top: 0px;
+    padding: 14px;
+}
+
+
+
