@@ -74,27 +74,35 @@ export class CreateAdminComponent implements OnInit {
   }
 
   createAdmin() {
-    this.adminListService.uploadPic(this.formData).subscribe(
+    if (this.formData) {
+      this.adminListService.uploadPic(this.formData).subscribe(
+        (data: any) => {
+          console.log(JSON.stringify(data));
+          this.candidateUploadLocResp = data.data.result.files.file[0].providerResponse.location;
+          this.postAdmin();
+        },
+        error => {
+          console.log(JSON.stringify(error));
+      });
+    } else {
+      this.postAdmin();
+    }
+
+  }
+
+  postAdmin() {
+    this.newAdmin['rank'] = this.ranObj.name;
+    this.newAdmin['rankId'] = this.ranObj.id;
+    this.newAdmin['profilePic'] = this.candidateUploadLocResp;
+    console.log(JSON.stringify(this.newAdmin));
+    this.adminListService.createAdmin(this.newAdmin).subscribe(
       (data: any) => {
-        console.log(JSON.stringify(data));
-        this.candidateUploadLocResp = data.data.result.files.file[0].providerResponse.location;
-        this.newAdmin['rank'] = this.ranObj.name;
-        this.newAdmin['rankId'] = this.ranObj.id;
-        this.newAdmin['profilePic'] = this.candidateUploadLocResp;
-        console.log(JSON.stringify(this.newAdmin));
-        this.adminListService.createAdmin(this.newAdmin).subscribe(
-          (data1: any) => {
-            alert('created successfully');
-            this.displayListChanged.emit(true);
-          },
-          error1 => {
-            console.log(JSON.stringify(error1));
-        });
+        alert('created successfully');
+        this.displayListChanged.emit(true);
       },
       error => {
         console.log(JSON.stringify(error));
     });
-
   }
 
   updateAdmin() {

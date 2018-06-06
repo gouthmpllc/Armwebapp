@@ -146,41 +146,50 @@ export class CreateCandidateComponent implements OnInit {
   }
 
   createCandidate() {
-    this.adminListService.uploadPic(this.formData).subscribe(
-      (data: any) => {
-        console.log(JSON.stringify(data));
-        this.candidateUploadLocResp = data.data.result.files.file[0].providerResponse.location;
-        console.log(JSON.stringify(this.newCandidate));
-        this.newCandidate.gender = this.gender;
-        this.newCandidate.genderCode = +this.genderCode;
 
-        this.newCandidate.rank = this.rank;
-        this.newCandidate.rankId = this.rankId;
-        this.newCandidate.subunit = this.subUnit;
-        this.newCandidate.subunitId = this.subUnitId;
+    if (this.formData) {
+      this.adminListService.uploadPic(this.formData).subscribe(
+        (data: any) => {
+          console.log(JSON.stringify(data));
+          this.candidateUploadLocResp = data.data.result.files.file[0].providerResponse.location;
+          this.postCandidate();
+          // console.log(JSON.stringify(this.newCandidate));
+        },
+        error => {
+          console.log(JSON.stringify(error));
+      });
+    } else {
+      this.postCandidate();
+    }
 
-        this.newCandidate.rankCatgName = this.rankCatName;
-        this.newCandidate.rankCatgId = this.rankCatId;
+  }
 
-        this.newCandidate.profilePic = this.candidateUploadLocResp;
-        this.newCandidate.createdBy = this.loginData.data.userId;
-        this.newCandidate.createdStatus = 'NEW';
-        this.newCandidate.status = 'active';
-        delete this.newCandidate.rankCat;
-        this.newCandidate.age = this.calculateAge(this.newCandidate.candDob);
-        console.log(JSON.stringify(this.newCandidate));
-        this.adminListService.createCandidate(this.newCandidate).subscribe(
-          (data1: any) => {
-            this.displayListChanged.emit(true);
-          },
-          error1 => {
-            console.log(JSON.stringify(error1));
-        });
+  postCandidate() {
+    this.newCandidate.gender = this.gender;
+    this.newCandidate.genderCode = +this.genderCode;
+
+    this.newCandidate.rank = this.rank;
+    this.newCandidate.rankId = this.rankId;
+    this.newCandidate.subunit = this.subUnit;
+    this.newCandidate.subunitId = this.subUnitId;
+
+    this.newCandidate.rankCatgName = this.rankCatName;
+    this.newCandidate.rankCatgId = this.rankCatId;
+
+    this.newCandidate.profilePic = this.candidateUploadLocResp;
+    this.newCandidate.createdBy = this.loginData.data.userId;
+    this.newCandidate.createdStatus = 'NEW';
+    this.newCandidate.status = 'active';
+    delete this.newCandidate.rankCat;
+    this.newCandidate.age = this.calculateAge(this.newCandidate.candDob);
+    console.log(JSON.stringify(this.newCandidate));
+    this.adminListService.createCandidate(this.newCandidate).subscribe(
+      (data1: any) => {
+        this.displayListChanged.emit(true);
       },
       error => {
         console.log(JSON.stringify(error));
     });
-
   }
 
   calculateAge(dob) {

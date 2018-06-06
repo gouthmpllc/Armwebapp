@@ -9,6 +9,9 @@ import { Angular5Csv } from 'angular5-csv/Angular5-csv';
   styleUrls: ['./super-admin-reports.component.css']
 })
 export class SuperAdminReportsComponent implements OnInit {
+  displayTwoDate: boolean;
+  displayOneDate: boolean;
+  dateWiseStatus: boolean;
   wingStatus: boolean;
   typeStatus: boolean;
   data: any = [];
@@ -27,7 +30,11 @@ export class SuperAdminReportsComponent implements OnInit {
   rankCategory: any = '';
   selectedcCategoryId: any = '';
   dupTestTypes: any = [];
-
+  fromDate: any;
+  toDate: any;
+  maxDate = new Date();
+  dateRa = [{name: 'Date', value: 1}, {name: 'Date Range', value: 2}];
+  raId: any;
   public rowsOnPage = 10;
   public sortBy = 'createdAt';
   public sortOrder = 'desc';
@@ -50,7 +57,7 @@ export class SuperAdminReportsComponent implements OnInit {
         // console.log(JSON.stringify(data));
         this.data = data.data.data;
         if (this.data.length > 0) {
-          alert('Generated successfully');
+          // alert('Generated successfully');
         } else {
           alert('No Data Found');
         }
@@ -157,7 +164,7 @@ export class SuperAdminReportsComponent implements OnInit {
         // console.log(JSON.stringify(data));
         this.data = data.data.data;
         if (this.data.length > 0) {
-          alert('Generated successfully');
+          // alert('Generated successfully');
         } else {
           alert('No Data Found');
         }
@@ -174,7 +181,24 @@ export class SuperAdminReportsComponent implements OnInit {
         // console.log(JSON.stringify(data));
         this.data = data.data.data;
         if (this.data.length > 0) {
-          alert('Generated successfully');
+          // alert('Generated successfully');
+        } else {
+          alert('No Data Found');
+        }
+      },
+      error => {
+        console.log(JSON.stringify(error));
+    });
+  }
+
+  loaddatewiseReports(fDate, tDate) {
+    this.data = [];
+    this.adminListService.getAllDateWiseReports(fDate, tDate).subscribe(
+      (data: any) => {
+        // console.log(JSON.stringify(data));
+        this.data = data.data.data;
+        if (this.data.length > 0) {
+          // alert('Generated successfully');
         } else {
           alert('No Data Found');
         }
@@ -202,6 +226,24 @@ export class SuperAdminReportsComponent implements OnInit {
     this.loadTestTypewiseReports('', []);
   }
 
+  setDateWise() {
+    this.resetFilters();
+    this.dateWiseStatus = true;
+    this.displayOneDate = true;
+    this.raId = 1;
+  }
+
+  setParticularDate(id) {
+    this.resetFilters();
+    this.dateWiseStatus = true;
+    if (id === 1) {
+      this.displayOneDate = true;
+      this.displayTwoDate = false;
+    } else {
+      this.displayTwoDate = true;
+    }
+  }
+
 
   resetFilters() {
     this.subArray = [];
@@ -213,6 +255,11 @@ export class SuperAdminReportsComponent implements OnInit {
     this.wingStatus = false;
     this.categoryStatus = false;
     this.typeStatus = false;
+    this.dateWiseStatus = false;
+    this.displayOneDate = false;
+    this.displayTwoDate = false;
+    this.fromDate = '';
+    this.toDate = '';
   }
 
   geneeateWingWiseFilterArray() {
@@ -230,6 +277,13 @@ export class SuperAdminReportsComponent implements OnInit {
 
   geneeateTestTypeWiseFilterArray() {
     this.loadTestTypewiseReports(this.selectedcCategoryId, this.typeArray);
+  }
+
+  geneeateDateWiseFilterArray() {
+    if (!this.toDate) {
+      this.toDate = this.fromDate;
+    }
+    this.loaddatewiseReports(this.fromDate, this.toDate);
   }
 
   generateCsv() {

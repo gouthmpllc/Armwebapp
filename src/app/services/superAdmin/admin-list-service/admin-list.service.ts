@@ -95,4 +95,10 @@ export class AdminListService {
     JSON.stringify(typeArray) + `&testCatIds=` + catId)
     .map((res: Response) => res);
   }
+
+  getAllDateWiseReports(fDate, tDate) {
+    return this.httpClient.get(AppSettings.API_ENDPOINT + `TestResults//getReportsByDates?startDate=`
+    + fDate + `&endDate=` + tDate)
+    .map((res: Response) => res);
+  }
 }

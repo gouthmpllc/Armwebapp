@@ -27,8 +27,9 @@
       </div>
 
       <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">
+          <label>Upload Profile Picture</label>
         <input type="file" (change)="uploadDatasource($event)" name="datasourcelistdata" class="inputfile" 
-          id="datasourcelistdata" accept=".png" />
+          id="datasourcelistdata" accept=".png,.jpeg" />
       </div>
 
       <div *ngIf="!userName" class="input-group sign-in-input" style="width:100%;margin-bottom:10px;">
