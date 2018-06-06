@@ -8,6 +8,7 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./super-admin-settings.component.css']
 })
 export class SuperAdminSettingsComponent implements OnInit {
+  displayTestTypeUpdateBtn: boolean;
   CatId: any;
   CatName: any;
   displayCategoryUpdateBtn: boolean;
@@ -85,7 +86,7 @@ export class SuperAdminSettingsComponent implements OnInit {
     } else {
       this.ageGroup.splice(index, 1);
     }
-    // console.log(JSON.stringify(this.ageGroup));
+    console.log(JSON.stringify(this.ageGroup));
   }
 
 
@@ -109,7 +110,7 @@ export class SuperAdminSettingsComponent implements OnInit {
         alert('TestType Created Successfully');
         this.ageGroup = [];
         this.CatId  = '';
-        this.ageGroup = '';
+        // this.ageGroup = '';
         addTestTypeForm.resetForm();
         this.loadTestTypes();
       },
@@ -160,6 +161,62 @@ export class SuperAdminSettingsComponent implements OnInit {
         alert('Updated Successfully');
         this.displayCategoryUpdateBtn = false;
         this.loadTestCategories();
+      },
+      error => {
+        console.log(JSON.stringify(error));
+        alert('Server Not Found');
+        // this.toastr.error('Invalid Login Credentials!', 'Oops!');
+    });
+  }
+
+  setActiveTestType(testType) {
+    testType.status = 'active';
+    this.editTestTypes(testType);
+  }
+
+  setInActiveTestType(testType) {
+    testType.status = 'inactive';
+    this.editTestTypes(testType);
+  }
+
+  setEditTestType(testType) {
+    this.testType = testType;
+    console.log(JSON.stringify(testType));
+    this.displayTestTypeUpdateBtn = true;
+
+  }
+
+  updateTestType(addTestTypeForm: NgForm) {
+    if (this.CatName && this.CatId) {
+      this.testType.catogiryName  = this.CatName;
+      this.testType.catogiryId = this.CatId;
+    }
+    this.editTestTypes(this.testType, addTestTypeForm);
+  }
+
+  editTestTypes(testType, formName?) {
+    this.superAdminSettingsService.updateTestType(testType).subscribe(
+      (data: any) => {
+        alert('Updated Successfully');
+        this.displayTestTypeUpdateBtn = false;
+        if (formName) {
+          formName.resetForm();
+        }
+        this.loadTestTypes();
+      },
+      error => {
+        console.log(JSON.stringify(error));
+        alert('Server Not Found');
+        this.loadTestTypes();
+        // this.toastr.error('Invalid Login Credentials!', 'Oops!');
+    });
+  }
+
+  removeTestType(testType) {
+    this.superAdminSettingsService.deleteTestType(testType).subscribe(
+      (data: any) => {
+        alert('Deleted Successfully');
+        this.loadTestTypes();
       },
       error => {
         console.log(JSON.stringify(error));

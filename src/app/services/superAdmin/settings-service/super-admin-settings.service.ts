@@ -51,4 +51,14 @@ export class SuperAdminSettingsService {
     .map((res: Response) => res);
   }
 
+  updateTestType(testType) {
+    return this.httpClient.put(AppSettings.API_ENDPOINT + `TestTypes/` + testType.id, testType)
+    .map((res: Response) => res);
+  }
+
+  deleteTestType(testType) {
+    return this.httpClient.delete(AppSettings.API_ENDPOINT + `TestTypes/` + testType.id)
+    .map((res: Response) => res);
+  }
+
 }
