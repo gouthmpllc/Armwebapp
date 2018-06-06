@@ -22,12 +22,10 @@
               [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
                 <thead>               
                     <tr>
-                      <th colspan="2">
-                        <mfDefaultSorter by="createdAt">Created Date</mfDefaultSorter>
-                      </th>
-                      <th colspan="2">
-                        <mfDefaultSorter by="candArmyNum">Army Number</mfDefaultSorter>
-                      </th>
+                        <th colspan="2">
+                            <mfDefaultSorter by="candArmyNum">Army Number</mfDefaultSorter>
+                          </th>
+                      
                       <th colspan="2">
                         <mfDefaultSorter by="candName">Candidate Name</mfDefaultSorter>
                       </th>
@@ -35,11 +33,14 @@
                         <mfDefaultSorter by="rank">Rank</mfDefaultSorter>
                       </th>
                       <th colspan="2">
+                          <mfDefaultSorter by="gender">Gender</mfDefaultSorter>
+                        </th>
+                      <th colspan="2">
                         <mfDefaultSorter by="age">Age</mfDefaultSorter>
                       </th>
                       <th colspan="2">
-                        <mfDefaultSorter by="gender">Gender</mfDefaultSorter>
-                      </th>
+                          <mfDefaultSorter by="createdAt">Created Date</mfDefaultSorter>
+                        </th>
                       <th colspan="2">
                         <mfDefaultSorter>Actions</mfDefaultSorter>
                       </th>
@@ -50,11 +51,7 @@
   
                   <tbody>
                       <tr *ngFor="let candidate of mf.data" class="notfirst cursor-pointer">
-                          <td colspan="2">
-                            <span *ngIf="candidate.createdAt">
-                                {{candidate.createdAt | date}}
-                            </span>
-                          </td>
+                          
                           <td colspan="2">
                             <span *ngIf="candidate.candArmyNum">
                                 {{candidate.candArmyNum}}
@@ -71,15 +68,21 @@
                             </span>
                           </td>
                           <td colspan="2">
+                              <span *ngIf="candidate.gender">
+                                  {{candidate.gender}}
+                              </span>
+                            </td>
+                          <td colspan="2">
                             <span *ngIf="candidate.age">
                                 {{candidate.age}}
                             </span>
                           </td>
+                          
                           <td colspan="2">
-                            <span *ngIf="candidate.gender">
-                                {{candidate.gender}}
-                            </span>
-                          </td>
+                              <span *ngIf="candidate.createdAt">
+                                  {{candidate.createdAt | date}}
+                              </span>
+                            </td>
                           <td colspan="2">
                             <button [disabled]="candidate.status == 'active'" class="btn btn-sm btn-active" (click)="setActiveCandidate(candidate)">Active</button>
                             <button [disabled]="candidate.status == 'inactive'" class="btn btn-sm btn-Inactive" (click)="setInActiveCandidate(candidate)">In Active</button>
