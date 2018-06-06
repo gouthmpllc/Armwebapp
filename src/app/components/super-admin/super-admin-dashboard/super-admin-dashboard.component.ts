@@ -86,11 +86,8 @@ export class SuperAdminDashboardComponent implements OnInit {
         this.allData = data.data.data;
         this.BPETArray = this.formatTo(this.allData.testsData , 'BPET');
         this.PPETArray = this.formatTo(this.allData.testsData , 'PPET');
-        // this.BPETArrayBarData = this.formatTo(this.allData.resultWithQualifier , 'BPET');
-        // this.PPETArrayBarData = this.formatTo(this.allData.resultWithQualifier , 'PPET');
         this.BPETArrayBarData = this.formatTobarChart(this.formatTo(this.allData.resultWithQualifier , 'BPET'));
         this.PPETArrayBarData = this.formatTobarChart(this.formatTo(this.allData.resultWithQualifier , 'PPET'));
-
       },
       error => {
         console.log(JSON.stringify(error));
@@ -118,8 +115,10 @@ export class SuperAdminDashboardComponent implements OnInit {
       groups[groupName].push({'name': resultWiseData[i].testResult, 'value': resultWiseData[i].count});
     }
     resultWiseData = [];
-    for (let groupName in groups) {
-      resultWiseData.push({name: groupName, series: groups[groupName]});
+    for (const groupName in groups) {
+      if (true) {
+        resultWiseData.push({name: groupName, series: groups[groupName]});
+      }
     }
     console.log(JSON.stringify(resultWiseData));
     return resultWiseData;
@@ -137,14 +136,6 @@ export class SuperAdminDashboardComponent implements OnInit {
     });
   }
 
-  // startTime() {
-  //   const today = new Date();
-  //   const h = today.getHours();
-  //   let m = today.getMinutes();
-  //   let s = today.getSeconds();
-  //   this.currentTime = h + ':' + m + ':' + s;
-  // }
-
   startTime() {
     let today = new Date();
     let h = today.getHours();
@@ -153,8 +144,9 @@ export class SuperAdminDashboardComponent implements OnInit {
     m = this.checkTime(m);
     s = this.checkTime(s);
     this.currentTime = h + ':' + m + ':' + s;
-    // setTimeout (() => {
-    // }, 1000);
+    setTimeout (() => {
+      this.startTime();
+    }, 1000);
   }
 
   checkTime(i) {
