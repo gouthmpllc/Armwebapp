@@ -43,7 +43,7 @@
     </div>
   </div>
   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mtop40">
-    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12" >
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
       <div class="col-lg-12" *ngIf="allData">
         <div class="f-size20">
           Tests Completed
@@ -51,19 +51,40 @@
           <!-- <div>
             <div id="chartdiv"></div>								
           </div> -->
-          <span class="" *ngFor="let test of allData.testsData">
-            <div class="inner-content text-center" style="width: 100px;display:inline;float:left;">
-              <div class="c100 p{{test.perecntage}} small center green">
-                  <span *ngIf="test">{{test.perecntage}}%</span>
-                  <div class="slice"><div class="bar"></div><div class="fill"></div></div>
-              </div>
-              <p *ngIf="test">{{test.testName}}</p>
+
+          <!-- Bpet -->
+          <div style="font-size:16px;" class="col-lg-12 col-md-12" >
+            <h5 style="font-weight:600">BPET:</h5>
+            <hr>
+            <span class="pie-box col-lg-4 col-md-4" *ngFor="let test of BPETArray">
+              <div class="inner-content text-center" style="width:130px;height:150px;display:inline;float:left;margin-bottom:15px">
+                <div class="c100 p{{test.perecntage}} small center green" style="font-size:130px">
+                    <span *ngIf="test">{{test.perecntage}}%</span>
+                    <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+                </div>
+                <p *ngIf="test">{{test.testName}}</p>
+            </div>
+            </span>
           </div>
-          </span>
+
+          <!-- ppet -->
+          <div style="font-size:16px;" class="col-lg-12 col-md-12">
+            <h5 style="font-weight:600">PPET:</h5>
+            <hr>
+            <span class="pie-box col-lg-4 col-md-4" *ngFor="let test of PPETArray">
+              <div class="inner-content text-center" style="width:130px;height:150px;display:inline;float:left;margin-bottom:15px;">
+                <div class="c100 p{{test.perecntage}} small center green" style="font-size:130px">
+                    <span *ngIf="test">{{test.perecntage}}%</span>
+                    <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+                </div>
+                <p *ngIf="test">{{test.testName}}</p>
+            </div>
+            </span>
+          </div>
 
       </div>
       
-      <div class="col-lg-12">
+      <!-- <div class="col-lg-12">
         <div class="f-size20">
           Test Reports Graphs
         </div>
@@ -72,6 +93,56 @@
           [view]="view"
           [scheme]="colorScheme"
           [results]="testBarChartData"
+          [gradient]="gradient"
+          [xAxis]="showXAxis"
+          [yAxis]="showYAxis"
+          [legend]="showLegend"
+          [showXAxisLabel]="showXAxisLabel"
+          [showYAxisLabel]="showYAxisLabel"
+          [xAxisLabel]="xAxisLabel"
+          [yAxisLabel]="yAxisLabel"
+          (select)="onSelect($event)">
+        </ngx-charts-bar-vertical-stacked>
+        </div>
+      </div> -->
+    </div>
+
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+      <div class="col-lg-12">
+        <div class="f-size20">
+          Test Reports Graphs
+        </div>
+        <h5 style="font-weight:600">BPET:</h5>
+        <hr>
+        <div>
+          <ngx-charts-bar-vertical-stacked
+          [view]="view"
+          [scheme]="colorScheme"
+          [results]="BPETArrayBarData"
+          [gradient]="gradient"
+          [xAxis]="showXAxis"
+          [yAxis]="showYAxis"
+          [legend]="showLegend"
+          [showXAxisLabel]="showXAxisLabel"
+          [showYAxisLabel]="showYAxisLabel"
+          [xAxisLabel]="xAxisLabel"
+          [yAxisLabel]="yAxisLabel"
+          (select)="onSelect($event)">
+        </ngx-charts-bar-vertical-stacked>
+        </div>
+      </div>
+
+      <div class="col-lg-12">
+        <!-- <div class="f-size20">
+          Test Reports Graphs
+        </div> -->
+        <h5 style="font-weight:600">PPET:</h5>
+        <hr>
+        <div>
+          <ngx-charts-bar-vertical-stacked
+          [view]="view"
+          [scheme]="colorScheme"
+          [results]="PPETArrayBarData"
           [gradient]="gradient"
           [xAxis]="showXAxis"
           [yAxis]="showYAxis"

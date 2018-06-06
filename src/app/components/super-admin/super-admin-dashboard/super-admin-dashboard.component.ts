@@ -21,7 +21,11 @@ export class SuperAdminDashboardComponent implements OnInit {
   single: any[];
   multi: any[];
   testBarChartData: any = [];
-  view: any[] = [600, 300];
+  view: any[] = [480, 330];
+  BPETArray: any = [];
+  PPETArray: any = [];
+  BPETArrayBarData: any = [];
+  PPETArrayBarData: any = [];
 
   // options
   showXAxis = true;
@@ -80,7 +84,13 @@ export class SuperAdminDashboardComponent implements OnInit {
       (data: any) => {
         console.log(JSON.stringify(data));
         this.allData = data.data.data;
-        this.formatTobarChart(this.allData.resultWithQualifier);
+        this.BPETArray = this.formatTo(this.allData.testsData , 'BPET');
+        this.PPETArray = this.formatTo(this.allData.testsData , 'PPET');
+        // this.BPETArrayBarData = this.formatTo(this.allData.resultWithQualifier , 'BPET');
+        // this.PPETArrayBarData = this.formatTo(this.allData.resultWithQualifier , 'PPET');
+        this.BPETArrayBarData = this.formatTobarChart(this.formatTo(this.allData.resultWithQualifier , 'BPET'));
+        this.PPETArrayBarData = this.formatTobarChart(this.formatTo(this.allData.resultWithQualifier , 'PPET'));
+
       },
       error => {
         console.log(JSON.stringify(error));
@@ -88,8 +98,17 @@ export class SuperAdminDashboardComponent implements OnInit {
       });
   }
 
-  formatTobarChart(resultWiseData) {
+  formatTo(data, catName) {
+    let result = [];
+    for (let i = 0; i < data.length; i ++) {
+      if (data[i].testCatogiryName === catName) {
+        result.push(data[i]);
+      }
+    }
+    return result;
+  }
 
+  formatTobarChart(resultWiseData) {
     let groups = {};
     for (let i = 0; i < resultWiseData.length; i++) {
       const groupName = resultWiseData[i].testName;
@@ -103,7 +122,8 @@ export class SuperAdminDashboardComponent implements OnInit {
       resultWiseData.push({name: groupName, series: groups[groupName]});
     }
     console.log(JSON.stringify(resultWiseData));
-    this.testBarChartData = resultWiseData;
+    return resultWiseData;
+    // this.testBarChartData = resultWiseData;
   }
 
   loadAllAdmins() {
