@@ -34,9 +34,10 @@
     </div> -->
     <div class="candidateCntr">
       <div class="tcell12">
-        <div class="f-size24">16 : 58</div>
+        <div *ngIf="currentTime" class="f-size24">{{currentTime}}</div>
         <div>
-          Monday, 4th June, 2018
+          {{currentDate | date}}
+          <!-- {{dddd}}? -->
         </div>
       </div>
     </div>

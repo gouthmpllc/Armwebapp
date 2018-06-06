@@ -12,6 +12,8 @@ import { CandidateListService } from '../../../services/admin/candidate-list-ser
   styleUrls: ['./super-admin-dashboard.component.css']
 })
 export class SuperAdminDashboardComponent implements OnInit {
+  currentTime: any;
+  currentDate = new Date();
   dispayAdminTable: boolean;
   dispaySuperAdminTable: boolean;
   allData: any;
@@ -47,6 +49,7 @@ export class SuperAdminDashboardComponent implements OnInit {
   ngOnInit() {
     this.loginData = this.cookieService.getObject('loginResponce');
     this.loadDashBoardData();
+    this.startTime();
     // if (this.loginData) {
     //   if (this.loginData.data.role === 'SUPERADMIN') {
     //     this.dispaySuperAdminTable = true;
@@ -113,4 +116,30 @@ export class SuperAdminDashboardComponent implements OnInit {
         console.log(JSON.stringify(error));
     });
   }
+
+  // startTime() {
+  //   const today = new Date();
+  //   const h = today.getHours();
+  //   let m = today.getMinutes();
+  //   let s = today.getSeconds();
+  //   this.currentTime = h + ':' + m + ':' + s;
+  // }
+
+  startTime() {
+    let today = new Date();
+    let h = today.getHours();
+    let m = today.getMinutes();
+    let s = today.getSeconds();
+    m = this.checkTime(m);
+    s = this.checkTime(s);
+    this.currentTime = h + ':' + m + ':' + s;
+    // setTimeout (() => {
+    // }, 1000);
+  }
+
+  checkTime(i) {
+    if (i < 10) {i = '0' + i; }  // add zero in front of numbers < 10
+    return i;
+  }
+
 }
