@@ -7,5 +7,5 @@ export const environment = {
   production: false,
 
   // Dev
-  apiendpoint: 'http://139.162.35.236:3000/api/',
+  apiendpoint: 'http://139.162.60.164:3000/api/',
 };
