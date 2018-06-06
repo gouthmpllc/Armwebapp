@@ -89,5 +89,8 @@
     font-size: 11px;
     margin-top: -90px;
     margin-bottom:-85px;
-}	
+}
+.width100 {
+    width: 100%;
+}
 .amcharts-chart-div a{display: none !important;}

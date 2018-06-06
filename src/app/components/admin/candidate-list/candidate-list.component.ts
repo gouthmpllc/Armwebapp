@@ -12,6 +12,7 @@ export class CandidateListComponent implements OnInit {
   data: any = [];
   displayAdminList: boolean;
   loginData: any;
+  candidateQuery: string;
 
   public rowsOnPage = 10;
   public sortBy = 'createdAt';

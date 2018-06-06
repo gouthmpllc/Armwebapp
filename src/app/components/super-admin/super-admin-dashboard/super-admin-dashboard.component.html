@@ -84,11 +84,12 @@
         </div>
       </div>
     </div>
-    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+    <!-- super admin -->
+    <div *ngIf="dispaySuperAdminTable" class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
       <div class="f-size20 m-btm20">
         Admin List
       </div>
-      <div >
+      <div>
           <div class="flexcroll table-scroll">
               <table class="table table-striped" id="myProgram" [mfData]="data" #mf="mfDataTable"
               [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
@@ -136,148 +137,64 @@
                   </tfoot>
               </table>
           </div>
-        <!-- <table class="table table-responsive armytable">
-          <thead>
-            <tr>
-              <th>
-                Army number
-              </th>
-              <th>
-                Age
-              </th>
-              <th>
-                Sex
-              </th>
-              <th>
-                Name
-              </th>
-              <th>
-                Location
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                SMBY124
-              </td>
-              <td>
-                28
-              </td>
-              <td>
-                M
-              </td>
-              <td>
-                Samyodha G Gill
-              </td>
-              <td>
-                Hyderabad, TS
-              </td>
-            </tr>
-            <tr>
-              <td>
-                SMBY124
-              </td>
-              <td>
-                28
-              </td>
-              <td>
-                M
-              </td>
-              <td>
-                Samyodha G Gill
-              </td>
-              <td>
-                Hyderabad, TS
-              </td>
-            </tr>
-            <tr>
-              <td>
-                SMBY124
-              </td>
-              <td>
-                28
-              </td>
-              <td>
-                M
-              </td>
-              <td>
-                Samyodha G Gill
-              </td>
-              <td>
-                Hyderabad, TS
-              </td>
-            </tr>
-            <tr>
-              <td>
-                SMBY124
-              </td>
-              <td>
-                28
-              </td>
-              <td>
-                M
-              </td>
-              <td>
-                Samyodha G Gill
-              </td>
-              <td>
-                Hyderabad, TS
-              </td>
-            </tr>
-            <tr>
-              <td>
-                SMBY124
-              </td>
-              <td>
-                28
-              </td>
-              <td>
-                M
-              </td>
-              <td>
-                Samyodha G Gill
-              </td>
-              <td>
-                Hyderabad, TS
-              </td>
-            </tr>
-            <tr>
-              <td>
-                SMBY124
-              </td>
-              <td>
-                28
-              </td>
-              <td>
-                M
-              </td>
-              <td>
-                Samyodha G Gill
-              </td>
-              <td>
-                Hyderabad, TS
-              </td>
-            </tr>
-            <tr>
-              <td>
-                SMBY124
-              </td>
-              <td>
-                28
-              </td>
-              <td>
-                M
-              </td>
-              <td>
-                Samyodha G Gill
-              </td>
-              <td>
-                Hyderabad, TS
-              </td>
-            </tr>
-          </tbody>
-        </table> -->
       </div>
     </div>
+
+    <!-- admin -->
+    <div *ngIf="dispayAdminTable" class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+        <div class="f-size20 m-btm20">
+          Candidate List
+        </div>
+        <div>
+            <div class="flexcroll table-scroll">
+                <table class="table table-striped" id="myProgram" [mfData]="data" #mf="mfDataTable"
+                [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+                  <thead>               
+                      <tr>
+                        <th colspan="2">
+                          <mfDefaultSorter by="candArmyNum">Army Number</mfDefaultSorter>
+                        </th>
+                        <th colspan="2">
+                          <mfDefaultSorter by="candName">Candidate Name</mfDefaultSorter>
+                        </th>
+                        <th colspan="2">
+                          <mfDefaultSorter by="rank">Rank</mfDefaultSorter>
+                        </th>
+                        <th colspan="2">
+                          <mfDefaultSorter by="rankCatgName">Rank Category Name</mfDefaultSorter>
+                        </th>
+                      </tr>
+                      <tr>
+                      </tr>
+                    </thead>
+    
+                    <tbody>
+                        <tr *ngFor="let admin of mf.data" class="notfirst">
+                            <td colspan="2">
+                              {{admin.candArmyNum}}
+                            </td>
+                            <td colspan="2">
+                              {{admin.candName}} 
+                            </td>
+                            <td colspan="2">
+                              {{admin.rank}} 
+                            </td>
+                            <td colspan="2">
+                                {{admin.rankCatgName}}
+                            </td>
+                          </tr>
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <td colspan="8">
+                          <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+                        </td>
+                      </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+      </div>
+
+
   </div>

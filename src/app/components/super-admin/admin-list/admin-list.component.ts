@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 export class AdminListComponent implements OnInit {
   data: any = [];
   displayAdminList: boolean;
-
+  adminQuery: string;
   public rowsOnPage = 10;
   public sortBy = 'createdAt';
   public sortOrder = 'desc';

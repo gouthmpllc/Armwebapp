@@ -46,6 +46,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CdkTableModule } from '@angular/cdk/table';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
+import { AdminSearchPipe } from './pipes/super-admin/admin-search.pipe';
+import { CandidateSearchPipe } from './pipes/candidates/candidate-search.pipe';
 
 @NgModule({
   declarations: [
@@ -64,7 +66,9 @@ import {NgxChartsModule} from '@swimlane/ngx-charts';
     CreateAdminComponent,
     AdminDashboardComponent,
     CandidateListComponent,
-    CreateCandidateComponent
+    CreateCandidateComponent,
+    AdminSearchPipe,
+    CandidateSearchPipe
   ],
   imports: [
     BrowserModule,

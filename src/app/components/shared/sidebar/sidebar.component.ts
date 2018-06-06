@@ -47,6 +47,8 @@ export class SidebarComponent implements OnInit {
             this.selectedMenuActive = 'dashboard';
           } else if (this.path === 'candidateList') {
             this.selectedMenuActive = 'candidateList';
+          } else if (this.path === 'reports') {
+            this.selectedMenuActive = 'reports';
           } else {
               this.selectedMenuActive = this.path;
           }
@@ -111,6 +113,13 @@ export class SidebarComponent implements OnInit {
             'img_icon': 'assets/images/reports_48.png',
             // 'active_img_icon': 'assets/images/sidePanel/institute/inst_bulk_upload.png',
             // 'name'    : '',
+          },
+          {
+             'urlLink': 'reports',
+             'urlName': 'Reports',
+             'img_icon': 'assets/images/reports_48.png',
+           //  'active_img_icon': 'assets/images/sidePanel/institute/inst_student Management.png',
+           //  'name'    : 'disableLink',
           },
         ];
       break;
