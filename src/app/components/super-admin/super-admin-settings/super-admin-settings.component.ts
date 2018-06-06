@@ -104,6 +104,7 @@ export class SuperAdminSettingsComponent implements OnInit {
     this.testType.catogiryName  = this.CatName;
     this.testType.catogiryId = this.CatId;
     this.testType.ageGroup = this.ageGroup;
+    this.testType.status = 'active';
     console.log(JSON.stringify(this.testType));
     this.superAdminSettingsService.createTestTypes(this.testType).subscribe(
       (data: any) => {
@@ -142,16 +143,21 @@ export class SuperAdminSettingsComponent implements OnInit {
   }
 
   removeCategory(category) {
-    this.superAdminSettingsService.deleteCategory(category).subscribe(
-      (data: any) => {
-        alert('Deleted Successfully');
-        this.loadTestCategories();
-      },
-      error => {
-        console.log(JSON.stringify(error));
-        alert('Server Not Found');
-        // this.toastr.error('Invalid Login Credentials!', 'Oops!');
-    });
+    if (confirm('Are You Sure?')) {
+      this.superAdminSettingsService.deleteCategory(category).subscribe(
+        (data: any) => {
+          alert('Deleted Successfully');
+          this.loadTestCategories();
+        },
+        error => {
+          console.log(JSON.stringify(error));
+          alert('Server Not Found');
+          // this.toastr.error('Invalid Login Credentials!', 'Oops!');
+      });
+    } else {
+      return false;
+    }
+
   }
 
   editTestCategories(category) {
@@ -213,16 +219,21 @@ export class SuperAdminSettingsComponent implements OnInit {
   }
 
   removeTestType(testType) {
-    this.superAdminSettingsService.deleteTestType(testType).subscribe(
-      (data: any) => {
-        alert('Deleted Successfully');
-        this.loadTestTypes();
-      },
-      error => {
-        console.log(JSON.stringify(error));
-        alert('Server Not Found');
-        // this.toastr.error('Invalid Login Credentials!', 'Oops!');
-    });
+    if (confirm('Are You Sure?')) {
+      this.superAdminSettingsService.deleteTestType(testType).subscribe(
+        (data: any) => {
+          alert('Deleted Successfully');
+          this.loadTestTypes();
+        },
+        error => {
+          console.log(JSON.stringify(error));
+          alert('Server Not Found');
+          // this.toastr.error('Invalid Login Credentials!', 'Oops!');
+      });
+    } else {
+      return false;
+    }
+
   }
 
 }

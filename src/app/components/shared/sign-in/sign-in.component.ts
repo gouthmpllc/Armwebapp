@@ -13,6 +13,7 @@ export class SignInComponent implements OnInit {
   user: any = {}; // login user obj
   campusLoginResponse: any;
   token: any;
+  hide = true;
 
   constructor(private signInService: SignInService,
     private cookieService: CookieService,
@@ -36,6 +37,7 @@ signIn() {
         this.cookieService.putObject('loginResponce', this.campusLoginResponse);
       },
       error => {
+        alert('Invalid Credentials');
         console.log(JSON.stringify(error));
         // this.toastr.error('Invalid Login Credentials!', 'Oops!');
       });

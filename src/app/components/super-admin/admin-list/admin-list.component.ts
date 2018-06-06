@@ -60,16 +60,22 @@ export class AdminListComponent implements OnInit {
   }
 
   removeAdmin(admin) {
-    this.adminListService.deleteAdmin(admin).subscribe(
-      (data: any) => {
-        alert('deleted Successfully');
-        this.loadAllAdmins();
-        // console.log(JSON.stringify(data));
-      },
-      error => {
-        console.log(JSON.stringify(error));
-        // this.toastr.error('Invalid Login Credentials!', 'Oops!');
-    });
+
+    if (confirm('Are you sure?!')) {
+      this.adminListService.deleteAdmin(admin).subscribe(
+        (data: any) => {
+          alert('deleted Successfully');
+          this.loadAllAdmins();
+          // console.log(JSON.stringify(data));
+        },
+        error => {
+          console.log(JSON.stringify(error));
+          // this.toastr.error('Invalid Login Credentials!', 'Oops!');
+      });
+    } else {
+      return false;
+    }
+
   }
 
   editAdminStatus(selAdmin, message) {

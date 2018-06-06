@@ -29,7 +29,7 @@ export class SuperAdminDashboardComponent implements OnInit {
   showXAxisLabel = true;
   xAxisLabel = 'Test Name';
   showYAxisLabel = true;
-  yAxisLabel = 'Test Results';
+  yAxisLabel = 'No .of Candidates';
   loginData: any;
 
   colorScheme = {
@@ -47,15 +47,15 @@ export class SuperAdminDashboardComponent implements OnInit {
   ngOnInit() {
     this.loginData = this.cookieService.getObject('loginResponce');
     this.loadDashBoardData();
-    if (this.loginData) {
-      if (this.loginData.data.role === 'SUPERADMIN') {
-        this.dispaySuperAdminTable = true;
-        this.loadAllAdmins();
-      } else if (this.loginData.data.role === 'ADMIN') {
-        this.dispayAdminTable = true;
-        this.loadCandidates();
-      }
-    }
+    // if (this.loginData) {
+    //   if (this.loginData.data.role === 'SUPERADMIN') {
+    //     this.dispaySuperAdminTable = true;
+    //     this.loadAllAdmins();
+    //   } else if (this.loginData.data.role === 'ADMIN') {
+    //     this.dispayAdminTable = true;
+    //     this.loadCandidates();
+    //   }
+    // }
 
   }
 

@@ -70,14 +70,19 @@ export class CandidateListComponent implements OnInit {
   }
 
   removeCandidate(selCandiate) {
-    this.candidateListService.deleteCandidate(selCandiate).subscribe(
-      (data: any) => {
-        alert('deleted Successfully');
-        this.loadAllCandidates();
-      },
-      error => {
-        console.log(JSON.stringify(error));
-    });
+    if (confirm('Are You Sure?')) {
+      this.candidateListService.deleteCandidate(selCandiate).subscribe(
+        (data: any) => {
+          alert('deleted Successfully');
+          this.loadAllCandidates();
+        },
+        error => {
+          console.log(JSON.stringify(error));
+      });
+    } else {
+      return false;
+    }
+
   }
 
   editCandidateStatus(selCandiate, message) {

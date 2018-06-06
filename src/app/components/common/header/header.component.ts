@@ -35,14 +35,14 @@ private signInService: SignInService) { }
                 'urlLink': '/home',
                 'urlName': 'HOME'
             },
-            {
-                'urlLink': '/about',
-                'urlName': 'ABOUT'
-            },
-            {
-                'urlLink': '/contact',
-                'urlName': 'CONTACT'
-            },
+            // {
+            //     'urlLink': '/about',
+            //     'urlName': 'ABOUT'
+            // },
+            // {
+            //     'urlLink': '/contact',
+            //     'urlName': 'CONTACT'
+            // },
             {
                 'urlLink': '/login',
                 'urlName': 'LOGIN'
