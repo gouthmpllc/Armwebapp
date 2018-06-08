@@ -4,99 +4,129 @@
   </div>
 </div>
 
-<div class="col-lg-6 col-md-6 col-xs-12 panel panel-default" style="padding:10px;">
-    <form #CreateadminForm="ngForm">
-        <div class="input-group sign-in-input" style="width:100%;margin-bottom:10px;">
-            <label *ngIf="userName">Enter Army Number</label><input type="text" class="form-control" name="candArmyNum" [(ngModel)]="newCandidate.candArmyNum" placeholder="Enter Army Number" required>
-        </div>
-        <div class="input-group sign-in-input" style="width:100%;margin-bottom:10px;">
-            <label *ngIf="userName">Enter Candidate Name</label><input type="text" class="form-control" name="candName" [(ngModel)]="newCandidate.candName" placeholder="Enter Candidate Name" required>
-        </div>
-        <!-- <div class="input-group sign-in-input" style="width:100%;margin-bottom:10px;">
-          <input type="text" class="form-control" name="name" [(ngModel)]="newCandidate.name" placeholder="Enter Admin Name" required>
-        </div> -->
-        <!-- <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">
-          <select class="custom-select" id="inputGroupSelect01" name="appointment" [(ngModel)]="newAdmin.appointment" style="width:100%;padding:10px;" required>
-            <option selected [value]="null">Select Position</option>
-            <option *ngFor="let category of testCategories" [value]="category.id">
-              {{category.catogiryName}}
-            </option>
-          </select>
-        </div> -->
-        <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">
-            <label *ngIf="userName">Select Rank Category</label>
-            <select class="custom-select" id="inputGroupSelect01" name="rankCat" [(ngModel)]="newCandidate.rankCat" style="width:100%;padding:10px;" (change)="onRankCatChange(newCandidate.rankCat)" required>
-            <option [value]="null || '' || undefined">Select Rank Category</option>
-            <option *ngFor="let rakCat of allRankCategories" [value]="rakCat.id">
-              {{rakCat.name}}
-            </option>
-          </select>
+<div class="col-lg-12 col-md-12 col-xs-12 panel panel-default" style="padding: 10px 0px 10px 15px;">
+  <form #CreateadminForm="ngForm">
+    <div class="col-lg-8 col-md-8 col-xs-12 padding0">
+      <div class="col-lg-6 col-md-6">
+        <div>
+          <mat-form-field class="width100">
+            <input matInput placeholder="Enter Army Number" id="candArmyNum" name="candArmyNum"
+            [(ngModel)]="newCandidate.candArmyNum" [readonly]="readOnly" required>
+          </mat-form-field>
         </div>
 
-        <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">
-            <label *ngIf="userName">Select Rank</label><select class="custom-select" id="inputGroupSelect01" name="rank" [(ngModel)]="newCandidate.rankId" style="width:100%;padding:10px;" (change)="onRankChange(newCandidate.rankId)" required>
-            <option [value]="null || '' || undefined">Select Rank</option>
-            <option *ngFor="let rank of allRanks" [value]="rank.id">
-              {{rank.name}}
-            </option>
-          </select>
+        <div>
+            <mat-form-field class="width100">
+              <mat-select name="rankCatgId" placeholder="Select Rank Category" [(ngModel)]="newCandidate.rankCatgId" 
+              (change)="onRankCatChange(newCandidate.rankCatgId)" required>
+                <mat-option *ngFor="let rakCat of allRankCategories;let i = index" [value]="rakCat.id">
+                    {{rakCat.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
         </div>
-        <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">
-            <label *ngIf="userName">Select Subunits</label>
-            <select class="custom-select" id="inputGroupSelect01" name="subunitId" [(ngModel)]="newCandidate.subunitId" style="width:100%;padding:10px;"  (change)="onSubUnitChange(newCandidate.subunitId)" required>
-              <option [value]="null || '' || undefined">Select Subunits</option>
-              <option *ngFor="let subUnit of allSubUnits" [value]="subUnit.id">
-                {{subUnit.name}}
-              </option>
-            </select>
-          </div>
-        <div *ngIf="userName" class="input-group sign-in-input" style="width:100%;margin-bottom:10px;">
-            <label>Enter Age</label><input type="text" class="form-control" name="age" [(ngModel)]="newCandidate.age" placeholder="Enter Age" readonly>
+
+        <div>
+            <mat-form-field class="width100">
+              <mat-select name="subunitId" placeholder="Select Subunits" [(ngModel)]="newCandidate.subunitId" 
+              (change)="onSubUnitChange(newCandidate.subunitId)" required>
+                <mat-option *ngFor="let subUnit of allSubUnits;let i = index" [value]="subUnit.id">
+                    {{subUnit.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
         </div>
-        <div class="col-lg-6">
-          <div  class="input-group sign-in-input" style="width:100%;margin-bottom:10px;">
-              <!-- <label *ngIf="userName">Select Date Of Birth</label> -->
-              <mat-form-field class="width100 ">
-                <input matInput [matDatepicker]="picker" placeholder="Select Date Of Birth"
-                name="establishedDate" [max]="maxDate"
-                [(ngModel)]="newCandidate.candDob" id="candDob" #candDob='ngModel'>
-                <mat-datepicker-toggle matSuffix [for]="picker" ></mat-datepicker-toggle>
-                <mat-datepicker touchUi="true" [disabled]="disableDate" #picker></mat-datepicker>
-              </mat-form-field>
-          </div>
-          <div style="margin-bottom:10px;">
-              <label *ngIf="userName">Select Gender</label>
-            <div *ngFor="let gender of genders">
+
+        <div>
+          <mat-form-field class="width100 ">
+            <input matInput [matDatepicker]="picker" [readonly]="readOnly" placeholder="Select Date Of Birth"
+            name="establishedDate" [max]="maxDate"
+            [(ngModel)]="newCandidate.candDob" id="candDob" #candDob='ngModel'>
+            <mat-datepicker-toggle matSuffix [for]="picker" [disabled]="readOnly"></mat-datepicker-toggle>
+            <mat-datepicker touchUi="true" [disabled]="disableDate" #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <div>
+            <!-- <div class="col-lg-6 col-md-6 upload-box"> -->
+          <label>Upload Profile Picture</label>
+          <input type="file" (change)="uploadDatasource($event)" name="datasourcelistdata" class="inputfile" 
+          id="datasourcelistdata" accept=".png,.jpeg">
+            <!-- </div> -->
+        </div>
+
+
+      </div>
+      <!-- end left -->
+
+      <div class="col-lg-6 col-md-6">
+        <div>
+          <mat-form-field class="width100">
+            <input matInput placeholder="Enter Candidate Name" id="candName" name="candName"
+            [(ngModel)]="newCandidate.candName" [readonly]="readOnly" required>
+          </mat-form-field>
+        </div>
+
+        <div>
+          <mat-form-field class="width100">
+            <mat-select name="rank" placeholder="Select Rank" [(ngModel)]="newCandidate.rankId" 
+            (change)="onRankChange(newCandidate.rankId)" required>
+              <mat-option *ngFor="let rank of allRanks;let i = index" [value]="rank.id">
+                  {{rank.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div *ngIf="userName">
+          <mat-form-field class="width100">
+            <input matInput placeholder="Age" id="age" name="age"
+            [(ngModel)]="newCandidate.age" readonly>
+          </mat-form-field>
+        </div>
+
+        <div>
+            <!-- <div *ngFor="let gender of genders">
                 <span>{{gender.name}} <input type="radio" class="" name="genderq" [(ngModel)]="newCandidate.genderCode" (change)="onSelectionChange(gender)" [value]="gender.value"></span>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-6">
-          <div *ngIf="newCandidate.barcodeUrl" class="col-lg-4 col-md-4 col-xs-6">
-            <img style="width:200px;height:150px;" [src]="newCandidate.barcodeUrl">
-          </div>
-        </div>
+            </div> -->
 
-        <div class="col-lg-6 col-md-6 upload-box">
-            <label>Upload Profile Picture</label>
-            <input type="file" (change)="uploadDatasource($event)" name="datasourcelistdata" class="inputfile" 
-            id="datasourcelistdata" accept=".png,.jpeg">
-            <!-- <span *ngIf="fileName">{{fileName}}</span> -->
+          <mat-radio-group  class="example-radio-group" name="genderq" [disabled]="readOnly" [(ngModel)]="newCandidate.genderCode" (change)="onSelectionChange(newCandidate.genderCode)">
+              <mat-radio-button style="margin-left:10px;"  class="example-radio-button"  *ngFor="let gender of genders" id={{gender.name}} [value]="gender.value">
+                  {{gender.name}}
+            </mat-radio-button>
+          </mat-radio-group>
         </div>
-
-        <div class="col-lg-6 col-lg-offset-3 col-xs-12" style="margin-top:15px;"> 
-          <button *ngIf="!userName" class="btn text-center add-catbtn btn-fullwidth" [disabled]="!CreateadminForm.form.valid" (click)="createCandidate()">
-            Add Candidate
+      </div>
+      
+      <div class="col-lg-12 col-md-12 col-xs-12 padding0">
+        <div calss="col-lg-6 col-lg-offset-4  col-md-4 col-md-offset-4 col-xs-12 " style="margin-top:15px;">
+          <button *ngIf="!userName" class="btn text-center add-catbtn pull-right" [disabled]="!CreateadminForm.form.valid" (click)="createCandidate()">
+            Save Candidate
           </button>
-          <button *ngIf="userName" class="btn text-center add-catbtn btn-fullwidth" [disabled]="!CreateadminForm.form.valid" (click)="updateCandidate()">
+          <button *ngIf="userName" class="btn text-center add-catbtn pull-right" [disabled]="!CreateadminForm.form.valid" (click)="updateCandidate()">
             Update Candidate
           </button>
         </div>
-    </form>
-  </div>
+      </div>
+    </div>
 
-  <div *ngIf="newCandidate.profilePic" class="col-lg-6 col-md-6 col-xs-12" style="padding: 200px 0px 0px 25px;;">
+  </form>
+
+  <div class="col-lg-4 col-md-4 col-xs-12">
+    <div  *ngIf="newCandidate.profilePic" class="candidate-pic col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-xs-10 col-xs-offset-1">
+        <img style="height:150px;width:150px;border-radius:50%;" [src]="newCandidate.profilePic" alt="Candidate Profile Pic">
+    </div>
+    <div class="col-lg-12 col-md-12">
+      <hr>
+    </div>
+    <div  *ngIf="newCandidate.barcodeUrl" class="candidate-pic col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-xs-12">
+      <img style="height:150px;width:225px;" [src]="newCandidate.barcodeUrl" alt="Candidate Profile Pic">
+    </div>
+  </div>
+</div>
+
+  <!-- <div *ngIf="newCandidate.profilePic" class="col-lg-6 col-md-6 col-xs-12" style="padding: 200px 0px 0px 25px;;">
     <div class="col-lg-6 col-lg-offset-3" style="margin-top:30px;" >
       <img [src]="newCandidate.profilePic" style="width:200px;height:150px;">
     </div>
-  </div>
+  </div> -->

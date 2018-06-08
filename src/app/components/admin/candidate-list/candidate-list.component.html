@@ -50,11 +50,11 @@
                   </thead>
   
                   <tbody>
-                      <tr *ngFor="let candidate of mf.data" class="notfirst cursor-pointer">
+                      <tr *ngFor="let candidate of mf.data" class="notfirst">
                           
                           <td colspan="2">
-                            <span *ngIf="candidate.candArmyNum">
-                                {{candidate.candArmyNum}}
+                            <span class="cursor-pointer" *ngIf="candidate.candArmyNum">
+                               <a (click)="candidateEdit(candidate)">{{candidate.candArmyNum}}</a>
                             </span>
                           </td>
                           <td colspan="2">
@@ -86,7 +86,7 @@
                           <td colspan="2">
                             <button [disabled]="candidate.status == 'active'" class="btn btn-sm btn-active" (click)="setActiveCandidate(candidate)">Active</button>
                             <button [disabled]="candidate.status == 'inactive'" class="btn btn-sm btn-Inactive" (click)="setInActiveCandidate(candidate)">In Active</button>
-                            <button class="btn btn-sm btn-edit" (click)="candidateEdit(candidate)">Edit</button>
+                            <button class="btn btn-sm btn-edit" (click)="candidateEdit(candidate)">View Profile</button>
                             <button class="btn btn-sm btn-remove" (click)="removeCandidate(candidate)">Remove</button>
                           </td>
                         </tr>

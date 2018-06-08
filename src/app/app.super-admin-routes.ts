@@ -15,15 +15,16 @@ export const superAdminRoutes: Routes = [
     {
         path: 'superAdmin', component: SuperAdminComponent, canActivate: [SignInService],
         children: [
-            { path: 'dashboard', component: SuperAdminDashboardComponent },
+            { path: 'dashboard', component: SuperAdminDashboardComponent, pathMatch: 'full'},
             { path: 'adminList', component: AdminListComponent},
-            { path: 'adminList/:userName', component: CreateAdminComponent},
+            { path: 'adminList/:userName', component: CreateAdminComponent, pathMatch: 'full'},
             { path: 'configuration', component: SuperAdminSettingsComponent},
             { path: 'reports', component: SuperAdminReportsComponent},
             { path: 'candidateList', component: CandidateListComponent},
             { path: 'candidateList/:userName', component: CreateCandidateComponent},
             { path: '**', redirectTo: 'dashboard' },
         ],
-    }
+    },
+    { path: '**', redirectTo: 'superAdmin/dashboard' },
 ];
 export const superAdminRoute: ModuleWithProviders = RouterModule.forRoot(superAdminRoutes);

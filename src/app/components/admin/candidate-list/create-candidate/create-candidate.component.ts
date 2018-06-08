@@ -32,6 +32,7 @@ export class CreateCandidateComponent implements OnInit {
     {name: 'Male', value: 1},
     {name: 'Female', value: 2},
   ];
+  readOnly: boolean;
   @Output() displayListChanged = new EventEmitter<boolean>();
   formData: FormData = new FormData();
   constructor(private adminListService: AdminListService, private cookieService: CookieService,
@@ -60,7 +61,13 @@ export class CreateCandidateComponent implements OnInit {
     this.candidateListService.getCurrentCandidateList(currentUser).subscribe(
       (data: any) => {
         console.log('cccccccccccccc' + JSON.stringify(data));
-        this.newCandidate = data.data[0];
+        if (data.data.length > 0) {
+          this.newCandidate = data.data[0];
+          this.readOnly = true;
+        } else {
+          alert('Candidate Not Found');
+          this.router.navigate(['superAdmin/candidateList']);
+        }
       },
       error => {
         console.log(JSON.stringify(error));
@@ -104,9 +111,14 @@ export class CreateCandidateComponent implements OnInit {
     });
   }
 
-  onSelectionChange(gender) {
-    this.gender = gender.name;
-    this.genderCode = gender.value;
+  onSelectionChange(id) {
+    for (let i = 0; i < this.genders.length; i++) {
+      if (id === this.genders[i].value ) {
+        this.gender = this.genders[i].name;
+        this.genderCode = this.genders[i].value;
+        return;
+      }
+    }
   }
 
   onRankChange(id) {
