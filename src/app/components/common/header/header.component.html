@@ -22,13 +22,19 @@
       </ul>
 
       <ul class="nav navbar-nav navbar-right m-right20" *ngIf="loginStatus">
+        <li *ngIf="currentTime" style="padding: 27px 20px;">
+            <span>
+                <p style="color:darkgreen" class="time-p margin0">{{currentDate | date}} | {{currentTime}}</p>
+                <!-- <p class="time-p margin0"></p> -->
+            </span>
+        </li>
         <li *ngIf="loginData.data.superVisor.username">
           <a style="padding: 28px 20px;">
             <b>
               <span *ngIf="loginData.data.role === 'SUPERADMIN'">SUPER ADMIN:</span>
               <span *ngIf="loginData.data.role === 'ADMIN'">ADMIN:</span> {{loginData.data.superVisor.username}}
             </b>
-        </a>
+          </a>
         </li>
         <!-- <li style="height:100%;" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
           <a style="padding: 28px 20px;" routerLink="dashboard">HOME</a>

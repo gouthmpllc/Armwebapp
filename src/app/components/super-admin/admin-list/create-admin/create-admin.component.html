@@ -7,7 +7,15 @@
           <label *ngIf="userName">Enter Admin Name</label> <input type="text" class="form-control" name="name" [(ngModel)]="newAdmin.name" placeholder="Enter Admin Name" required>
       </div>
       <div class="input-group sign-in-input" style="width:100%;margin-bottom:10px;">
-          <label *ngIf="userName">Enter Position</label> <input type="text" class="form-control" name="appointment" [(ngModel)]="newAdmin.appointment" placeholder="Enter Position" required>
+          <mat-form-field style="display:block;">
+              <mat-select placeholder="Select Appointment" name="appointmentId" [(ngModel)]="newAdmin.appointmentId" (change)="setSelectedAppointment(newAdmin.appointmentId)" required>
+                <mat-option *ngFor="let appointment of allAppointments;let i = index" [value]="appointment.id">
+                    {{appointment.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          <!-- <label *ngIf="userName">Enter Position</label>
+          <input type="text" class="form-control" name="appointment" [(ngModel)]="newAdmin.appointment" placeholder="Enter Position" required> -->
         </div>
       <!-- <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">
         <select class="custom-select" id="inputGroupSelect01" name="appointment" [(ngModel)]="newAdmin.appointment" style="width:100%;padding:10px;" required>
@@ -18,12 +26,20 @@
         </select>
       </div> -->
       <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">
-          <label *ngIf="userName">Select Rank</label> <select class="custom-select" id="inputGroupSelect01" name="rankid" [(ngModel)]="newAdmin.rankid" (change)="setSelectedRank(newAdmin.rankid)" style="width:100%;padding:10px;" required>
+          <mat-form-field style="display:block;">
+            <mat-select placeholder="Select Rank" name="rankid" [(ngModel)]="newAdmin.rankid" (change)="setSelectedRank(newAdmin.rankid)" required>
+              <mat-option *ngFor="let rank of allRanks;let i = index" [value]="rank.id">
+                  {{rank.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <!-- <label *ngIf="userName">Select Rank</label>
+          <select class="custom-select" id="inputGroupSelect01" name="rankid" [(ngModel)]="newAdmin.rankid" (change)="setSelectedRank(newAdmin.rankid)" style="width:100%;padding:10px;" required>
           <option [value]="null || '' || undefined">Select Rank</option>
           <option *ngFor="let rank of allRanks" [value]="rank.id">
             {{rank.name}}
           </option>
-        </select>
+        </select> -->
       </div>
 
       <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">

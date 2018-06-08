@@ -3,9 +3,28 @@
       <div class="col-lg-6">
         <h4>Reports</h4>
       </div> <br />
+    </div>
+    <div>
+
+    <div class="col-lg-12 col-md-12">
+      <div class="col-lg-6 col-md-6 col-xs-12">
+        <ul class="nav nav-tabs reports-nav">
+          <li class="active cursor-pointer"><a data-toggle="tab" (click)="setCategoryWiseReports()">Rank Category Wise</a></li>
+          <li class="cursor-pointer"><a data-toggle="tab" (click)="setWingWiseReports()">Wing Wise</a></li>
+          <li class="cursor-pointer"><a data-toggle="tab" (click)="setTestTypeWiseReports()">Test Type Wise</a></li>
+          <li class="cursor-pointer"><a data-toggle="tab" (click)="setDateWise()">Date Wise</a></li>
+        </ul>
       </div>
-      <div class="col-lg-12 col-md-12" >
-      <div class="col-lg-2" style="padding: 3px;">
+      <div class="col-lg-6 col-md-6 col-xs-12">
+        <div class="col-lg-4 col-md-4 col-xs-6 padding0 pull-right">
+          <button class="btn" (click)="generateCsv()" style="background:#2a2420;color:#fff;">Export Reports(CSV)</button>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-lg-12 col-md-12">
+      <!-- <div class="col-lg-2" style="padding: 3px;">
           <a class="btn text-center btn-horizontal createadmin-btn" (click)="setCategoryWiseReports()">Rank Category Wise</a>
       </div>
       <div class="col-lg-2" style="padding: 3px;">
@@ -17,21 +36,14 @@
       <div class="col-lg-2" style="padding: 3px;">
           <a class="btn text-center btn-horizontal createadmin-btn" (click)="setDateWise()">Date Wise</a>
       </div>
-      <!-- <div class="col-lg-2 pull-right" style="padding: 3px;">
-          <a class="btn text-center btn-horizontal createadmin-btn" (click)="generateCsv()">Test Type Wise</a>
-      </div> -->
+
       <div class="col-lg-2 col-md-2 col-xs-6 padding0 pull-right" style="margin-top:10px;">
         <button class="btn" (click)="generateCsv()" style="background:#2a2420;color:#fff;">Export Reports(CSV)</button>
-      </div>
+      </div> -->
 
       <div class="clearfix"></div>
-      <!-- <button (click)="generateCsv()">
-        Csv
-      </button> -->
+
       <div class="category" *ngIf="categoryStatus">
-        <!-- <div class="row">
-            <h5 class="col-lg-6 col-md-6 col-xs-12 reportHead" >Selected Category Wise Reports</h5>
-        </div> -->
         <div class="col-lg-12 col-md-12 col-xs-12 padding0">
             <div class="col-lg-5">
               <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">

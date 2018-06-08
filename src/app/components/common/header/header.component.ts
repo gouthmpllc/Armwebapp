@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {CookieService} from 'angular2-cookie/core';
 import { Router, ActivatedRoute, NavigationEnd  } from '@angular/router';
 import { SignInService } from '../../../services/signIn-service/sign-in.service';
@@ -8,10 +8,13 @@ import { SignInService } from '../../../services/signIn-service/sign-in.service'
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   urlValues: any;
   loginData: any;
   loginStatus: boolean;
+  public timerInterval: any;
+  currentTime: any;
+  currentDate = new Date();
 
   constructor(private cookieService: CookieService, private router: Router,
 private signInService: SignInService) { }
@@ -19,6 +22,10 @@ private signInService: SignInService) { }
   ngOnInit() {
     this.loginData = this.cookieService.getObject('loginResponce');
     this.loadHeaderChanges();
+    this.startTime();
+    this.timerInterval = setInterval(() => {
+      this.startTime();
+    }, 1000);
   }
 
   loadHeaderChanges() {
@@ -50,11 +57,25 @@ private signInService: SignInService) { }
       }
   }
 
+  startTime() {
+    const today = new Date();
+    const h = today.getHours();
+    const m = today.getMinutes() < 10 ? '0' + today.getMinutes() : today.getMinutes();
+    const s = today.getSeconds() < 10 ? '0' + today.getSeconds() : today.getSeconds();
+    this.currentTime = h + ':' + m + ':' + s;
+    // console.log('hhhhhhh');
+  }
+
   logout() {
     this.signInService.logout();
     this.loadHeaderChanges();
     window.location.reload();
     this.router.navigate(['home']);
+  }
+
+  ngOnDestroy () {
+    // console.log('this.timeout');
+    clearInterval(this.timerInterval);
   }
 
 }

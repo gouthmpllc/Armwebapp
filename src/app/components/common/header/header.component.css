@@ -115,3 +115,9 @@
   #custom-bootstrap-menu.navbar-default .navbar-nav>li>a:hover, #custom-bootstrap-menu.navbar-default .navbar-nav>li>a:focus {
     color: #ea9215 !important;
   }
+
+  .time-p{
+    color: #2a2420;
+    font-weight: 600;
+    font-size: 16px;
+  }

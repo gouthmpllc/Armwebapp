@@ -12,7 +12,7 @@ export class AdminListService {
   constructor(private httpClient: HttpClient) { }
 
   getAllAdminList() {
-    return this.httpClient.get(AppSettings.API_ENDPOINT + `SuperVisors`)
+    return this.httpClient.get(AppSettings.API_ENDPOINT + `SuperVisors?filter={"include":"appointment1"}`)
     .map((res: Response) => res);
   }
 
@@ -24,6 +24,16 @@ export class AdminListService {
 
   getAllRanks() {
     return this.httpClient.get(AppSettings.API_ENDPOINT + `ranks`)
+    .map((res: Response) => res);
+  }
+
+  getAllAppointments() {
+    return this.httpClient.get(AppSettings.API_ENDPOINT + `appointments`)
+    .map((res: Response) => res);
+  }
+
+  checkAppointment(id) {
+    return this.httpClient.get(AppSettings.API_ENDPOINT + `SuperVisors/count?where={"appointmentId":` + JSON.stringify(id) + `}`)
     .map((res: Response) => res);
   }
 

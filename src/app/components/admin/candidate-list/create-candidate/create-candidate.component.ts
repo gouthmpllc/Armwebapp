@@ -147,12 +147,14 @@ export class CreateCandidateComponent implements OnInit {
 
   createCandidate() {
 
-    if (this.formData) {
+    if (this.formData && this.fileName) {
       this.adminListService.uploadPic(this.formData).subscribe(
         (data: any) => {
           console.log(JSON.stringify(data));
           this.candidateUploadLocResp = data.data.result.files.file[0].providerResponse.location;
           this.postCandidate();
+          this.fileName = '';
+          this.formData = new FormData();
           // console.log(JSON.stringify(this.newCandidate));
         },
         error => {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {single} from '../../admin/admin-dashboard/data';
 import { SuperAdminSettingsService } from '../../../services/superAdmin/settings-service/super-admin-settings.service';
 import { AdminListService } from '../../../services/superAdmin/admin-list-service/admin-list.service';
@@ -11,7 +11,7 @@ import { CandidateListService } from '../../../services/admin/candidate-list-ser
   templateUrl: './super-admin-dashboard.component.html',
   styleUrls: ['./super-admin-dashboard.component.css']
 })
-export class SuperAdminDashboardComponent implements OnInit {
+export class SuperAdminDashboardComponent implements OnInit, OnDestroy {
   currentTime: any;
   currentDate = new Date();
   dispayAdminTable: boolean;
@@ -45,7 +45,7 @@ export class SuperAdminDashboardComponent implements OnInit {
   public rowsOnPage = 10;
   public sortBy = 'createdAt';
   public sortOrder = 'desc';
-
+  public timerInterval: any;
   constructor(private superAdminSettingsService: SuperAdminSettingsService, private adminListService: AdminListService,
     private cookieService: CookieService, private candidateListService: CandidateListService) {
   }
@@ -54,6 +54,10 @@ export class SuperAdminDashboardComponent implements OnInit {
     this.loginData = this.cookieService.getObject('loginResponce');
     this.loadDashBoardData();
     this.startTime();
+    this.timerInterval = setInterval(() => {
+      this.startTime();
+    }, 1000);
+
     // if (this.loginData) {
     //   if (this.loginData.data.role === 'SUPERADMIN') {
     //     this.dispaySuperAdminTable = true;
@@ -139,19 +143,28 @@ export class SuperAdminDashboardComponent implements OnInit {
   startTime() {
     let today = new Date();
     let h = today.getHours();
-    let m = today.getMinutes();
-    let s = today.getSeconds();
-    m = this.checkTime(m);
-    s = this.checkTime(s);
+    let m = today.getMinutes() < 10 ? '0' + today.getMinutes() : today.getMinutes();
+    // let m = today.getMinutes();
+    let s = today.getSeconds() < 10 ? '0' + today.getSeconds() : today.getSeconds();
+    // let s = today.getSeconds();
+    // m = this.checkTime(m);
+    // s = this.checkTime(s);
     this.currentTime = h + ':' + m + ':' + s;
-    setTimeout (() => {
-      this.startTime();
-    }, 1000);
+    // console.log('dddd');
+    // return h + ':' + m + ':' + s;
+    // setTimeout (() => {
+    //   this.startTime();
+    // }, 1000);
   }
 
-  checkTime(i) {
-    if (i < 10) {i = '0' + i; }  // add zero in front of numbers < 10
-    return i;
+  // checkTime(i) {
+  //   if (i < 10) {i = '0' + i; }
+  //   return i;
+  // }
+
+  ngOnDestroy () {
+    console.log('this.timeout');
+    clearInterval(this.timerInterval);
   }
 
 }

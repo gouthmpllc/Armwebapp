@@ -26,3 +26,17 @@ input[type='checkbox']:checked:after
 {
     background-color: #41533b;
 }
+.reports-nav li a{
+    color: #000;
+}
+.reports-nav li.active a{
+    background: #2a2420;
+    color: #fff;
+}
+.reports-nav>li>a:focus, .reports-nav>li>a:hover {
+    background: #2a2420;
+    color: #fff;
+}
+.category{
+    margin-top: 20px;
+}

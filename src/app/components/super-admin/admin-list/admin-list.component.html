@@ -58,7 +58,9 @@
                           {{admin.rank}} 
                         </td>
                         <td colspan="2">
-                            {{admin.appointment}}
+                          <span *ngIf="admin.appointment1">
+                              {{admin.appointment1.name}}
+                          </span>
                         </td>
                         <td colspan="2">
                             {{admin.createdAt | date}}

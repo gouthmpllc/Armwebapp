@@ -8,13 +8,14 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./create-admin.component.css']
 })
 export class CreateAdminComponent implements OnInit {
+  appointmentObj: any;
   candidateUploadLocResp: any;
   fileName: any;
   newAdmin: any = {};
   allRanks: any = [];
   userName: string;
   ranObj: any = {};
-
+  allAppointments: any = [];
   @Output() displayListChanged = new EventEmitter<boolean>();
   formData: FormData = new FormData();
   constructor(private adminListService: AdminListService, private route: ActivatedRoute, private router: Router) {
@@ -29,6 +30,7 @@ export class CreateAdminComponent implements OnInit {
   ngOnInit() {
     // this.newAdmin.rank = null;
     this.loadArmyRanks();
+    this.loadArmyAppointments();
     if (this.userName) {
       this.loadSelectedAdmin(this.userName);
     }
@@ -58,6 +60,46 @@ export class CreateAdminComponent implements OnInit {
     });
   }
 
+  loadArmyAppointments() {
+    this.adminListService.getAllAppointments().subscribe(
+      (data: any) => {
+        // console.log(JSON.stringify(data));
+        this.allAppointments = data.data;
+      },
+      error => {
+        console.log(JSON.stringify(error));
+        // this.toastr.error('Invalid Login Credentials!', 'Oops!');
+    });
+  }
+
+  setSelectedAppointment(id) {
+    this.allAppointments.filter(appointment => {
+      if (id === appointment.id) {
+        if (appointment.allow === 'single') {
+          this.adminListService.checkAppointment(appointment.id).subscribe(
+            (data: any) => {
+              console.log(JSON.stringify(data));
+              if (data.data.count < 1) {
+                  // this.appointmentObj = appointment;
+                  return appointment.id;
+              } else {
+                alert('Selected Appointment is already allocated to another person');
+                this.newAdmin.appointmentId = '';
+                return;
+              }
+              // this.allAppointments = data.data;
+            },
+            error => {
+              console.log(JSON.stringify(error));
+          });
+        } else {
+          // this.appointmentObj = appointment;
+          return appointment.id;
+        }
+      }
+    });
+  }
+
   setSelectedRank(selRankId) {
     this.allRanks.filter(rank => {
       if (selRankId === rank.id) {
@@ -71,14 +113,19 @@ export class CreateAdminComponent implements OnInit {
     const fileDetails = fileInput.target.files[0];
     this.fileName = fileDetails.name;
     this.formData.append('file', fileDetails);
+    if (!fileInput) {
+      this.formData = new FormData();
+    }
   }
 
   createAdmin() {
-    if (this.formData) {
+    if (this.formData && this.fileName) {
       this.adminListService.uploadPic(this.formData).subscribe(
         (data: any) => {
           console.log(JSON.stringify(data));
           this.candidateUploadLocResp = data.data.result.files.file[0].providerResponse.location;
+          this.formData = new FormData();
+          this.fileName = '';
           this.postAdmin();
         },
         error => {
@@ -93,6 +140,7 @@ export class CreateAdminComponent implements OnInit {
   postAdmin() {
     this.newAdmin['rank'] = this.ranObj.name;
     this.newAdmin['rankId'] = this.ranObj.id;
+    // this.newAdmin['appointmentId'] = this.appointmentObj.id;
     this.newAdmin['profilePic'] = this.candidateUploadLocResp;
     console.log(JSON.stringify(this.newAdmin));
     this.adminListService.createAdmin(this.newAdmin).subscribe(
