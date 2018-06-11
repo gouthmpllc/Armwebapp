@@ -21,13 +21,13 @@ export class SuperAdminDashboardComponent implements OnInit, OnDestroy {
   single: any[];
   multi: any[];
   testBarChartData: any = [];
-  view: any[] = [480, 330];
   BPETArray: any = [];
   PPETArray: any = [];
   BPETArrayBarData: any = [];
   PPETArrayBarData: any = [];
 
   // options
+  view: any[] = [480, 330];
   showXAxis = true;
   showYAxis = true;
   gradient = false;
@@ -110,6 +110,7 @@ export class SuperAdminDashboardComponent implements OnInit, OnDestroy {
   }
 
   formatTobarChart(resultWiseData) {
+    console.log('resultWiseData' + JSON.stringify(resultWiseData));
     let groups = {};
     for (let i = 0; i < resultWiseData.length; i++) {
       const groupName = resultWiseData[i].testName;

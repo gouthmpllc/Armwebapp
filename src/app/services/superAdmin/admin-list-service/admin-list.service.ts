@@ -86,7 +86,7 @@ export class AdminListService {
   // }
 
   getAllCategoryWiseReports(rankcatId, rankArray) {
-    return this.httpClient.get(AppSettings.API_ENDPOINT + `TestResults//getReportsByRankIdsAndRankCatogiry?rankIds=`
+    return this.httpClient.get(AppSettings.API_ENDPOINT + `TestResults/getReportsByRankIdsAndRankCatogiry?rankIds=`
     + JSON.stringify(rankArray) + `&rankCatogiryIds=` + rankcatId)
     .map((res: Response) => res);
   }
@@ -111,4 +111,23 @@ export class AdminListService {
     + fDate + `&endDate=` + tDate)
     .map((res: Response) => res);
   }
+
+  getBPETTestTypes() {
+    return this.httpClient.get
+    (AppSettings.API_ENDPOINT + `TestTypes?filter={"where":{"catogiryId":"` + '5b0ba2c9b6ded61e80440114' + `"}}`)
+    .map((res: Response) => res);
+  }
+
+  getPPETTestTypes() {
+    return this.httpClient.get
+    (AppSettings.API_ENDPOINT + `TestTypes?filter={"where":{"catogiryId":"` + '5b0ba2d8b6ded61e80440115' + `"}}`)
+    .map((res: Response) => res);
+  }
+
+  gettestTypesData(cId, tId, eDate, sDate) {
+    return this.httpClient.get(AppSettings.API_ENDPOINT + `Canditates/getCanditateDashBoard?armyNumber=`
+    + cId + `&testType=` + tId + `&startDate=` + JSON.stringify(sDate) + `&endDate=` + JSON.stringify(eDate))
+    .map((res: Response) => res);
+  }
+
 }

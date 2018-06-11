@@ -10,6 +10,9 @@ import { CandidateListService } from '../../../../services/admin/candidate-list-
   styleUrls: ['./create-candidate.component.css']
 })
 export class CreateCandidateComponent implements OnInit {
+  selectedTab: number;
+  showPPET: boolean;
+  showBpet: boolean;
   rankCatName: any;
   rankCatId: any;
   candidateUploadLocResp: any;
@@ -18,6 +21,8 @@ export class CreateCandidateComponent implements OnInit {
   subUnit: any;
   maxDate = new Date();
 
+  BPETTestTypes: any = [];
+  PPETTestTypes: any = [];
   newCandidate: any = {};
   loginData: any;
   allRanks: any = [];
@@ -35,6 +40,26 @@ export class CreateCandidateComponent implements OnInit {
   readOnly: boolean;
   @Output() displayListChanged = new EventEmitter<boolean>();
   formData: FormData = new FormData();
+
+  barGraphData: any = [];
+
+  // options
+  showXAxis = true;
+  showYAxis = true;
+  gradient = false;
+  showLegend = true;
+  showXAxisLabel = true;
+  xAxisLabel = 'Date';
+  showYAxisLabel = true;
+  yAxisLabel = 'Test Name';
+  view: any[] = [480, 330];
+  colorScheme = {
+    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA', '#FF0000']
+  };
+  startDate: any;
+  endDate: any;
+  sdate: any = {};
+  tabF: string;
   constructor(private adminListService: AdminListService, private cookieService: CookieService,
     private route: ActivatedRoute, private router: Router, private candidateListService: CandidateListService) {
     this.route.params.subscribe( params => {
@@ -53,6 +78,8 @@ export class CreateCandidateComponent implements OnInit {
     this.loadRankCategorys();
     if (this.userName) {
       this.loadSelectedCandidate(this.userName);
+      this.loadPPETTestTypes();
+      this.showBpet = true;
     }
   }
 
@@ -63,6 +90,7 @@ export class CreateCandidateComponent implements OnInit {
         console.log('cccccccccccccc' + JSON.stringify(data));
         if (data.data.length > 0) {
           this.newCandidate = data.data[0];
+          this.loadBPETTestTypes();
           this.readOnly = true;
         } else {
           alert('Candidate Not Found');
@@ -240,6 +268,125 @@ export class CreateCandidateComponent implements OnInit {
         // this.toastr.error('Invalid Login Credentials!', 'Oops!');
     });
   }
-  
+
+  loadBPETTestTypes() {
+    this.adminListService.getBPETTestTypes().subscribe(
+      (data: any) => {
+        console.log('ssss' + JSON.stringify(data));
+        this.BPETTestTypes = data.data;
+        // this.getWeeklyBPETData(this.BPETTestTypes[0].id, 0);
+        this.setWeeklyCandidateReports();
+      },
+      error => {
+        console.log(JSON.stringify(error));
+        // this.toastr.error('Invalid Login Credentials!', 'Oops!');
+    });
+  }
+
+  loadPPETTestTypes() {
+    this.adminListService.getPPETTestTypes().subscribe(
+      (data: any) => {
+        console.log('ssss' + JSON.stringify(data));
+        this.PPETTestTypes = data.data;
+      },
+      error => {
+        console.log(JSON.stringify(error));
+        // this.toastr.error('Invalid Login Credentials!', 'Oops!');
+    });
+  }
+
+  setWeeklyCandidateReports(dateRangeType?: string) {
+    this.BPETTestTypes = this.BPETTestTypes;
+    let minusDate;
+    if (dateRangeType === 'monthly' || dateRangeType === 'yearly' || dateRangeType === 'weekly') {
+      this.sdate = {};
+    }
+
+    if (this.sdate.startDate && this.sdate.endDate) {
+      this.tabF = '';
+      this.startDate = (this.sdate.startDate.getMonth() + 1) + '/' +
+      this.sdate.startDate.getDate() + '/' + this.sdate.startDate.getFullYear();
+      this.endDate = (this.sdate.endDate.getMonth() + 1) + '/' + this.sdate.endDate.getDate() + '/' + this.sdate.endDate.getFullYear();
+    } else {
+      this.sdate = {};
+      if (dateRangeType === 'monthly') {
+        this.tabF = 'monthly';
+        minusDate =  new Date(new Date().getTime() - (60 * 60 * 24 * 30 * 1000));
+        this.startDate = (minusDate.getMonth() + 1) + '/' + minusDate.getDate() + '/' + minusDate.getFullYear();
+        this.endDate = (new Date().getMonth() + 1) + '/' + new Date().getDate() + '/' + new Date().getFullYear();
+      } else if (dateRangeType === 'yearly') {
+        this.tabF = 'yearly';
+        minusDate =  new Date(new Date().getTime() - (60 * 60 * 24 * 365 * 1000));
+        this.startDate = (minusDate.getMonth() + 1) + '/' + minusDate.getDate() + '/' + minusDate.getFullYear();
+        this.endDate = (new Date().getMonth() + 1) + '/' + new Date().getDate() + '/' + new Date().getFullYear();
+      } else {
+        this.tabF = 'weekly';
+        minusDate =  new Date(new Date().getTime() - (60 * 60 * 24 * 7 * 1000));
+        this.startDate = (minusDate.getMonth() + 1) + '/' + minusDate.getDate() + '/' + minusDate.getFullYear();
+        this.endDate = (new Date().getMonth() + 1) + '/' + new Date().getDate() + '/' + new Date().getFullYear();
+      }
+    }
+
+    this.getWeeklyBPETData(this.BPETTestTypes[0].id, this.startDate, this.endDate, 0);
+  }
+
+  setCandidateBPETReports() {
+    // this.BPETTestTypes = this.BPETTestTypes;
+    this.showBpet = true;
+    this.getWeeklyBPETData(this.BPETTestTypes[0].id, this.startDate, this.endDate, 0);
+  }
+
+  setCandidatePPETReports() {
+    this.showBpet = false;
+    // this.BPETTestTypes = this.PPETTestTypes;
+    this.getWeeklyBPETData(this.PPETTestTypes[0].id, this.startDate, this.endDate, 0);
+  }
+
+  getWeeklyBPETData(bTypeid, sDate, eDate, index) {
+    this.barGraphData = [];
+    this.selectedTab = index;
+    this.adminListService.gettestTypesData(this.newCandidate.id, bTypeid, eDate, sDate).subscribe(
+      (data: any) => {
+        console.log('dddddddddddddd' + JSON.stringify(data));
+        // this.yAxisLabel = '9 Ft Ditch'
+        if (data.data.length > 0) {
+          this.barGraphData = this.formatTobarChart(data.data);
+          if (this.barGraphData.length < 10) {
+            this.view = [250, 330];
+          } else if (this.barGraphData.length < 15) {
+            this.view = [350, 330];
+          } else {
+            this.view = [480, 330];
+          }
+        }
+      },
+      error => {
+        console.log(JSON.stringify(error));
+    });
+  }
+
+  getBPETTestateReports(bTypeId, index) {
+     this.getWeeklyBPETData(bTypeId, this.startDate, this.endDate, index);
+  }
+
+  formatTobarChart(resultWiseData) {
+    // console.log('resultWiseData' + JSON.stringify(resultWiseData));
+    let groups = {};
+    for (let i = 0; i < resultWiseData.length; i++) {
+      const groupName = resultWiseData[i].date;
+      if (!groups[groupName]) {
+        groups[groupName] = [];
+      }
+      groups[groupName].push({'name': resultWiseData[i].testResult, 'value': resultWiseData[i].value});
+    }
+    resultWiseData = [];
+    for (const groupName in groups) {
+      if (true) {
+        resultWiseData.push({name: groupName, series: groups[groupName]});
+      }
+    }
+    console.log(JSON.stringify(resultWiseData));
+    return resultWiseData;
+  }
 
 }
