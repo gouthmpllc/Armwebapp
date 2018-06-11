@@ -348,7 +348,7 @@ export class CreateCandidateComponent implements OnInit {
     this.adminListService.gettestTypesData(this.newCandidate.id, bTypeid, eDate, sDate).subscribe(
       (data: any) => {
         console.log('dddddddddddddd' + JSON.stringify(data));
-        // this.yAxisLabel = '9 Ft Ditch'
+        this.yAxisLabel = data.data[0].name;
         if (data.data.length > 0) {
           this.barGraphData = this.formatTobarChart(data.data);
           if (this.barGraphData.length < 10) {
