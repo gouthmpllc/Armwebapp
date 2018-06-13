@@ -240,7 +240,43 @@ export class CreateCandidateComponent implements OnInit {
     return Math.abs(ageDate.getUTCFullYear() - 1970);
   }
 
+  editCandidate() {
+    if (this.formData && this.fileName) {
+      this.adminListService.uploadPic(this.formData).subscribe(
+        (data: any) => {
+          console.log(JSON.stringify(data));
+          this.candidateUploadLocResp = data.data.result.files.file[0].providerResponse.location;
+          this.updateCandidate();
+          this.fileName = '';
+          this.formData = new FormData();
+          // console.log(JSON.stringify(this.newCandidate));
+        },
+        error => {
+          console.log(JSON.stringify(error));
+      });
+    } else {
+      this.updateCandidate();
+    }
+  }
+
   updateCandidate() {
+
+    if (this.rank && this.rankId) {
+      this.newCandidate.rank = this.rank;
+      this.newCandidate.rankId = this.rankId;
+    }
+    if (this.subUnit && this.subUnitId) {
+      this.newCandidate.subunit = this.subUnit;
+      this.newCandidate.subunitId = this.subUnitId;
+    }
+    if (this.rankCatName && this.rankCatId) {
+      this.newCandidate.rankCatgName = this.rankCatName;
+      this.newCandidate.rankCatgId = this.rankCatId;
+    }
+    if (this.candidateUploadLocResp) {
+      this.newCandidate.profilePic = this.candidateUploadLocResp;
+    }
+
     this.adminListService.updateCandidate(this.newCandidate).subscribe(
       (data: any) => {
         alert('updated successfully');
@@ -348,8 +384,8 @@ export class CreateCandidateComponent implements OnInit {
     this.adminListService.gettestTypesData(this.newCandidate.id, bTypeid, eDate, sDate).subscribe(
       (data: any) => {
         console.log('dddddddddddddd' + JSON.stringify(data));
-        this.yAxisLabel = data.data[0].name;
         if (data.data.length > 0) {
+          this.yAxisLabel = data.data[0].name;
           this.barGraphData = this.formatTobarChart(data.data);
           if (this.barGraphData.length < 10) {
             this.view = [250, 330];

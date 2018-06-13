@@ -18,6 +18,8 @@ export class SuperAdminSettingsComponent implements OnInit {
   testTypes: any [];
   ageRanges: any [];
   ageGroup: any = [];
+  optionGroup: any = [];
+  testTypeResultOptions: any = [];
 
   constructor(private superAdminSettingsService: SuperAdminSettingsService) { }
 
@@ -26,6 +28,7 @@ export class SuperAdminSettingsComponent implements OnInit {
     this.loadTestTypes();
     this.loadAgeRanges();
     this.testType.catogiryId = null;
+    this.loadTestTypeResultOptions();
   }
 
   loadTestCategories() {
@@ -64,6 +67,18 @@ export class SuperAdminSettingsComponent implements OnInit {
       });
   }
 
+  loadTestTypeResultOptions() {
+    this.superAdminSettingsService.getTestTypeResultOptions().subscribe(
+      (data: any) => {
+        // console.log(JSON.stringify(data));
+        this.testTypeResultOptions = data.data;
+      },
+      error => {
+        console.log(JSON.stringify(error));
+        // this.toastr.error('Invalid Login Credentials!', 'Oops!');
+      });
+  }
+
   createCategory(addCategoryForm: NgForm) {
     this.category['status'] = 'active';
     console.log(JSON.stringify(this.category));
@@ -84,10 +99,23 @@ export class SuperAdminSettingsComponent implements OnInit {
     if (event.target.checked) {
       this.ageGroup.push(selectedAge.id);
     } else {
+      const index = this.ageGroup.findIndex(data => data === selectedAge.id);
+      // this.studentIdArray.splice(index, 1);
       this.ageGroup.splice(index, 1);
     }
     console.log(JSON.stringify(this.ageGroup));
   }
+
+  testOtionArray(event, selectedOp, index) {
+    if (event.target.checked) {
+      this.optionGroup.push(selectedOp.id);
+    } else {
+      const index = this.optionGroup.findIndex(data => data === selectedOp.id);
+      this.optionGroup.splice(index, 1);
+    }
+    console.log(JSON.stringify(this.optionGroup));
+  }
+
 
 
   setCategory(id) {
@@ -104,12 +132,14 @@ export class SuperAdminSettingsComponent implements OnInit {
     this.testType.catogiryName  = this.CatName;
     this.testType.catogiryId = this.CatId;
     this.testType.ageGroup = this.ageGroup;
+    this.testType.optionGroup = this.optionGroup;
     this.testType.status = 'active';
     console.log(JSON.stringify(this.testType));
     this.superAdminSettingsService.createTestTypes(this.testType).subscribe(
       (data: any) => {
         alert('TestType Created Successfully');
         this.ageGroup = [];
+        this.optionGroup = [];
         this.CatId  = '';
         // this.ageGroup = '';
         addTestTypeForm.resetForm();
@@ -197,6 +227,12 @@ export class SuperAdminSettingsComponent implements OnInit {
       this.testType.catogiryName  = this.CatName;
       this.testType.catogiryId = this.CatId;
     }
+    if (this.ageGroup.length > 0) {
+      this.testType.ageGroup  = this.ageGroup;
+    }
+    if (this.optionGroup.length > 0) {
+      this.testType.optionGroup  = this.optionGroup;
+    }
     this.editTestTypes(this.testType, addTestTypeForm);
   }
 
@@ -205,6 +241,8 @@ export class SuperAdminSettingsComponent implements OnInit {
       (data: any) => {
         alert('Updated Successfully');
         this.displayTestTypeUpdateBtn = false;
+        this.ageGroup = [];
+        this.optionGroup = [];
         if (formName) {
           formName.resetForm();
         }

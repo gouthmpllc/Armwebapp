@@ -103,7 +103,7 @@
           <button *ngIf="!userName" class="btn text-center add-catbtn pull-right" [disabled]="!CreateadminForm.form.valid" (click)="createCandidate()">
             Save Candidate
           </button>
-          <button *ngIf="userName" class="btn text-center add-catbtn pull-right" [disabled]="!CreateadminForm.form.valid" (click)="updateCandidate()">
+          <button *ngIf="userName" class="btn text-center add-catbtn pull-right" [disabled]="!CreateadminForm.form.valid" (click)="editCandidate()">
             Update Candidate
           </button>
         </div>

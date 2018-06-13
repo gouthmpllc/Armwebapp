@@ -41,6 +41,11 @@ export class SuperAdminSettingsService {
     .map((res: Response) => res);
   }
 
+  getTestTypeResultOptions() {
+    return this.httpClient.get(AppSettings.API_ENDPOINT + `testResultOptions`)
+    .map((res: Response) => res);
+  }
+
   getTestType() {
     return this.httpClient.get(AppSettings.API_ENDPOINT + `TestTypes`)
     .map((res: Response) => res);

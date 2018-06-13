@@ -153,9 +153,33 @@ export class CreateAdminComponent implements OnInit {
     });
   }
 
+  editAdmin() {
+    if (this.formData && this.fileName) {
+      this.adminListService.uploadPic(this.formData).subscribe(
+        (data: any) => {
+          console.log(JSON.stringify(data));
+          this.candidateUploadLocResp = data.data.result.files.file[0].providerResponse.location;
+          this.formData = new FormData();
+          this.fileName = '';
+          this.updateAdmin();
+        },
+        error => {
+          console.log(JSON.stringify(error));
+      });
+    } else {
+      this.updateAdmin();
+    }
+  }
+
   updateAdmin() {
-    console.log(JSON.stringify(this.newAdmin));
-    this.newAdmin.rankId = this.newAdmin.rank;
+    if (this.ranObj) {
+      this.newAdmin['rank'] = this.ranObj.name;
+      this.newAdmin['rankId'] = this.ranObj.id;
+    }
+    if (this.candidateUploadLocResp) {
+      this.newAdmin['profilePic'] = this.candidateUploadLocResp;
+    }
+    // this.newAdmin.rankId = this.newAdmin.rank;
     this.newAdmin.password = this.newAdmin.credential;
     this.adminListService.updateAdmin(this.newAdmin).subscribe(
       (data: any) => {

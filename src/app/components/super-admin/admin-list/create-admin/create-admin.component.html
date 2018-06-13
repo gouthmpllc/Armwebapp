@@ -58,7 +58,7 @@
         <button *ngIf="!userName" class="btn text-center add-catbtn btn-fullwidth" [disabled]="!CreateadminForm.form.valid" (click)="createAdmin()">
           Add Admin
         </button>
-        <button *ngIf="userName" class="btn text-center add-catbtn btn-fullwidth" [disabled]="!CreateadminForm.form.valid" (click)="updateAdmin()">
+        <button *ngIf="userName" class="btn text-center add-catbtn btn-fullwidth" [disabled]="!CreateadminForm.form.valid" (click)="editAdmin()">
           Update Admin
         </button>
       </div>
