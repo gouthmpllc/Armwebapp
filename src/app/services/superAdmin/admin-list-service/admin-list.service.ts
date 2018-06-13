@@ -113,14 +113,17 @@ export class AdminListService {
   }
 
   getBPETTestTypes() {
+    const id = '5b0ba2c9b6ded61e80440114';
     return this.httpClient.get
-    (AppSettings.API_ENDPOINT + `TestTypes?filter={"where":{"catogiryId":"` + '5b0ba2c9b6ded61e80440114' + `"}}`)
+    (AppSettings.API_ENDPOINT + `TestTypes?filter={"where":{"catogiryId":"` +
+    id + '"' + ',' + `"status":"` + 'active' +  `"}}`)
     .map((res: Response) => res);
   }
 
   getPPETTestTypes() {
     return this.httpClient.get
-    (AppSettings.API_ENDPOINT + `TestTypes?filter={"where":{"catogiryId":"` + '5b0ba2d8b6ded61e80440115' + `"}}`)
+    (AppSettings.API_ENDPOINT + `TestTypes?filter={"where":{"catogiryId":"` +
+    '5b0ba2d8b6ded61e80440115' + '"' + ',' + `"status":"` + 'active' +  `"}}`)
     .map((res: Response) => res);
   }
 
