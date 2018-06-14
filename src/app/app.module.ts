@@ -48,6 +48,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
 import { AdminSearchPipe } from './pipes/super-admin/admin-search.pipe';
 import { CandidateSearchPipe } from './pipes/candidates/candidate-search.pipe';
+import { ReportsSearchPipe } from './pipes/reports/reports-search.pipe';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import { CandidateSearchPipe } from './pipes/candidates/candidate-search.pipe';
     CandidateListComponent,
     CreateCandidateComponent,
     AdminSearchPipe,
-    CandidateSearchPipe
+    CandidateSearchPipe,
+    ReportsSearchPipe
   ],
   imports: [
     BrowserModule,

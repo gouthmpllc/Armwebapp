@@ -1,14 +1,39 @@
+
+<div *ngIf="userName" class="col-lg-12 col-md-12" style="margin-top:20px;">
+  <div class="col-lg-6">
+    <h4>Update Admin</h4>
+  </div>
+
+  <div class="col-lg-6" style="padding: 3px;">
+    <a class="btn text-center btn-horizontal pull-right createadmin-btn" (click)="editToListView()"><span>X</span></a>
+  </div>
+
+</div>
+
+<div class="col-lg-12 col-md-12 col-xs-12 box-border padding0">
 <div class="col-lg-6 col-md-6 col-xs-12 panel panel-default" style="padding:10px;">
+    <div class="row margin0" *ngIf="userName">
+      <button class="btn pull-right" *ngIf="editable" (click)="enableEditFields();">Edit</button>
+      <button class="btn pull-right" *ngIf="!editable" (click)="enableEditFields();">X</button>
+    </div>
   <form #CreateadminForm="ngForm">
       <div class="input-group sign-in-input" style="width:100%;margin-bottom:10px;">
-        <label *ngIf="userName">Enter Army Number</label><input type="text" class="form-control" name="username" [(ngModel)]="newAdmin.username" placeholder="Enter Army Number" required>
+        <!-- <label *ngIf="userName">Enter Army Number</label><input type="text" class="form-control" name="username" [(ngModel)]="newAdmin.username" placeholder="Enter Army Number" required> -->
+        <mat-form-field class="width100">
+          <input matInput placeholder="Enter Army Number" id="username" name="username"
+          [(ngModel)]="newAdmin.username" [disabled]="readOnly" required>
+        </mat-form-field>
       </div>
       <div class="input-group sign-in-input" style="width:100%;margin-bottom:10px;">
-          <label *ngIf="userName">Enter Admin Name</label> <input type="text" class="form-control" name="name" [(ngModel)]="newAdmin.name" placeholder="Enter Admin Name" required>
+          <!-- <label *ngIf="userName">Enter Admin Name</label> <input type="text" class="form-control" name="name" [(ngModel)]="newAdmin.name" placeholder="Enter Admin Name" required> -->
+          <mat-form-field class="width100">
+            <input matInput placeholder="Enter Name" id="name" name="name"
+            [(ngModel)]="newAdmin.name" [disabled]="readOnly" required>
+          </mat-form-field>
       </div>
       <div class="input-group sign-in-input" style="width:100%;margin-bottom:10px;">
           <mat-form-field style="display:block;">
-              <mat-select placeholder="Select Appointment" name="appointmentId" [(ngModel)]="newAdmin.appointmentId" (change)="setSelectedAppointment(newAdmin.appointmentId)" required>
+              <mat-select placeholder="Select Appointment" name="appointmentId" [(ngModel)]="newAdmin.appointmentId" (change)="setSelectedAppointment(newAdmin.appointmentId)" [disabled]="editable" required>
                 <mat-option *ngFor="let appointment of allAppointments;let i = index" [value]="appointment.id">
                     {{appointment.name}}
                 </mat-option>
@@ -27,7 +52,7 @@
       </div> -->
       <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">
           <mat-form-field style="display:block;">
-            <mat-select placeholder="Select Rank" name="rankid" [(ngModel)]="newAdmin.rankid" (change)="setSelectedRank(newAdmin.rankid)" required>
+            <mat-select placeholder="Select Rank" name="rankid" [(ngModel)]="newAdmin.rankid" (change)="setSelectedRank(newAdmin.rankid)" [disabled]="editable" required>
               <mat-option *ngFor="let rank of allRanks;let i = index" [value]="rank.id">
                   {{rank.name}}
               </mat-option>
@@ -45,14 +70,22 @@
       <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">
           <label>Upload Profile Picture</label>
         <input type="file" (change)="uploadDatasource($event)" name="datasourcelistdata" class="inputfile" 
-          id="datasourcelistdata" accept=".png,.jpeg" />
+          id="datasourcelistdata" [disabled]="editable" accept=".png,.jpeg" />
       </div>
 
       <div *ngIf="!userName" class="input-group sign-in-input" style="width:100%;margin-bottom:10px;">
-        <input type="text" class="form-control" name="password" [(ngModel)]="newAdmin.password" placeholder="Enter Password" required>
+        <!-- <input type="text" class="form-control" name="password" [(ngModel)]="newAdmin.password" placeholder="Enter Password" required> -->
+        <mat-form-field class="width100">
+          <input matInput placeholder="Password" id="password" name="password"
+          [(ngModel)]="newAdmin.password" [disabled]="editable" required>
+        </mat-form-field>
       </div>
       <div *ngIf="!userName" class="input-group sign-in-input" style="width:100%;margin-bottom:10px;">
-        <input type="text" class="form-control" name="credential" [(ngModel)]="newAdmin.credential" placeholder="Confirm Password" required>
+        <!-- <input type="text" class="form-control" name="credential" [(ngModel)]="newAdmin.credential" placeholder="Confirm Password" required> -->
+        <mat-form-field class="width100">
+          <input matInput placeholder="Confirm Password" id="credential" name="credential"
+          [(ngModel)]="newAdmin.credential" [disabled]="readOnly" required>
+        </mat-form-field>
       </div>
       <div class="col-lg-6 col-lg-offset-3 col-xs-12"> 
         <button *ngIf="!userName" class="btn text-center add-catbtn btn-fullwidth" [disabled]="!CreateadminForm.form.valid" (click)="createAdmin()">
@@ -70,3 +103,5 @@
       <img [src]="newAdmin.profilePic" style="width:200px;height:150px;">
     </div>
   </div>
+</div>
+  <div class="clearfix"></div>

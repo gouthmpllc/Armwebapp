@@ -53,10 +53,10 @@ export class SuperAdminDashboardComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.loginData = this.cookieService.getObject('loginResponce');
     this.loadDashBoardData();
-    this.startTime();
-    this.timerInterval = setInterval(() => {
-      this.startTime();
-    }, 1000);
+    // this.startTime();
+    // this.timerInterval = setInterval(() => {
+    //   this.startTime();
+    // }, 1000);
 
     // if (this.loginData) {
     //   if (this.loginData.data.role === 'SUPERADMIN') {

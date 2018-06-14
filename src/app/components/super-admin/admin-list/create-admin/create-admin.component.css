@@ -9,3 +9,11 @@
     border: 0px;
     border-radius: 0;
 }
+
+.createadmin-btn{
+    padding: 6px 30px;
+    background: #415438;
+    border-radius: 0px;
+    color: #fff;
+    font-size: 14px;
+}

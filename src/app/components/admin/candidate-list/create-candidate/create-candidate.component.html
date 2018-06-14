@@ -2,23 +2,32 @@
   <div class="col-lg-6">
     <h4>Update Candidate</h4>
   </div>
+
+  <div class="col-lg-6" style="padding: 3px;">
+    <a class="btn text-center btn-horizontal pull-right createadmin-btn" (click)="editToListView()"><span>X</span></a>
+  </div>
+
 </div>
 
 <div class="col-lg-12 col-md-12 col-xs-12 panel panel-default" style="padding: 10px 0px 10px 15px;">
   <form #CreateadminForm="ngForm">
     <div class="col-lg-8 col-md-8 col-xs-12 padding0">
+      <div class="row margin0" *ngIf="userName">
+        <button class="btn pull-right" *ngIf="editable" (click)="enableEditFields();">Edit</button>
+        <button class="btn pull-right" *ngIf="!editable" (click)="enableEditFields();">X</button>
+      </div>
       <div class="col-lg-6 col-md-6">
         <div>
           <mat-form-field class="width100">
             <input matInput placeholder="Enter Army Number" id="candArmyNum" name="candArmyNum"
-            [(ngModel)]="newCandidate.candArmyNum" [readonly]="readOnly" required>
+            [(ngModel)]="newCandidate.candArmyNum" [disabled]="readOnly" required>
           </mat-form-field>
         </div>
 
         <div>
             <mat-form-field class="width100">
               <mat-select name="rankCatgId" placeholder="Select Rank Category" [(ngModel)]="newCandidate.rankCatgId" 
-              (change)="onRankCatChange(newCandidate.rankCatgId)" required>
+              (change)="onRankCatChange(newCandidate.rankCatgId)" [disabled]="editable" required>
                 <mat-option *ngFor="let rakCat of allRankCategories;let i = index" [value]="rakCat.id">
                     {{rakCat.name}}
                 </mat-option>
@@ -29,7 +38,7 @@
         <div>
             <mat-form-field class="width100">
               <mat-select name="subunitId" placeholder="Select Subunits" [(ngModel)]="newCandidate.subunitId" 
-              (change)="onSubUnitChange(newCandidate.subunitId)" required>
+              (change)="onSubUnitChange(newCandidate.subunitId)" [disabled]="editable" required>
                 <mat-option *ngFor="let subUnit of allSubUnits;let i = index" [value]="subUnit.id">
                     {{subUnit.name}}
                 </mat-option>
@@ -39,7 +48,7 @@
 
         <div>
           <mat-form-field class="width100 ">
-            <input matInput [matDatepicker]="picker" [readonly]="readOnly" placeholder="Select Date Of Birth"
+            <input matInput [matDatepicker]="picker" [disabled]="readOnly" placeholder="Select Date Of Birth"
             name="establishedDate" [max]="maxDate"
             [(ngModel)]="newCandidate.candDob" id="candDob" #candDob='ngModel'>
             <mat-datepicker-toggle matSuffix [for]="picker" [disabled]="readOnly"></mat-datepicker-toggle>
@@ -51,7 +60,7 @@
             <!-- <div class="col-lg-6 col-md-6 upload-box"> -->
           <label>Upload Profile Picture</label>
           <input type="file" (change)="uploadDatasource($event)" name="datasourcelistdata" class="inputfile" 
-          id="datasourcelistdata" accept=".png,.jpeg">
+          id="datasourcelistdata" [disabled]="editable" accept=".png,.jpeg">
             <!-- </div> -->
         </div>
 
@@ -63,14 +72,14 @@
         <div>
           <mat-form-field class="width100">
             <input matInput placeholder="Enter Candidate Name" id="candName" name="candName"
-            [(ngModel)]="newCandidate.candName" [readonly]="readOnly" required>
+            [(ngModel)]="newCandidate.candName" [disabled]="readOnly" required>
           </mat-form-field>
         </div>
 
         <div>
           <mat-form-field class="width100">
             <mat-select name="rank" placeholder="Select Rank" [(ngModel)]="newCandidate.rankId" 
-            (change)="onRankChange(newCandidate.rankId)" required>
+            (change)="onRankChange(newCandidate.rankId)" [disabled]="editable" required>
               <mat-option *ngFor="let rank of allRanks;let i = index" [value]="rank.id">
                   {{rank.name}}
               </mat-option>
@@ -81,7 +90,7 @@
         <div *ngIf="userName">
           <mat-form-field class="width100">
             <input matInput placeholder="Age" id="age" name="age"
-            [(ngModel)]="newCandidate.age" readonly>
+            [(ngModel)]="newCandidate.age" [disabled]="readOnly">
           </mat-form-field>
         </div>
 
@@ -112,7 +121,7 @@
 
   </form>
 
-  <div class="col-lg-4 col-md-4 col-xs-12">
+  <div class="col-lg-4 col-md-4 col-xs-12" *ngIf="userName">
     <div  *ngIf="newCandidate.profilePic" class="candidate-pic col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-xs-10 col-xs-offset-1">
         <img style="height:150px;width:150px;border-radius:50%;" [src]="newCandidate.profilePic" alt="Candidate Profile Pic">
     </div>

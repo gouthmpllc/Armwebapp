@@ -8,6 +8,8 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./create-admin.component.css']
 })
 export class CreateAdminComponent implements OnInit {
+  readOnly: boolean;
+  editable: boolean;
   appointmentObj: any;
   candidateUploadLocResp: any;
   fileName: any;
@@ -33,7 +35,17 @@ export class CreateAdminComponent implements OnInit {
     this.loadArmyAppointments();
     if (this.userName) {
       this.loadSelectedAdmin(this.userName);
+      this.readOnly = true;
+      this.editable  = true;
     }
+  }
+
+  enableEditFields() {
+    this.editable = !this.editable;
+  }
+
+  editToListView() {
+    this.router.navigate(['superAdmin/adminList']);
   }
 
   loadSelectedAdmin(currentUser) {

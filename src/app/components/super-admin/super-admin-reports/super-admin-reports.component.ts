@@ -38,6 +38,7 @@ export class SuperAdminReportsComponent implements OnInit {
   public rowsOnPage = 10;
   public sortBy = 'createdAt';
   public sortOrder = 'desc';
+  searchQuery: string;
   constructor(private adminListService: AdminListService, private superAdminSettingsService: SuperAdminSettingsService) { }
 
   ngOnInit() {

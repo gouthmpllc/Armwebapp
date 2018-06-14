@@ -38,6 +38,7 @@ export class CreateCandidateComponent implements OnInit {
     {name: 'Female', value: 2},
   ];
   readOnly: boolean;
+  editable: boolean;
   @Output() displayListChanged = new EventEmitter<boolean>();
   formData: FormData = new FormData();
 
@@ -80,6 +81,7 @@ export class CreateCandidateComponent implements OnInit {
       this.loadSelectedCandidate(this.userName);
       this.loadPPETTestTypes();
       this.showBpet = true;
+      this.editable = true;
     }
   }
 
@@ -185,6 +187,10 @@ export class CreateCandidateComponent implements OnInit {
     this.formData.append('file', fileDetails);
   }
 
+  editToListView() {
+    this.router.navigate(['superAdmin/candidateList']);
+  }
+
   createCandidate() {
 
     if (this.formData && this.fileName) {
@@ -238,6 +244,10 @@ export class CreateCandidateComponent implements OnInit {
     let ageDifMs = Date.now() - dob.getTime();
     let ageDate = new Date(ageDifMs); // miliseconds from epoch
     return Math.abs(ageDate.getUTCFullYear() - 1970);
+  }
+
+  enableEditFields() {
+    this.editable = !this.editable;
   }
 
   editCandidate() {
