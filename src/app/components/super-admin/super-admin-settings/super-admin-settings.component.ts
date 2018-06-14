@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SuperAdminSettingsService } from '../../../services/superAdmin/settings-service/super-admin-settings.service';
 import { NgForm } from '@angular/forms';
+import { Router} from '@angular/router';
 
 @Component({
   selector: 'app-super-admin-settings',
@@ -24,7 +25,11 @@ export class SuperAdminSettingsComponent implements OnInit {
   optionId: any = [];
   dupTestTypeOption: any = [];
   dupAgeTypeOption: any = [];
-  constructor(private superAdminSettingsService: SuperAdminSettingsService) { }
+  constructor(private superAdminSettingsService: SuperAdminSettingsService, private router: Router) { 
+    this.router.routeReuseStrategy.shouldReuseRoute = function() {
+      return false;
+   };
+  }
 
   ngOnInit() {
     this.loadTestCategories();
@@ -294,9 +299,12 @@ export class SuperAdminSettingsComponent implements OnInit {
         this.optionGroup = [];
         this.ageId = [];
         this.optionId = [];
+        this.testType = {};
         if (formName) {
           formName.resetForm();
         }
+        this.router.navigated = false;
+        this.router.navigate(['superAdmin/configuration']);
         this.loadTestTypes();
       },
       error => {
