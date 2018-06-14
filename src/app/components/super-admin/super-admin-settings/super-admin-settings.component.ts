@@ -20,7 +20,10 @@ export class SuperAdminSettingsComponent implements OnInit {
   ageGroup: any = [];
   optionGroup: any = [];
   testTypeResultOptions: any = [];
-
+  ageId: any = [];
+  optionId: any = [];
+  dupTestTypeOption: any = [];
+  dupAgeTypeOption: any = [];
   constructor(private superAdminSettingsService: SuperAdminSettingsService) { }
 
   ngOnInit() {
@@ -59,6 +62,7 @@ export class SuperAdminSettingsComponent implements OnInit {
     this.superAdminSettingsService.getAgeRanges().subscribe(
       (data: any) => {
         // console.log(JSON.stringify(data));
+        this.dupAgeTypeOption = data.data;
         this.ageRanges = data.data;
       },
       error => {
@@ -71,6 +75,7 @@ export class SuperAdminSettingsComponent implements OnInit {
     this.superAdminSettingsService.getTestTypeResultOptions().subscribe(
       (data: any) => {
         // console.log(JSON.stringify(data));
+        this.dupTestTypeOption = data.data;
         this.testTypeResultOptions = data.data;
       },
       error => {
@@ -134,12 +139,15 @@ export class SuperAdminSettingsComponent implements OnInit {
     this.testType.ageGroup = this.ageGroup;
     this.testType.optionGroup = this.optionGroup;
     this.testType.status = 'active';
+    delete this.testType.ageId;
     console.log(JSON.stringify(this.testType));
     this.superAdminSettingsService.createTestTypes(this.testType).subscribe(
       (data: any) => {
         alert('TestType Created Successfully');
         this.ageGroup = [];
         this.optionGroup = [];
+        this.ageId = [];
+        this.optionId = [];
         this.CatId  = '';
         // this.ageGroup = '';
         addTestTypeForm.resetForm();
@@ -215,11 +223,52 @@ export class SuperAdminSettingsComponent implements OnInit {
     this.editTestTypes(testType);
   }
 
-  setEditTestType(testType) {
+  setEditTestType(testType, AddTestTypeForm?: NgForm) {
+    this.testType = {};
+    this.ageId = [];
+    this.optionId = [];
+    // AddTestTypeForm.resetForm();
     this.testType = testType;
     console.log(JSON.stringify(testType));
     this.displayTestTypeUpdateBtn = true;
+    this.loadageGroupDataWithChecked(testType.ageGroup);
+    this.loadoptionGroupDataWithChecked(testType.optionGroup);
+  }
 
+  loadoptionGroupDataWithChecked(optionArray) {
+    this.testTypeResultOptions = this.dupTestTypeOption;
+    this.optionGroup = [];
+    this.optionGroup = optionArray;
+    if (optionArray.length > 0) {
+      for (let i = 0; i < this.testTypeResultOptions.length; i++) {
+        for (let j = 0; j < optionArray.length; j++) {
+          if (optionArray[j] === this.testTypeResultOptions[i].id) {
+            this.testTypeResultOptions[i].checked = true;
+            break;
+          } else {
+            this.testTypeResultOptions[i].checked = false;
+          }
+        }
+      }
+    }
+  }
+
+  loadageGroupDataWithChecked(agesArray) {
+    this.ageRanges = this.dupAgeTypeOption;
+    this.ageGroup = [];
+    this.ageGroup = agesArray;
+    if (agesArray.length > 0) {
+      for (let i = 0; i < this.ageRanges.length; i++) {
+        for (let j = 0; j < agesArray.length; j++) {
+          if (agesArray[j] === this.ageRanges[i].id) {
+            this.ageRanges[i].checked = true;
+            break;
+          } else {
+            this.ageRanges[i].checked = false;
+          }
+        }
+      }
+    }
   }
 
   updateTestType(addTestTypeForm: NgForm) {
@@ -243,6 +292,8 @@ export class SuperAdminSettingsComponent implements OnInit {
         this.displayTestTypeUpdateBtn = false;
         this.ageGroup = [];
         this.optionGroup = [];
+        this.ageId = [];
+        this.optionId = [];
         if (formName) {
           formName.resetForm();
         }

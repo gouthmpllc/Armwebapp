@@ -54,7 +54,6 @@ input[type='checkbox']:after
 
     height: 15px;
     width: 15px;
-    /* top: -2px; */
     left: -1px;
     position: relative;
     background-color: #fff;
