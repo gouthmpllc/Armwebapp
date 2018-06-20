@@ -91,10 +91,10 @@ export class AdminListService {
       .map((res: Response) => res);
   }
 
-  getAllFilteredData(ranCatogs, ranks, subunits, testCategories, testTypes) {
+  getAllFilteredData(ranCatogs, ranks, subunits, testCategories, testTypes,fDate, tDate) {
     return this.httpClient.get(AppSettings.API_ENDPOINT + `TestResults/getFilteredReport?rankCatogiries=`
-      + JSON.stringify(ranCatogs) + `&ranks=` + JSON.stringify(ranks) + '&subUnit=' + JSON.stringify(subunits) + '&testCatogiries=' + JSON.stringify(testCategories) +
-      '&testTypes=' + JSON.stringify(testTypes))
+      + JSON.stringify(ranCatogs) + `&ranks=` + JSON.stringify(ranks) + `&subUnit=` + JSON.stringify(subunits) + '&testCatogiries=' + JSON.stringify(testCategories) +
+      '&testTypes=' + JSON.stringify(testTypes) + `&startDate=` + fDate + `&endDate=` + tDate)
       .map((res: Response) => res);
   }
 
@@ -114,7 +114,7 @@ export class AdminListService {
   }
 
   getAllDateWiseReports(fDate, tDate) {
-    return this.httpClient.get(AppSettings.API_ENDPOINT + `TestResults//getReportsByDates?startDate=`
+    return this.httpClient.get(AppSettings.API_ENDPOINT + `TestResults/getReportsByDates?startDate=`
       + fDate + `&endDate=` + tDate)
       .map((res: Response) => res);
   }

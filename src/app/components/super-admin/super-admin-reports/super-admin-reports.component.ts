@@ -49,6 +49,7 @@ export class SuperAdminReportsComponent implements OnInit {
     this.loadArmyRanks();
     this.loadRankCategorys();
     this.categoryStatus = true;
+    this.displayOneDate = true;
   }
 
   loadCategorywiseReports(catArray, rkArray) {
@@ -68,9 +69,10 @@ export class SuperAdminReportsComponent implements OnInit {
       });
   }
 
-  loadFilteredData(ranCatogs, ranks, subunits, testCategories, testTypes) {
+  loadFilteredData(ranCatogs, ranks, subunits, testCategories, testTypes, fDate, tDate) {
     this.data = [];
-    this.adminListService.getAllFilteredData(ranCatogs, ranks, subunits, testCategories, testTypes).subscribe(
+    this.adminListService.getAllFilteredData(ranCatogs, ranks, subunits, testCategories, testTypes,
+      fDate, tDate).subscribe(
       (data: any) => {
         // console.log(JSON.stringify(data));
         this.data = data.data.data;
@@ -305,8 +307,10 @@ export class SuperAdminReportsComponent implements OnInit {
 
   geneeateCategoryWiseFilterArray() {
     //this.loadCategorywiseReports(this.rankCategory, this.rankArray);
-
-    this.loadFilteredData(this.rankCategory, this.rankArray, this.subArray, this.selectedcCategoryId, this.typeArray);
+    if (!this.toDate) {
+      this.toDate = this.fromDate;
+    }
+    this.loadFilteredData(this.rankCategory, this.rankArray, this.subArray, this.selectedcCategoryId, this.typeArray,this.fromDate, this.toDate);
 
   }
 
@@ -318,7 +322,10 @@ export class SuperAdminReportsComponent implements OnInit {
     if (!this.toDate) {
       this.toDate = this.fromDate;
     }
-    this.loaddatewiseReports(this.fromDate, this.toDate);
+    this.loadFilteredData(this.rankCategory, this.rankArray, this.subArray, this.selectedcCategoryId,
+      this.typeArray, this.fromDate, this.toDate);
+
+    // this.loaddatewiseReports(this.fromDate, this.toDate);
   }
 
   generateCsv() {
