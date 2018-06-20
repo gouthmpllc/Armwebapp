@@ -27,8 +27,8 @@ export class SuperAdminReportsComponent implements OnInit {
   testTypes: any = [];
   allRankCategories: any = [];
   dupRanks: any = [];
-  rankCategory: any = '';
-  selectedcCategoryId: any = '';
+  rankCategory: any = [];
+  selectedcCategoryId: any = [];
   dupTestTypes: any = [];
   fromDate: any;
   toDate: any;
@@ -54,6 +54,23 @@ export class SuperAdminReportsComponent implements OnInit {
   loadCategorywiseReports(catArray, rkArray) {
     this.data = [];
     this.adminListService.getAllCategoryWiseReports(catArray, rkArray).subscribe(
+      (data: any) => {
+        // console.log(JSON.stringify(data));
+        this.data = data.data.data;
+        if (this.data.length > 0) {
+          // alert('Generated successfully');
+        } else {
+          alert('No Data Found');
+        }
+      },
+      error => {
+        console.log(JSON.stringify(error));
+      });
+  }
+
+  loadFilteredData(ranCatogs, ranks, subunits, testCategories, testTypes) {
+    this.data = [];
+    this.adminListService.getAllFilteredData(ranCatogs, ranks, subunits, testCategories, testTypes).subscribe(
       (data: any) => {
         // console.log(JSON.stringify(data));
         this.data = data.data.data;
@@ -123,13 +140,20 @@ export class SuperAdminReportsComponent implements OnInit {
     this.rankArray = [];
     this.allRanks = this.dupRanks;
     let result: any = [];
-    this.allRanks.filter(rank => {
-      if (id === rank.rankCatgId) {
-        result.push(rank);
-      }
-    });
-    this.allRanks = [];
-    this.allRanks = result;
+    if (id.length == 0) {
+      this.allRanks = this.dupRanks;
+
+    } else {
+      this.allRanks.filter(rank => {
+        if (id.indexOf(rank.rankCatgId) >= 0) {
+          result.push(rank);
+        }
+      });
+      this.allRanks = [];
+      this.allRanks = result;
+    }
+
+
     // console.log(JSON.stringify(this.allRanks));
   }
 
@@ -137,14 +161,20 @@ export class SuperAdminReportsComponent implements OnInit {
     this.typeArray = [];
     this.testTypes = this.dupTestTypes;
     let result: any = [];
-    this.testTypes.filter(type => {
-      if (id === type.catogiryId) {
-        result.push(type);
-      }
-    });
-    this.testTypes = [];
-    this.testTypes = result;
-    console.log(JSON.stringify(this.allRanks));
+    console.log('test cat Ids ' + JSON.stringify(id));
+
+    if (id.length > 0) {
+      this.testTypes.filter(type => {
+        if (id.indexOf(type.catogiryId) >= 0) {
+          result.push(type);
+        }
+      });
+      this.testTypes = [];
+      this.testTypes = result;
+    } else {
+      this.testTypes = this.dupTestTypes;
+    }
+
   }
 
   loadRankCategorys() {
@@ -252,8 +282,8 @@ export class SuperAdminReportsComponent implements OnInit {
     this.categoryArray = [];
     this.rankArray = [];
     this.typeArray = [];
-    this.rankCategory = '';
-    this.selectedcCategoryId = '';
+    this.rankCategory = [];
+    this.selectedcCategoryId = [];
     this.wingStatus = false;
     this.categoryStatus = false;
     this.typeStatus = false;
@@ -274,7 +304,10 @@ export class SuperAdminReportsComponent implements OnInit {
   // }
 
   geneeateCategoryWiseFilterArray() {
-    this.loadCategorywiseReports(this.rankCategory, this.rankArray);
+    //this.loadCategorywiseReports(this.rankCategory, this.rankArray);
+
+    this.loadFilteredData(this.rankCategory, this.rankArray, this.subArray, this.selectedcCategoryId, this.typeArray);
+
   }
 
   geneeateTestTypeWiseFilterArray() {

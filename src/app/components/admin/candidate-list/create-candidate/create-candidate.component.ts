@@ -26,6 +26,7 @@ export class CreateCandidateComponent implements OnInit {
   newCandidate: any = {};
   loginData: any;
   allRanks: any = [];
+  dupRanks: any = [];
   allSubUnits: any = [];
   allRankCategories: any = [];
   genderCode: any;
@@ -34,11 +35,13 @@ export class CreateCandidateComponent implements OnInit {
   rankId: any;
   userName: string;
   genders: any = [
-    {name: 'Male', value: 1},
-    {name: 'Female', value: 2},
+    { name: 'Male', value: 1 },
+    { name: 'Female', value: 2 },
   ];
   readOnly: boolean;
   editable: boolean;
+  rankCatSelected: boolean = true;
+  rankEnable: boolean;
   @Output() displayListChanged = new EventEmitter<boolean>();
   formData: FormData = new FormData();
 
@@ -63,13 +66,13 @@ export class CreateCandidateComponent implements OnInit {
   tabF: string;
   constructor(private adminListService: AdminListService, private cookieService: CookieService,
     private route: ActivatedRoute, private router: Router, private candidateListService: CandidateListService) {
-    this.route.params.subscribe( params => {
+    this.route.params.subscribe(params => {
       if (params) {
         this.userName = params.userName;
       }
       console.log('vv' + JSON.stringify(params));
     });
-    }
+  }
 
   ngOnInit() {
     this.loginData = this.cookieService.getObject('loginResponce');
@@ -77,11 +80,13 @@ export class CreateCandidateComponent implements OnInit {
     this.loadArmyRanks();
     this.loadSubUnits();
     this.loadRankCategorys();
+    this.rankEnable = true;
     if (this.userName) {
       this.loadSelectedCandidate(this.userName);
       this.loadPPETTestTypes();
       this.showBpet = true;
       this.editable = true;
+      this.rankEnable = true;
     }
   }
 
@@ -102,19 +107,20 @@ export class CreateCandidateComponent implements OnInit {
       error => {
         console.log(JSON.stringify(error));
         // this.toastr.error('Invalid Login Credentials!', 'Oops!');
-    });
+      });
   }
 
   loadArmyRanks() {
     this.adminListService.getAllRanks().subscribe(
       (data: any) => {
         // console.log(JSON.stringify(data));
-        this.allRanks = data.data;
+        //this.allRanks = data.data;
+        this.dupRanks = data.data;
       },
       error => {
         console.log(JSON.stringify(error));
         // this.toastr.error('Invalid Login Credentials!', 'Oops!');
-    });
+      });
   }
 
   loadSubUnits() {
@@ -126,7 +132,7 @@ export class CreateCandidateComponent implements OnInit {
       error => {
         console.log(JSON.stringify(error));
         // this.toastr.error('Invalid Login Credentials!', 'Oops!');
-    });
+      });
   }
 
   loadRankCategorys() {
@@ -138,12 +144,12 @@ export class CreateCandidateComponent implements OnInit {
       error => {
         console.log(JSON.stringify(error));
         // this.toastr.error('Invalid Login Credentials!', 'Oops!');
-    });
+      });
   }
 
   onSelectionChange(id) {
     for (let i = 0; i < this.genders.length; i++) {
-      if (id === this.genders[i].value ) {
+      if (id === this.genders[i].value) {
         this.gender = this.genders[i].name;
         this.genderCode = this.genders[i].value;
         return;
@@ -153,7 +159,7 @@ export class CreateCandidateComponent implements OnInit {
 
   onRankChange(id) {
     for (let i = 0; i < this.allRanks.length; i++) {
-      if (id === this.allRanks[i].id ) {
+      if (id === this.allRanks[i].id) {
         this.rank = this.allRanks[i].name;
         this.rankId = this.allRanks[i].id;
         return;
@@ -163,7 +169,7 @@ export class CreateCandidateComponent implements OnInit {
 
   onSubUnitChange(id) {
     for (let i = 0; i < this.allSubUnits.length; i++) {
-      if (id === this.allSubUnits[i].id ) {
+      if (id === this.allSubUnits[i].id) {
         this.subUnit = this.allSubUnits[i].name;
         this.subUnitId = this.allSubUnits[i].id;
         return;
@@ -172,12 +178,25 @@ export class CreateCandidateComponent implements OnInit {
   }
 
   onRankCatChange(id) {
+
     for (let i = 0; i < this.allRankCategories.length; i++) {
-      if (id === this.allRankCategories[i].id ) {
+      if (id === this.allRankCategories[i].id) {
         this.rankCatName = this.allRankCategories[i].name;
         this.rankCatId = this.allRankCategories[i].id;
         return;
       }
+    }
+
+    console.log('rank selected'+id)
+    this.rankEnable = !this.rankEnable;
+
+    
+    this.allRanks = [];
+    for (let index = 0; index < this.dupRanks.length; index++) {
+      if (this.dupRanks[index].rankCatgId == id) {
+        this.allRanks.push(this.dupRanks[index])
+      }
+      
     }
   }
 
@@ -205,7 +224,7 @@ export class CreateCandidateComponent implements OnInit {
         },
         error => {
           console.log(JSON.stringify(error));
-      });
+        });
     } else {
       this.postCandidate();
     }
@@ -237,7 +256,7 @@ export class CreateCandidateComponent implements OnInit {
       },
       error => {
         console.log(JSON.stringify(error));
-    });
+      });
   }
 
   calculateAge(dob) {
@@ -248,6 +267,7 @@ export class CreateCandidateComponent implements OnInit {
 
   enableEditFields() {
     this.editable = !this.editable;
+    this.rankEnable = !this.rankEnable;
   }
 
   editCandidate() {
@@ -263,7 +283,7 @@ export class CreateCandidateComponent implements OnInit {
         },
         error => {
           console.log(JSON.stringify(error));
-      });
+        });
     } else {
       this.updateCandidate();
     }
@@ -312,7 +332,7 @@ export class CreateCandidateComponent implements OnInit {
       error => {
         console.log(JSON.stringify(error));
         // this.toastr.error('Invalid Login Credentials!', 'Oops!');
-    });
+      });
   }
 
   loadBPETTestTypes() {
@@ -326,7 +346,7 @@ export class CreateCandidateComponent implements OnInit {
       error => {
         console.log(JSON.stringify(error));
         // this.toastr.error('Invalid Login Credentials!', 'Oops!');
-    });
+      });
   }
 
   loadPPETTestTypes() {
@@ -338,7 +358,7 @@ export class CreateCandidateComponent implements OnInit {
       error => {
         console.log(JSON.stringify(error));
         // this.toastr.error('Invalid Login Credentials!', 'Oops!');
-    });
+      });
   }
 
   setWeeklyCandidateReports(dateRangeType?: string) {
@@ -351,23 +371,23 @@ export class CreateCandidateComponent implements OnInit {
     if (this.sdate.startDate && this.sdate.endDate) {
       this.tabF = '';
       this.startDate = (this.sdate.startDate.getMonth() + 1) + '/' +
-      this.sdate.startDate.getDate() + '/' + this.sdate.startDate.getFullYear();
+        this.sdate.startDate.getDate() + '/' + this.sdate.startDate.getFullYear();
       this.endDate = (this.sdate.endDate.getMonth() + 1) + '/' + this.sdate.endDate.getDate() + '/' + this.sdate.endDate.getFullYear();
     } else {
       this.sdate = {};
       if (dateRangeType === 'monthly') {
         this.tabF = 'monthly';
-        minusDate =  new Date(new Date().getTime() - (60 * 60 * 24 * 30 * 1000));
+        minusDate = new Date(new Date().getTime() - (60 * 60 * 24 * 30 * 1000));
         this.startDate = (minusDate.getMonth() + 1) + '/' + minusDate.getDate() + '/' + minusDate.getFullYear();
         this.endDate = (new Date().getMonth() + 1) + '/' + new Date().getDate() + '/' + new Date().getFullYear();
       } else if (dateRangeType === 'yearly') {
         this.tabF = 'yearly';
-        minusDate =  new Date(new Date().getTime() - (60 * 60 * 24 * 365 * 1000));
+        minusDate = new Date(new Date().getTime() - (60 * 60 * 24 * 365 * 1000));
         this.startDate = (minusDate.getMonth() + 1) + '/' + minusDate.getDate() + '/' + minusDate.getFullYear();
         this.endDate = (new Date().getMonth() + 1) + '/' + new Date().getDate() + '/' + new Date().getFullYear();
       } else {
         this.tabF = 'weekly';
-        minusDate =  new Date(new Date().getTime() - (60 * 60 * 24 * 7 * 1000));
+        minusDate = new Date(new Date().getTime() - (60 * 60 * 24 * 7 * 1000));
         this.startDate = (minusDate.getMonth() + 1) + '/' + minusDate.getDate() + '/' + minusDate.getFullYear();
         this.endDate = (new Date().getMonth() + 1) + '/' + new Date().getDate() + '/' + new Date().getFullYear();
       }
@@ -408,11 +428,11 @@ export class CreateCandidateComponent implements OnInit {
       },
       error => {
         console.log(JSON.stringify(error));
-    });
+      });
   }
 
   getBPETTestateReports(bTypeId, index) {
-     this.getWeeklyBPETData(bTypeId, this.startDate, this.endDate, index);
+    this.getWeeklyBPETData(bTypeId, this.startDate, this.endDate, index);
   }
 
   formatTobarChart(resultWiseData) {
@@ -423,12 +443,12 @@ export class CreateCandidateComponent implements OnInit {
       if (!groups[groupName]) {
         groups[groupName] = [];
       }
-      groups[groupName].push({'name': resultWiseData[i].testResult, 'value': resultWiseData[i].value});
+      groups[groupName].push({ 'name': resultWiseData[i].testResult, 'value': resultWiseData[i].value });
     }
     resultWiseData = [];
     for (const groupName in groups) {
       if (true) {
-        resultWiseData.push({name: groupName, series: groups[groupName]});
+        resultWiseData.push({ name: groupName, series: groups[groupName] });
       }
     }
     console.log(JSON.stringify(resultWiseData));
