@@ -12,7 +12,7 @@ export class CandidateListService {
   constructor(private httpClient: HttpClient) { }
 
   getAllCandidateList() {
-    return this.httpClient.get(AppSettings.API_ENDPOINT + `Canditates`)
+    return this.httpClient.get(AppSettings.API_ENDPOINT + `Canditates?filter={"include":"superVisor"}`)
     .map((res: Response) => res);
   }
 

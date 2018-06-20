@@ -43,6 +43,8 @@ export class SuperAdminReportsComponent implements OnInit {
   public sortOrder = 'desc';
   searchQuery: string;
   resultArray: any = [];
+  loadingStatus: boolean;
+
   constructor(private adminListService: AdminListService, private superAdminSettingsService: SuperAdminSettingsService) { }
 
   ngOnInit() {
@@ -90,15 +92,17 @@ export class SuperAdminReportsComponent implements OnInit {
 
   loadFilteredData(ranCatogs, ranks, subunits, testCategories, testTypes, fDate, tDate, resultArray) {
     this.data = [];
+    this.loadingStatus = true;
     this.adminListService.getAllFilteredData(ranCatogs, ranks, subunits, testCategories, testTypes,
       fDate, tDate, resultArray).subscribe(
       (data: any) => {
         // console.log(JSON.stringify(data));
+        this.loadingStatus = false;
         this.data = data.data.data;
         if (this.data.length > 0) {
           // alert('Generated successfully');
         } else {
-          alert('No Data Found');
+          // alert('No Data Found');
         }
       },
       error => {
