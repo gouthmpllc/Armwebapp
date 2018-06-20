@@ -96,3 +96,10 @@
 }
 .amcharts-chart-div a{display: none !important;}
 
+.color-red {
+    color:red !important;
+} 
+.m-btm5 {
+    margin-top: -15px;
+    margin-bottom: 5px;
+}

@@ -66,8 +66,8 @@
                             {{admin.createdAt | date}}
                           </td>
                         <td colspan="3">
-                          <button [disabled]="admin.status == 'active'" class="btn btn-sm btn-active" (click)="setActiveAdmin(admin)">Active</button>
-                          <button [disabled]="admin.status == 'inactive'" class="btn btn-sm btn-Inactive" (click)="setInActiveAdmin(admin)">In Active</button>
+                          <button *ngIf="admin.status == 'inactive'" class="btn btn-sm btn-active" (click)="setActiveAdmin(admin)">Active</button>
+                          <button *ngIf="admin.status == 'active'" class="btn btn-sm btn-Inactive" (click)="setInActiveAdmin(admin)">In Active</button>
                           <button class="btn btn-sm btn-edit" (click)="adminEdit(admin)">view Details</button>
                           <button class="btn btn-sm btn-remove" (click)="removeAdmin(admin)">Remove</button>
                         </td>

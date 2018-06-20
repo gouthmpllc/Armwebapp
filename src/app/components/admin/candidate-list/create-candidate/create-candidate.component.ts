@@ -182,9 +182,14 @@ export class CreateCandidateComponent implements OnInit {
   }
 
   uploadDatasource(fileInput: any) {
-    const fileDetails = fileInput.target.files[0];
-    this.fileName = fileDetails.name;
-    this.formData.append('file', fileDetails);
+    if (fileInput) {
+      const fileDetails = fileInput.target.files[0];
+      this.fileName = fileDetails.name;
+      this.formData.append('file', fileDetails);
+    } else {
+      this.fileName = '';
+      this.formData = new FormData();
+    }
   }
 
   editToListView() {
@@ -228,6 +233,7 @@ export class CreateCandidateComponent implements OnInit {
     this.newCandidate.createdBy = this.loginData.data.userId;
     this.newCandidate.createdStatus = 'NEW';
     this.newCandidate.status = 'active';
+    this.newCandidate.createdByArmy = this.loginData.data.username;
     delete this.newCandidate.rankCat;
     this.newCandidate.age = this.calculateAge(this.newCandidate.candDob);
     console.log(JSON.stringify(this.newCandidate));

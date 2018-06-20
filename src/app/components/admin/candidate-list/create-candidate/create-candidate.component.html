@@ -20,47 +20,59 @@
         <div>
           <mat-form-field class="width100">
             <input matInput placeholder="Enter Army Number" id="candArmyNum" name="candArmyNum"
-            [(ngModel)]="newCandidate.candArmyNum" [disabled]="readOnly" required>
+            [(ngModel)]="newCandidate.candArmyNum" [disabled]="readOnly"  #candArmyNum="ngModel" required>
           </mat-form-field>
+          <div *ngIf="candArmyNum.errors && (candArmyNum.dirty || candArmyNum.touched)" class="color-red m-btm5" >
+            <div [hidden]="!candArmyNum.errors.required"> Army Number Must be Required.</div>
+          </div>
         </div>
 
         <div>
             <mat-form-field class="width100">
               <mat-select name="rankCatgId" placeholder="Select Rank Category" [(ngModel)]="newCandidate.rankCatgId" 
-              (change)="onRankCatChange(newCandidate.rankCatgId)" [disabled]="editable" required>
+              (change)="onRankCatChange(newCandidate.rankCatgId)" [disabled]="editable" #rankCatgId="ngModel" required>
                 <mat-option *ngFor="let rakCat of allRankCategories;let i = index" [value]="rakCat.id">
                     {{rakCat.name}}
                 </mat-option>
               </mat-select>
             </mat-form-field>
+            <div *ngIf="rankCatgId.errors && (rankCatgId.dirty || rankCatgId.touched)" class="color-red m-btm5" >
+              <div [hidden]="!rankCatgId.errors.required"> Rank category Must be Required.</div>
+            </div>
         </div>
 
         <div>
             <mat-form-field class="width100">
               <mat-select name="subunitId" placeholder="Select Subunits" [(ngModel)]="newCandidate.subunitId" 
-              (change)="onSubUnitChange(newCandidate.subunitId)" [disabled]="editable" required>
+              (change)="onSubUnitChange(newCandidate.subunitId)" [disabled]="editable"  #subunitId="ngModel" required>
                 <mat-option *ngFor="let subUnit of allSubUnits;let i = index" [value]="subUnit.id">
                     {{subUnit.name}}
                 </mat-option>
               </mat-select>
             </mat-form-field>
+            <div *ngIf="subunitId.errors && (subunitId.dirty || subunitId.touched)" class="color-red m-btm5" >
+              <div [hidden]="!subunitId.errors.required"> Subunit Must be Required.</div>
+            </div>
         </div>
 
         <div>
           <mat-form-field class="width100 ">
             <input matInput [matDatepicker]="picker" [disabled]="readOnly" placeholder="Select Date Of Birth"
             name="establishedDate" [max]="maxDate"
-            [(ngModel)]="newCandidate.candDob" id="candDob" #candDob='ngModel'>
+            [(ngModel)]="newCandidate.candDob" id="candDob" #candDob='ngModel' required>
             <mat-datepicker-toggle matSuffix [for]="picker" [disabled]="readOnly"></mat-datepicker-toggle>
             <mat-datepicker touchUi="true" [disabled]="disableDate" #picker></mat-datepicker>
           </mat-form-field>
+          <div *ngIf="candDob.errors && (candDob.dirty || candDob.touched)" class="color-red m-btm5" >
+            <div [hidden]="!candDob.errors.required"> DOB Must be Required(mm/dd/yyyy).</div>
+          </div>
         </div>
 
         <div>
             <!-- <div class="col-lg-6 col-md-6 upload-box"> -->
           <label>Upload Profile Picture</label>
           <input type="file" (change)="uploadDatasource($event)" name="datasourcelistdata" class="inputfile" 
-          id="datasourcelistdata" [disabled]="editable" accept=".png,.jpeg">
+          id="datasourcelistdata" [disabled]="editable" accept=".png,.jpeg" required>
             <!-- </div> -->
         </div>
 
@@ -72,26 +84,35 @@
         <div>
           <mat-form-field class="width100">
             <input matInput placeholder="Enter Candidate Name" id="candName" name="candName"
-            [(ngModel)]="newCandidate.candName" [disabled]="readOnly" required>
+            [(ngModel)]="newCandidate.candName" [disabled]="readOnly" #candName='ngModel' required>
           </mat-form-field>
+          <div *ngIf="candName.errors && (candName.dirty || candName.touched)" class="color-red m-btm5" >
+            <div [hidden]="!candName.errors.required"> Name must be Required.</div>
+          </div>
         </div>
 
         <div>
           <mat-form-field class="width100">
             <mat-select name="rank" placeholder="Select Rank" [(ngModel)]="newCandidate.rankId" 
-            (change)="onRankChange(newCandidate.rankId)" [disabled]="editable" required>
+            (change)="onRankChange(newCandidate.rankId)" [disabled]="editable" #rankId='ngModel' required>
               <mat-option *ngFor="let rank of allRanks;let i = index" [value]="rank.id">
                   {{rank.name}}
               </mat-option>
             </mat-select>
           </mat-form-field>
+          <div *ngIf="rankId.errors && (rankId.dirty || rankId.touched)" class="color-red m-btm5" >
+            <div [hidden]="!rankId.errors.required"> Rank Must be Required.</div>
+          </div>
         </div>
 
         <div *ngIf="userName">
           <mat-form-field class="width100">
             <input matInput placeholder="Age" id="age" name="age"
-            [(ngModel)]="newCandidate.age" [disabled]="readOnly">
+            [(ngModel)]="newCandidate.age" [disabled]="readOnly" #age='ngModel'>
           </mat-form-field>
+          <div *ngIf="age.errors && (age.dirty || age.touched)" class="color-red m-btm5" >
+            <div [hidden]="!age.errors.required"> Age Must be Required.</div>
+          </div>
         </div>
 
         <div>
@@ -99,11 +120,14 @@
                 <span>{{gender.name}} <input type="radio" class="" name="genderq" [(ngModel)]="newCandidate.genderCode" (change)="onSelectionChange(gender)" [value]="gender.value"></span>
             </div> -->
 
-          <mat-radio-group  class="example-radio-group" name="genderq" [disabled]="readOnly" [(ngModel)]="newCandidate.genderCode" (change)="onSelectionChange(newCandidate.genderCode)">
+          <mat-radio-group  class="example-radio-group" name="genderq" [disabled]="readOnly" [(ngModel)]="newCandidate.genderCode" (change)="onSelectionChange(newCandidate.genderCode)" #gender='ngModel' required>
               <mat-radio-button style="margin-left:10px;"  class="example-radio-button"  *ngFor="let gender of genders" id={{gender.name}} [value]="gender.value">
                   {{gender.name}}
             </mat-radio-button>
           </mat-radio-group>
+          <div *ngIf="gender.errors && (gender.dirty || gender.touched)" class="color-red m-btm5" >
+            <div [hidden]="!gender.errors.required"> Gender Must be Required.</div>
+          </div>
         </div>
       </div>
       
