@@ -156,6 +156,7 @@
     </div>
     <div *ngIf="newCandidate.barcodeUrl" class="candidate-pic col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-xs-12">
       <img style="height:150px;width:225px;" [src]="newCandidate.barcodeUrl" alt="Candidate Profile Pic">
+      <button type="btn" (click)="printImage(newCandidate.barcodeUrl)">Print</button>
     </div>
   </div>
 </div>

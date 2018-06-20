@@ -16,8 +16,8 @@ export class SuperAdminSettingsService {
     .map((res: Response) => res);
   }
 
-  getAllDashboardData() {
-    return this.httpClient.get(AppSettings.API_ENDPOINT + `Canditates/getDashBoardDetails`)
+  getAllDashboardData(reportDate) {
+    return this.httpClient.get(AppSettings.API_ENDPOINT + `Canditates/getDashBoardDetails?dashboardDate=` + reportDate)
     .map((res: Response) => res);
   }
 

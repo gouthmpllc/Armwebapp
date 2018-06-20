@@ -178,21 +178,19 @@ export class CreateCandidateComponent implements OnInit {
   }
 
   onRankCatChange(id) {
+    this.newCandidate.rankId = '';
+    for (let i = 0; i < this.allRankCategories.length; i++) {
+      if (id === this.allRankCategories[i].id) {
+        this.rankCatName = this.allRankCategories[i].name;
+        this.rankCatId = this.allRankCategories[i].id;
+        // return;
+      }
+    }
 
-    this.rankCatName = '';
-    this.rankCatId = '';
-
-    // for (let i = 0; i < this.allRankCategories.length; i++) {
-    //   if (id === this.allRankCategories[i].id) {
-    //     this.rankCatName = this.allRankCategories[i].name;
-    //     this.rankCatId = this.allRankCategories[i].id;
-    //     return;
-    //   }
-    // }
-
-    console.log('rank selected'+id)
+    // console.log('rank selected'+id)
     this.rankEnable = !this.rankEnable;
-
+    this.rank = '';
+    this.rankId = '';
     this.allRanks = [];
     for (let index = 0; index < this.dupRanks.length; index++) {
       if (this.dupRanks[index].rankCatgId === id) {
@@ -217,22 +215,26 @@ export class CreateCandidateComponent implements OnInit {
   }
 
   createCandidate() {
-
-    if (this.formData && this.fileName) {
-      this.adminListService.uploadPic(this.formData).subscribe(
-        (data: any) => {
-          console.log(JSON.stringify(data));
-          this.candidateUploadLocResp = data.data.result.files.file[0].providerResponse.location;
-          this.postCandidate();
-          this.fileName = '';
-          this.formData = new FormData();
-          // console.log(JSON.stringify(this.newCandidate));
-        },
-        error => {
-          console.log(JSON.stringify(error));
-        });
+    this.newCandidate.age = this.calculateAge(this.newCandidate.candDob);
+    if (this.newCandidate.age > 16 && this.newCandidate.age < 60) {
+      if (this.formData && this.fileName) {
+        this.adminListService.uploadPic(this.formData).subscribe(
+          (data: any) => {
+            console.log(JSON.stringify(data));
+            this.candidateUploadLocResp = data.data.result.files.file[0].providerResponse.location;
+            this.postCandidate();
+            this.fileName = '';
+            this.formData = new FormData();
+          },
+          error => {
+            console.log(JSON.stringify(error));
+          });
+      } else {
+        this.postCandidate();
+      }
     } else {
-      this.postCandidate();
+      alert('Candidate`s Age should be between 16 Years and 60 Years');
+      this.newCandidate.age = '';
     }
 
   }
@@ -255,7 +257,6 @@ export class CreateCandidateComponent implements OnInit {
     this.newCandidate.status = 'active';
     this.newCandidate.createdByArmy = this.loginData.data.username;
     delete this.newCandidate.rankCat;
-    this.newCandidate.age = this.calculateAge(this.newCandidate.candDob);
     console.log(JSON.stringify(this.newCandidate));
     this.adminListService.createCandidate(this.newCandidate).subscribe(
       (data1: any) => {
@@ -462,4 +463,11 @@ export class CreateCandidateComponent implements OnInit {
     return resultWiseData;
   }
 
+  printImage(imgUrl) {
+    if (imgUrl) {
+      let win = window.open('');
+      win.document.write('<img src="' + imgUrl + '" onload="window.print();window.close()" />');
+      win.focus();
+    }
+  }
 }

@@ -193,6 +193,9 @@
               <thead>
                 <tr>
                   <th colspan="2">
+                    <mfDefaultSorter>S.No</mfDefaultSorter>
+                  </th>
+                  <th colspan="2">
                     <mfDefaultSorter by="candTestDate">Test Date</mfDefaultSorter>
                   </th>
                   <th colspan="2">
@@ -223,9 +226,9 @@
                   <th colspan="2">
                       <mfDefaultSorter by="createdBy">Conducted By</mfDefaultSorter>
                     </th>
-                  <th colspan="2">
+                  <!-- <th colspan="2">
                     <mfDefaultSorter by="createdAt">Created Date</mfDefaultSorter>
-                  </th>
+                  </th> -->
                  
                 </tr>
                 <tr>
@@ -234,9 +237,12 @@
               </thead>
 
               <tbody>
-                <tr *ngFor="let admin of mf.data" class="notfirst cursor-pointer">
+                <tr *ngFor="let admin of mf.data;let i =index" class="notfirst cursor-pointer">
                   <td colspan="2">
-                    {{admin.candTestDate | date}}
+                    {{i}}
+                  </td>
+                  <td colspan="2">
+                    {{admin.candTestDate | date}} | {{admin.candTestDate | date:'shortTime'}}
                   </td>
                   <td colspan="2">
                     {{admin.armyNumber}}
@@ -265,9 +271,9 @@
                   <td colspan="2">
                       {{admin.conductedBy}}
                     </td>
-                  <td colspan="2">
+                  <!-- <td colspan="2">
                     {{admin.createdAt | date}}
-                  </td>
+                  </td> -->
                   
                 </tr>
               </tbody>

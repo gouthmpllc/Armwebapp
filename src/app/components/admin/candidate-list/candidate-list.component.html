@@ -23,6 +23,9 @@
                 <thead>               
                     <tr>
                         <th colspan="2">
+                            <mfDefaultSorter>S.No</mfDefaultSorter>
+                          </th>
+                        <th colspan="2">
                             <mfDefaultSorter by="candArmyNum">Army Number</mfDefaultSorter>
                           </th>
                       
@@ -54,8 +57,10 @@
                   </thead>
   
                   <tbody>
-                      <tr *ngFor="let candidate of mf.data" class="notfirst">
-                          
+                      <tr *ngFor="let candidate of mf.data;let i=index;" class="notfirst">
+                          <td colspan="2">
+                            {{i}}
+                          </td>
                           <td colspan="2">
                             <span class="cursor-pointer" *ngIf="candidate.candArmyNum">
                                <a (click)="candidateEdit(candidate)">{{candidate.candArmyNum}}</a>
@@ -104,7 +109,7 @@
                   </tbody>
                   <tfoot>
                     <tr>
-                      <td colspan="14">
+                      <td colspan="16">
                         <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
                       </td>
                     </tr>

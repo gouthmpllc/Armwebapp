@@ -22,6 +22,10 @@
             [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
               <thead>               
                   <tr>
+
+                    <th colspan="2">
+                        <mfDefaultSorter>S.No</mfDefaultSorter>
+                      </th>
                     
                     <th colspan="2">
                       <mfDefaultSorter by="name">Army Number</mfDefaultSorter>
@@ -47,7 +51,10 @@
                 </thead>
 
                 <tbody>
-                    <tr *ngFor="let admin of mf.data" class="notfirst">
+                    <tr *ngFor="let admin of mf.data;let i = index;" class="notfirst">
+                      <td colspan="2">
+                        {{i}}
+                      </td>
                         <td colspan="2">
                           {{admin.username}}
                         </td>
@@ -75,7 +82,7 @@
                 </tbody>
                 <tfoot>
                   <tr>
-                    <td colspan="11">
+                    <td colspan="13">
                       <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
                     </td>
                   </tr>

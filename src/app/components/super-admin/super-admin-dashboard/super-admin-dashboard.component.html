@@ -1,46 +1,66 @@
-<div>
-    <div class="candidateCntr">
-      <div class="">
-        <img src="../assets/images/candidates.png" class="img-responsive dtcell">
-      </div>
-      <div class="tcell12">
-        <div *ngIf="allData" class="f-size24">{{allData.totalCanditates}}</div>
-        <div class="color-ccc f-size18">
-          Total Candidates
-        </div>
-      </div>
+<div class="col-lg-12 padding0 col-md-12" style="margin-top:10px;">
+  <div class="col-lg-6 col-md-6" style="margin-top: 15px;">
+    <div class="col-lg-4">
+      <h5 class="" style="font-weight: 600;font-size: 16px;">As on <span *ngIf="reportDate">{{reportDate | date}}</span></h5>
     </div>
-    <div class="candidateCntr">
-      <div class="">
-        <img src="../assets/images/admin_icon.png" class="img-responsive dtcell">
-      </div>
-      <div class="tcell12">
-        <div *ngIf="allData" class="f-size24">{{allData.totalAdmins}}</div>
-        <div class="color-ccc f-size18">
-          No. of Admins
-        </div>
-      </div>
+    <div class="col-lg-6 col-md-6">
+      <mat-form-field class="width100 ">
+        <input matInput [matDatepicker]="picker" placeholder="Select Date" name="reportDate" [max]="maxDate" [(ngModel)]="reportDate"
+          id="fromDate" #fDate='ngModel' >
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker touchUi="true" [disabled]="disableDate" #picker></mat-datepicker>
+      </mat-form-field>
     </div>
-    <!-- <div class="candidateCntr">
-      <div class="">
-        <img src="../assets/images/test results.png" class="img-responsive dtcell">
-      </div>
-      <div class="tcell12">
-        <div *ngIf="allData" class="f-size24">{{allData.totaAvg}}%</div>
-        <div class="color-ccc f-size18">
-         Test Results
-        </div>
-      </div>
-    </div> -->
-    <!-- <div class="candidateCntr">
-      <div class="tcell12">
-        <div *ngIf="currentTime" id="txt" class="f-size24">{{currentTime}}</div>
-        <div class="color-ccc f-size18">
-          {{currentDate | date}}
-        </div>
-      </div>
-    </div> -->
+    <div class="col-lg-2 col-md-2">
+      <button class="btn" (click)="generateDateWise()">Generate</button>
+    </div>
   </div>
+  <div class="col-lg-6 col-md-6">
+          <div class="candidateCntr col-lg-6 col-md-6">
+            <div class="">
+              <img src="../assets/images/candidates.png" class="img-responsive dtcell">
+            </div>
+            <div class="tcell12">
+              <div *ngIf="allData" class="f-size24">{{allData.totalCanditates}}</div>
+              <div class="color-ccc f-size18">
+                Total Candidates
+              </div>
+            </div>
+          </div>
+          <div class="candidateCntr  col-lg-6 col-md-6">
+            <div class="">
+              <img src="../assets/images/admin_icon.png" class="img-responsive dtcell">
+            </div>
+            <div class="tcell12">
+              <div *ngIf="allData" class="f-size24">{{allData.totalAdmins}}</div>
+              <div class="color-ccc f-size18">
+                No. of Admins
+              </div>
+            </div>
+          </div>
+          <!-- <div class="candidateCntr">
+            <div class="">
+              <img src="../assets/images/test results.png" class="img-responsive dtcell">
+            </div>
+            <div class="tcell12">
+              <div *ngIf="allData" class="f-size24">{{allData.totaAvg}}%</div>
+              <div class="color-ccc f-size18">
+               Test Results
+              </div>
+            </div>
+          </div> -->
+          <!-- <div class="candidateCntr">
+            <div class="tcell12">
+              <div *ngIf="currentTime" id="txt" class="f-size24">{{currentTime}}</div>
+              <div class="color-ccc f-size18">
+                {{currentDate | date}}
+              </div>
+            </div>
+          </div> -->
+        
+  </div>
+</div>
+
   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mtop40">
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
       <div class="col-lg-12" *ngIf="allData">

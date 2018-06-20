@@ -46,12 +46,14 @@ export class SuperAdminDashboardComponent implements OnInit, OnDestroy {
   public sortBy = 'createdAt';
   public sortOrder = 'desc';
   public timerInterval: any;
+  reportDate: any;
   constructor(private superAdminSettingsService: SuperAdminSettingsService, private adminListService: AdminListService,
     private cookieService: CookieService, private candidateListService: CandidateListService) {
   }
 
   ngOnInit() {
     this.loginData = this.cookieService.getObject('loginResponce');
+    this.loadPreviousDate();
     this.loadDashBoardData();
     // this.startTime();
     // this.timerInterval = setInterval(() => {
@@ -70,6 +72,10 @@ export class SuperAdminDashboardComponent implements OnInit, OnDestroy {
 
   }
 
+  loadPreviousDate() {
+    this.reportDate = (new Date().getMonth() + 1) + '-' + (new Date().getDate() - 1) + '-' + (new Date().getFullYear());
+  }
+
   loadCandidates() {
     this.candidateListService.getAllCandidateList().subscribe(
       (data: any) => {
@@ -84,7 +90,7 @@ export class SuperAdminDashboardComponent implements OnInit, OnDestroy {
 
   // formatting;
   loadDashBoardData() {
-    this.superAdminSettingsService.getAllDashboardData().subscribe(
+    this.superAdminSettingsService.getAllDashboardData(this.reportDate).subscribe(
       (data: any) => {
         console.log(JSON.stringify(data));
         this.allData = data.data.data;
@@ -97,6 +103,11 @@ export class SuperAdminDashboardComponent implements OnInit, OnDestroy {
         console.log(JSON.stringify(error));
         // this.toastr.error('Invalid Login Credentials!', 'Oops!');
       });
+  }
+
+  generateDateWise() {
+    
+    this.loadDashBoardData();
   }
 
   formatTo(data, catName) {
