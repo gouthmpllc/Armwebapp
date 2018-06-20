@@ -243,37 +243,43 @@ export class SuperAdminSettingsComponent implements OnInit {
   loadoptionGroupDataWithChecked(optionArray) {
     this.testTypeResultOptions = this.dupTestTypeOption;
     this.optionGroup = [];
-    this.optionGroup = optionArray;
-    if (optionArray.length > 0) {
-      for (let i = 0; i < this.testTypeResultOptions.length; i++) {
-        for (let j = 0; j < optionArray.length; j++) {
-          if (optionArray[j] === this.testTypeResultOptions[i].id) {
-            this.testTypeResultOptions[i].checked = true;
-            break;
-          } else {
-            this.testTypeResultOptions[i].checked = false;
+    if(optionArray) {
+      this.optionGroup = optionArray;
+      if (optionArray.length > 0) {
+        for (let i = 0; i < this.testTypeResultOptions.length; i++) {
+          for (let j = 0; j < optionArray.length; j++) {
+            if (optionArray[j] === this.testTypeResultOptions[i].id) {
+              this.testTypeResultOptions[i].checked = true;
+              break;
+            } else {
+              this.testTypeResultOptions[i].checked = false;
+            }
           }
         }
       }
     }
+
   }
 
   loadageGroupDataWithChecked(agesArray) {
     this.ageRanges = this.dupAgeTypeOption;
     this.ageGroup = [];
-    this.ageGroup = agesArray;
-    if (agesArray.length > 0) {
-      for (let i = 0; i < this.ageRanges.length; i++) {
-        for (let j = 0; j < agesArray.length; j++) {
-          if (agesArray[j] === this.ageRanges[i].id) {
-            this.ageRanges[i].checked = true;
-            break;
-          } else {
-            this.ageRanges[i].checked = false;
+    if (agesArray) {
+      this.ageGroup = agesArray;
+      if (agesArray.length > 0) {
+        for (let i = 0; i < this.ageRanges.length; i++) {
+          for (let j = 0; j < agesArray.length; j++) {
+            if (agesArray[j] === this.ageRanges[i].id) {
+              this.ageRanges[i].checked = true;
+              break;
+            } else {
+              this.ageRanges[i].checked = false;
+            }
           }
         }
       }
     }
+
   }
 
   updateTestType(addTestTypeForm: NgForm) {

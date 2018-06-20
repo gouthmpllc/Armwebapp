@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AdminListService } from '../../../services/superAdmin/admin-list-service/admin-list.service';
 import { SuperAdminSettingsService } from '../../../services/superAdmin/settings-service/super-admin-settings.service';
 import { Angular5Csv } from 'angular5-csv/Angular5-csv';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-super-admin-reports',
@@ -9,6 +10,8 @@ import { Angular5Csv } from 'angular5-csv/Angular5-csv';
   styleUrls: ['./super-admin-reports.component.css']
 })
 export class SuperAdminReportsComponent implements OnInit {
+  testTypeResultOptions: any = [];
+  dupTestTypeOption: any = [];
   displayTwoDate: boolean;
   displayOneDate: boolean;
   dateWiseStatus: boolean;
@@ -27,8 +30,8 @@ export class SuperAdminReportsComponent implements OnInit {
   testTypes: any = [];
   allRankCategories: any = [];
   dupRanks: any = [];
-  rankCategory: any = '';
-  selectedcCategoryId: any = '';
+  rankCategory: any = [];
+  selectedcCategoryId: any = [];
   dupTestTypes: any = [];
   fromDate: any;
   toDate: any;
@@ -39,6 +42,7 @@ export class SuperAdminReportsComponent implements OnInit {
   public sortBy = 'createdAt';
   public sortOrder = 'desc';
   searchQuery: string;
+  resultArray: any = [];
   constructor(private adminListService: AdminListService, private superAdminSettingsService: SuperAdminSettingsService) { }
 
   ngOnInit() {
@@ -48,7 +52,10 @@ export class SuperAdminReportsComponent implements OnInit {
     this.loadTestTypes();
     this.loadArmyRanks();
     this.loadRankCategorys();
+    this.loadTestTypeResultOptions();
     this.categoryStatus = true;
+    this.displayOneDate = true;
+    this.raId = 1;
   }
 
   loadCategorywiseReports(catArray, rkArray) {
@@ -66,6 +73,44 @@ export class SuperAdminReportsComponent implements OnInit {
       error => {
         console.log(JSON.stringify(error));
       });
+  }
+
+  loadTestTypeResultOptions() {
+    this.superAdminSettingsService.getTestTypeResultOptions().subscribe(
+      (data: any) => {
+        // console.log(JSON.stringify(data));
+        this.dupTestTypeOption = data.data;
+        this.testTypeResultOptions = data.data;
+      },
+      error => {
+        console.log(JSON.stringify(error));
+        // this.toastr.error('Invalid Login Credentials!', 'Oops!');
+      });
+  }
+
+  loadFilteredData(ranCatogs, ranks, subunits, testCategories, testTypes, fDate, tDate, resultArray) {
+    this.data = [];
+    this.adminListService.getAllFilteredData(ranCatogs, ranks, subunits, testCategories, testTypes,
+      fDate, tDate, resultArray).subscribe(
+      (data: any) => {
+        // console.log(JSON.stringify(data));
+        this.data = data.data.data;
+        if (this.data.length > 0) {
+          // alert('Generated successfully');
+        } else {
+          alert('No Data Found');
+        }
+      },
+      error => {
+        console.log(JSON.stringify(error));
+      });
+  }
+
+  resetAll(FilterForm: NgForm) {
+    this.data = [];
+    this.resetFilters();
+    this.loadCategorywiseReports([], []);
+    FilterForm.resetForm();
   }
 
   loadTestTypes() {
@@ -123,13 +168,20 @@ export class SuperAdminReportsComponent implements OnInit {
     this.rankArray = [];
     this.allRanks = this.dupRanks;
     let result: any = [];
-    this.allRanks.filter(rank => {
-      if (id === rank.rankCatgId) {
-        result.push(rank);
-      }
-    });
-    this.allRanks = [];
-    this.allRanks = result;
+    if (id.length == 0) {
+      this.allRanks = this.dupRanks;
+
+    } else {
+      this.allRanks.filter(rank => {
+        if (id.indexOf(rank.rankCatgId) >= 0) {
+          result.push(rank);
+        }
+      });
+      this.allRanks = [];
+      this.allRanks = result;
+    }
+
+
     // console.log(JSON.stringify(this.allRanks));
   }
 
@@ -137,14 +189,20 @@ export class SuperAdminReportsComponent implements OnInit {
     this.typeArray = [];
     this.testTypes = this.dupTestTypes;
     let result: any = [];
-    this.testTypes.filter(type => {
-      if (id === type.catogiryId) {
-        result.push(type);
-      }
-    });
-    this.testTypes = [];
-    this.testTypes = result;
-    console.log(JSON.stringify(this.allRanks));
+    console.log('test cat Ids ' + JSON.stringify(id));
+
+    if (id.length > 0) {
+      this.testTypes.filter(type => {
+        if (id.indexOf(type.catogiryId) >= 0) {
+          result.push(type);
+        }
+      });
+      this.testTypes = [];
+      this.testTypes = result;
+    } else {
+      this.testTypes = this.dupTestTypes;
+    }
+
   }
 
   loadRankCategorys() {
@@ -252,13 +310,14 @@ export class SuperAdminReportsComponent implements OnInit {
     this.categoryArray = [];
     this.rankArray = [];
     this.typeArray = [];
-    this.rankCategory = '';
-    this.selectedcCategoryId = '';
+    this.resultArray = [];
+    this.rankCategory = [];
+    this.selectedcCategoryId = [];
     this.wingStatus = false;
     this.categoryStatus = false;
     this.typeStatus = false;
-    this.dateWiseStatus = false;
-    this.displayOneDate = false;
+    this.displayOneDate = true;
+    this.raId = 1;
     this.displayTwoDate = false;
     this.fromDate = '';
     this.toDate = '';
@@ -274,7 +333,13 @@ export class SuperAdminReportsComponent implements OnInit {
   // }
 
   geneeateCategoryWiseFilterArray() {
-    this.loadCategorywiseReports(this.rankCategory, this.rankArray);
+    // this.loadCategorywiseReports(this.rankCategory, this.rankArray);
+    if (!this.toDate) {
+      this.toDate = this.fromDate;
+    }
+    this.loadFilteredData(this.rankCategory, this.rankArray, this.subArray, this.selectedcCategoryId,
+      this.typeArray, this.fromDate, this.toDate, this.resultArray);
+
   }
 
   geneeateTestTypeWiseFilterArray() {
@@ -285,7 +350,10 @@ export class SuperAdminReportsComponent implements OnInit {
     if (!this.toDate) {
       this.toDate = this.fromDate;
     }
-    this.loaddatewiseReports(this.fromDate, this.toDate);
+    this.loadFilteredData(this.rankCategory, this.rankArray, this.subArray, this.selectedcCategoryId,
+      this.typeArray, this.fromDate, this.toDate, this.resultArray);
+
+    // this.loaddatewiseReports(this.fromDate, this.toDate);
   }
 
   generateCsv() {

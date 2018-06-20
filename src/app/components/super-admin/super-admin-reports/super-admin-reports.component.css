@@ -40,3 +40,9 @@ input[type='checkbox']:checked:after
 .category{
     margin-top: 20px;
 }
+
+.rt-btn {
+    background: #2a2420;
+    color: #fff;
+    text-align: center;
+}
