@@ -13,7 +13,7 @@ export class CandidateListComponent implements OnInit {
   displayAdminList: boolean;
   loginData: any;
   candidateQuery: string;
-
+  loadingStatus: boolean;
   public rowsOnPage = 10;
   public sortBy = 'createdAt';
   public sortOrder = 'desc';
@@ -25,9 +25,11 @@ export class CandidateListComponent implements OnInit {
   }
 
   loadAllCandidates() {
+    this.loadingStatus = true;
     this.candidateListService.getAllCandidateList().subscribe(
       (data: any) => {
         // console.log(JSON.stringify(data));
+        this.loadingStatus = false;
         this.data = data.data;
       },
       error => {

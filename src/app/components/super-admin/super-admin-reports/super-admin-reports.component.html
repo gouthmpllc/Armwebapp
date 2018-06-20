@@ -204,7 +204,7 @@
                   </svg>
             </div>
 
-            <table *ngIf="!loadingStatus" class="table table-striped" id="myProgram" [mfData]="data | reportsSearch : searchQuery" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage"
+            <table class="table table-striped" *ngIf="!loadingStatus" id="myProgram" [mfData]="data | reportsSearch : searchQuery" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage"
               [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
               <thead>
                 <tr>
@@ -255,7 +255,7 @@
               <tbody>
                 <tr *ngFor="let admin of mf.data;let i =index" class="notfirst cursor-pointer">
                   <td colspan="2">
-                    {{i}}
+                    {{i+1}}
                   </td>
                   <td colspan="2">
                     {{admin.candTestDate | date}} | {{admin.candTestDate | date:'shortTime'}}

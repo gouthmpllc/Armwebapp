@@ -14,6 +14,7 @@ export class AdminListComponent implements OnInit {
   public rowsOnPage = 10;
   public sortBy = 'createdAt';
   public sortOrder = 'desc';
+  loadingStatus: boolean;
   constructor(private adminListService: AdminListService, private router: Router) { }
 
   ngOnInit() {
@@ -21,9 +22,11 @@ export class AdminListComponent implements OnInit {
   }
 
   loadAllAdmins() {
+    this.loadingStatus = true;
     this.adminListService.getAllAdminList().subscribe(
       (data: any) => {
         // console.log(JSON.stringify(data));
+        this.loadingStatus = false;
         this.data = data.data;
       },
       error => {
