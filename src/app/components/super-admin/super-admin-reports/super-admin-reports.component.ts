@@ -33,7 +33,7 @@ export class SuperAdminReportsComponent implements OnInit {
   fromDate: any;
   toDate: any;
   maxDate = new Date();
-  dateRa = [{name: 'Date', value: 1}, {name: 'Date Range', value: 2}];
+  dateRa = [{ name: 'Date', value: 1 }, { name: 'Date Range', value: 2 }];
   raId: any;
   public rowsOnPage = 10;
   public sortBy = 'createdAt';
@@ -65,7 +65,7 @@ export class SuperAdminReportsComponent implements OnInit {
       },
       error => {
         console.log(JSON.stringify(error));
-    });
+      });
   }
 
   loadTestTypes() {
@@ -93,6 +93,7 @@ export class SuperAdminReportsComponent implements OnInit {
       });
   }
 
+
   loadSubUnits() {
     this.adminListService.getAllSubUnits().subscribe(
       (data: any) => {
@@ -102,7 +103,7 @@ export class SuperAdminReportsComponent implements OnInit {
       error => {
         console.log(JSON.stringify(error));
         // this.toastr.error('Invalid Login Credentials!', 'Oops!');
-    });
+      });
   }
 
   loadArmyRanks() {
@@ -115,7 +116,7 @@ export class SuperAdminReportsComponent implements OnInit {
       error => {
         console.log(JSON.stringify(error));
         // this.toastr.error('Invalid Login Credentials!', 'Oops!');
-    });
+      });
   }
 
   setRanks(id) {
@@ -155,7 +156,7 @@ export class SuperAdminReportsComponent implements OnInit {
       error => {
         console.log(JSON.stringify(error));
         // this.toastr.error('Invalid Login Credentials!', 'Oops!');
-    });
+      });
   }
 
   loadWingwiseReports(subUnit) {
@@ -172,7 +173,7 @@ export class SuperAdminReportsComponent implements OnInit {
       },
       error => {
         console.log(JSON.stringify(error));
-    });
+      });
   }
 
   loadTestTypewiseReports(catId, typeArray) {
@@ -189,7 +190,7 @@ export class SuperAdminReportsComponent implements OnInit {
       },
       error => {
         console.log(JSON.stringify(error));
-    });
+      });
   }
 
   loaddatewiseReports(fDate, tDate) {
@@ -206,7 +207,7 @@ export class SuperAdminReportsComponent implements OnInit {
       },
       error => {
         console.log(JSON.stringify(error));
-    });
+      });
   }
 
   setCategoryWiseReports() {
@@ -297,9 +298,13 @@ export class SuperAdminReportsComponent implements OnInit {
       useBom: true,
       noDownload: false,
       headers: ['armyNumber', 'Name', 'gender', 'age', 'sNo',
-      'rank', 'subunit', 'catogiryName', 'testName', 'testResult', 'candTestDate', 'createdAt']
+        'rank', 'subunit', 'catogiryName', 'testName', 'testResult', 'candTestDate', 'createdAt']
     };
     new Angular5Csv(this.data, 'report', options);
+  }
+
+  filterByRank() {
+    console.log('clicked on filter By Rank')
   }
 
 }

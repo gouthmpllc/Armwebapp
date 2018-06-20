@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CandidateListService } from '../../../services/admin/candidate-list-service/candidate-list.service';
 import { Router } from '@angular/router';
-import {CookieService} from 'angular2-cookie/core';
+import { CookieService } from 'angular2-cookie/core';
 
 @Component({
   selector: 'app-candidate-list',
@@ -33,7 +33,7 @@ export class CandidateListComponent implements OnInit {
       error => {
         console.log(JSON.stringify(error));
         // this.toastr.error('Invalid Login Credentials!', 'Oops!');
-    });
+      });
   }
 
   setAdminStatus() {
@@ -51,7 +51,7 @@ export class CandidateListComponent implements OnInit {
       if (this.loginData.data.role === 'SUPERADMIN') {
         this.router.navigate(['superAdmin/candidateList', selCandidate.candArmyNum]);
       } else if (this.loginData.data.role === 'ADMIN') {
-        this.router.navigate(['admin/candidateList', selCandidate.candArmyNum]);
+        this.router.navigate(['superAdmin/candidateList', selCandidate.candArmyNum]);
       }
     }
   }
@@ -78,7 +78,7 @@ export class CandidateListComponent implements OnInit {
         },
         error => {
           console.log(JSON.stringify(error));
-      });
+        });
     } else {
       return false;
     }
@@ -97,7 +97,7 @@ export class CandidateListComponent implements OnInit {
         } else if (message === 'Activated') {
           selCandiate.status = 'active';
         }
-    });
+      });
   }
 
 }
