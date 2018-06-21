@@ -61,10 +61,12 @@ export class SuperAdminReportsComponent implements OnInit {
   }
 
   loadCategorywiseReports(catArray, rkArray) {
+    this.loadingStatus = true;
     this.data = [];
     this.adminListService.getAllCategoryWiseReports(catArray, rkArray).subscribe(
       (data: any) => {
         // console.log(JSON.stringify(data));
+        this.loadingStatus = false;
         this.data = data.data.data;
         if (this.data.length > 0) {
           // alert('Generated successfully');
@@ -114,7 +116,8 @@ export class SuperAdminReportsComponent implements OnInit {
     this.data = [];
     this.resetFilters();
     this.loadCategorywiseReports([], []);
-    FilterForm.resetForm();
+    // FilterForm.resetForm();
+
   }
 
   loadTestTypes() {

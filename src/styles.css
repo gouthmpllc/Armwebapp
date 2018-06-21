@@ -118,7 +118,7 @@
   /*
   Set the color of the icon
 */
-svg path,
-svg rect{
+.loader--style3 svg path,
+.loader--style3 svg rect{
   fill: #FF6700;
 }

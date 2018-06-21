@@ -154,6 +154,7 @@ export class CreateAdminComponent implements OnInit {
     this.newAdmin['rankId'] = this.ranObj.id;
     // this.newAdmin['appointmentId'] = this.appointmentObj.id;
     this.newAdmin['profilePic'] = this.candidateUploadLocResp;
+    this.newAdmin['status'] = 'active';
     console.log(JSON.stringify(this.newAdmin));
     this.adminListService.createAdmin(this.newAdmin).subscribe(
       (data: any) => {
