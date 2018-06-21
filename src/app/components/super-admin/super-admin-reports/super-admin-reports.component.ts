@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AdminListService } from '../../../services/superAdmin/admin-list-service/admin-list.service';
 import { SuperAdminSettingsService } from '../../../services/superAdmin/settings-service/super-admin-settings.service';
 import { Angular5Csv } from 'angular5-csv/Angular5-csv';
-import { NgForm } from '@angular/forms';
+import { NgForm, NgModel } from '@angular/forms';
 
 @Component({
   selector: 'app-super-admin-reports',
@@ -346,7 +346,13 @@ export class SuperAdminReportsComponent implements OnInit {
     }
     console.log(this.fromDate);
     console.log(this.toDate);
-    this.loadFilteredData(this.rankCategory, this.rankArray, this.subArray, this.selectedcCategoryId,
+    let result = [];
+    if (this.subArray.length > 0) {
+      for (let i = 0; i < this.subArray.length; i++ ) {
+        result.push(this.subArray[i].id);
+      }
+    }
+    this.loadFilteredData(this.rankCategory, this.rankArray, result, this.selectedcCategoryId,
       this.typeArray, this.fromDate, this.toDate, this.resultArray);
 
   }
@@ -362,7 +368,14 @@ export class SuperAdminReportsComponent implements OnInit {
     if (!this.toDate && this.raId === 1) {
       this.toDate = this.fromDate;
     }
-    this.loadFilteredData(this.rankCategory, this.rankArray, this.subArray, this.selectedcCategoryId,
+    let result = [];
+    if (this.subArray.length > 0) {
+      for (let i = 0; i < this.subArray.length; i++ ) {
+        result.push(this.subArray[i].id);
+      }
+    }
+
+    this.loadFilteredData(this.rankCategory, this.rankArray, result, this.selectedcCategoryId,
       this.typeArray, this.fromDate, this.toDate, this.resultArray);
 
     // this.loaddatewiseReports(this.fromDate, this.toDate);
@@ -378,13 +391,27 @@ export class SuperAdminReportsComponent implements OnInit {
       useBom: true,
       noDownload: false,
       headers: ['armyNumber', 'Name', 'gender', 'age', 'sNo',
-        'rank', 'subunit', 'catogiryName', 'testName', 'testResult', 'candTestDate', 'createdAt']
+        'rank', 'subunit', 'catogiryName', 'testName', 'testResult', 'conductedBy' , 'candTestDate', 'createdAt']
     };
     new Angular5Csv(this.data, 'report', options);
   }
 
   filterByRank() {
-    console.log('clicked on filter By Rank')
+    console.log('clicked on filter By Rank');
+  }
+
+  equals(objOne, objTwo) {
+    if (typeof objOne !== 'undefined' && typeof objTwo !== 'undefined') {
+      return objOne.id === objTwo.id;
+    }
+  }
+
+  selectAll(select: NgModel, values, array) {
+    select.update.emit(values);
+  }
+
+  deselectAll(select: NgModel) {
+    select.update.emit([]);
   }
 
 }
