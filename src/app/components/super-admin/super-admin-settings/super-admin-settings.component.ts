@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { SuperAdminSettingsService } from '../../../services/superAdmin/settings-service/super-admin-settings.service';
 import { NgForm } from '@angular/forms';
 import { Router} from '@angular/router';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-super-admin-settings',
@@ -25,7 +26,7 @@ export class SuperAdminSettingsComponent implements OnInit {
   optionId: any = [];
   dupTestTypeOption: any = [];
   dupAgeTypeOption: any = [];
-  constructor(private superAdminSettingsService: SuperAdminSettingsService, private router: Router) { 
+  constructor(private superAdminSettingsService: SuperAdminSettingsService, private router: Router, public dialog: MatDialog) {
     this.router.routeReuseStrategy.shouldReuseRoute = function() {
       return false;
    };
@@ -195,7 +196,6 @@ export class SuperAdminSettingsComponent implements OnInit {
         error => {
           console.log(JSON.stringify(error));
           alert('Server Not Found');
-          // this.toastr.error('Invalid Login Credentials!', 'Oops!');
       });
     } else {
       return false;
@@ -322,21 +322,47 @@ export class SuperAdminSettingsComponent implements OnInit {
   }
 
   removeTestType(testType) {
-    if (confirm('Are You Sure?')) {
-      this.superAdminSettingsService.deleteTestType(testType).subscribe(
-        (data: any) => {
-          alert('Deleted Successfully');
-          this.loadTestTypes();
-        },
-        error => {
-          console.log(JSON.stringify(error));
-          alert('Server Not Found');
-          // this.toastr.error('Invalid Login Credentials!', 'Oops!');
+      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+        width: '250px',
+        data: testType
       });
-    } else {
-      return false;
-    }
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(result);
+        if (result) {
+          this.superAdminSettingsService.deleteTestType(testType).subscribe(
+            (data: any) => {
+              alert('Deleted Successfully');
+              this.loadTestTypes();
+            },
+            error => {
+              console.log(JSON.stringify(error));
+              alert('Server Not Found');
+          });
+        } else {
+          return false;
+        }
+      });
 
   }
 
+}
+
+
+@Component({
+  selector: 'app-confirm-dialog',
+  templateUrl: './confirm-dialog.html'
+  // providers: [EventStudentListComponent]
+})
+export class ConfirmDialogComponent {
+  deleteConfirm: boolean;
+
+  constructor(
+    public dialogRef: MatDialogRef<ConfirmDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
+  onNoClick(): void {
+    this.dialogRef.close();
+
+  }
 }

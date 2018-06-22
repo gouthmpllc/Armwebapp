@@ -17,12 +17,12 @@ import { SidebarComponent } from './components/shared/sidebar/sidebar.component'
 import { SuperAdminComponent } from './modules/super-admin/super-admin.component';
 import { AdminComponent } from './modules/admin/admin.component';
 import { SuperAdminDashboardComponent } from './components/super-admin/super-admin-dashboard/super-admin-dashboard.component';
-import { AdminListComponent } from './components/super-admin/admin-list/admin-list.component';
-import { SuperAdminSettingsComponent } from './components/super-admin/super-admin-settings/super-admin-settings.component';
+import { AdminListComponent, AdminConfirmDialogComponent } from './components/super-admin/admin-list/admin-list.component';
+import { SuperAdminSettingsComponent, ConfirmDialogComponent } from './components/super-admin/super-admin-settings/super-admin-settings.component';
 import { SuperAdminReportsComponent } from './components/super-admin/super-admin-reports/super-admin-reports.component';
 import { CreateAdminComponent } from './components/super-admin/admin-list/create-admin/create-admin.component';
 import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
-import { CandidateListComponent } from './components/admin/candidate-list/candidate-list.component';
+import { CandidateListComponent, CandidateConfirmDialogComponent } from './components/admin/candidate-list/candidate-list.component';
 import { CreateCandidateComponent } from './components/admin/candidate-list/create-candidate/create-candidate.component';
 
 // load landing page routes
@@ -70,7 +70,15 @@ import { ReportsSearchPipe } from './pipes/reports/reports-search.pipe';
     CreateCandidateComponent,
     AdminSearchPipe,
     CandidateSearchPipe,
-    ReportsSearchPipe
+    ReportsSearchPipe,
+    ConfirmDialogComponent,
+    AdminConfirmDialogComponent,
+    CandidateConfirmDialogComponent
+  ],
+  entryComponents: [
+    ConfirmDialogComponent,
+    AdminConfirmDialogComponent,
+    CandidateConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
