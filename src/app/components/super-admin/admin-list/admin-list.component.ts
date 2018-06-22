@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { AdminListService } from '../../../services/superAdmin/admin-list-service/admin-list.service';
 import { Router } from '@angular/router';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-admin-list',
@@ -15,7 +16,7 @@ export class AdminListComponent implements OnInit {
   public sortBy = 'createdAt';
   public sortOrder = 'desc';
   loadingStatus: boolean;
-  constructor(private adminListService: AdminListService, private router: Router) { }
+  constructor(private adminListService: AdminListService, private router: Router, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.loadAllAdmins();
@@ -63,21 +64,39 @@ export class AdminListComponent implements OnInit {
   }
 
   removeAdmin(admin) {
+    const dialogRef = this.dialog.open(AdminConfirmDialogComponent, {
+      width: '300px',
+      data: admin
+    });
 
-    if (confirm('Are you sure?!')) {
-      this.adminListService.deleteAdmin(admin).subscribe(
-        (data: any) => {
-          alert('deleted Successfully');
-          this.loadAllAdmins();
-          // console.log(JSON.stringify(data));
-        },
-        error => {
-          console.log(JSON.stringify(error));
-          // this.toastr.error('Invalid Login Credentials!', 'Oops!');
-      });
-    } else {
-      return false;
-    }
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      if (result) {
+        this.adminListService.deleteAdmin(admin).subscribe(
+              (data: any) => {
+                alert('deleted Successfully');
+                this.loadAllAdmins();
+              },
+              error => {
+                console.log(JSON.stringify(error));
+            });
+      } else {
+        return false;
+      }
+    });
+
+    // if (confirm('Are you sure?!')) {
+    //   this.adminListService.deleteAdmin(admin).subscribe(
+    //     (data: any) => {
+    //       alert('deleted Successfully');
+    //       this.loadAllAdmins();
+    //     },
+    //     error => {
+    //       console.log(JSON.stringify(error));
+    //   });
+    // } else {
+    //   return false;
+    // }
 
   }
 
@@ -99,4 +118,23 @@ export class AdminListComponent implements OnInit {
     });
   }
 
+}
+
+
+@Component({
+  selector: 'app-admin-confirm-dialog',
+  templateUrl: './admin-confirm-dialog.html'
+  // providers: [EventStudentListComponent]
+})
+export class AdminConfirmDialogComponent {
+  deleteConfirm: boolean;
+
+  constructor(
+    public dialogRef: MatDialogRef<AdminConfirmDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
+  onNoClick(): void {
+    this.dialogRef.close();
+
+  }
 }

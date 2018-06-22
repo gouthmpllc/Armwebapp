@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { CandidateListService } from '../../../services/admin/candidate-list-service/candidate-list.service';
 import { Router } from '@angular/router';
 import { CookieService } from 'angular2-cookie/core';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-candidate-list',
@@ -17,7 +18,8 @@ export class CandidateListComponent implements OnInit {
   public rowsOnPage = 10;
   public sortBy = 'createdAt';
   public sortOrder = 'desc';
-  constructor(private candidateListService: CandidateListService, private cookieService: CookieService, private router: Router) { }
+  constructor(private candidateListService: CandidateListService, private cookieService: CookieService,
+    public dialog: MatDialog, private router: Router) { }
 
   ngOnInit() {
     this.loginData = this.cookieService.getObject('loginResponce');
@@ -72,8 +74,15 @@ export class CandidateListComponent implements OnInit {
   }
 
   removeCandidate(selCandiate) {
-    if (confirm('Are You Sure?')) {
-      this.candidateListService.deleteCandidate(selCandiate).subscribe(
+    const dialogRef = this.dialog.open(CandidateConfirmDialogComponent, {
+      width: '325px',
+      data: selCandiate
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      if (result) {
+        this.candidateListService.deleteCandidate(selCandiate).subscribe(
         (data: any) => {
           alert('deleted Successfully');
           this.loadAllCandidates();
@@ -81,9 +90,23 @@ export class CandidateListComponent implements OnInit {
         error => {
           console.log(JSON.stringify(error));
         });
-    } else {
-      return false;
-    }
+      } else {
+        return false;
+      }
+    });
+
+    // if (confirm('Are You Sure?')) {
+    //   this.candidateListService.deleteCandidate(selCandiate).subscribe(
+    //     (data: any) => {
+    //       alert('deleted Successfully');
+    //       this.loadAllCandidates();
+    //     },
+    //     error => {
+    //       console.log(JSON.stringify(error));
+    //     });
+    // } else {
+    //   return false;
+    // }
 
   }
 
@@ -102,4 +125,22 @@ export class CandidateListComponent implements OnInit {
       });
   }
 
+}
+
+@Component({
+  selector: 'app-candidate-confirm-dialog',
+  templateUrl: './candidate-confirm-dialog.html'
+  // providers: [EventStudentListComponent]
+})
+export class CandidateConfirmDialogComponent {
+  deleteConfirm: boolean;
+
+  constructor(
+    public dialogRef: MatDialogRef<CandidateConfirmDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
+  onNoClick(): void {
+    this.dialogRef.close();
+
+  }
 }

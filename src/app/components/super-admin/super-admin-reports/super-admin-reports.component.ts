@@ -343,7 +343,8 @@ export class SuperAdminReportsComponent implements OnInit {
   geneeateCategoryWiseFilterArray() {
     // this.loadCategorywiseReports(this.rankCategory, this.rankArray);
     if (!this.toDate && this.raId === 1) {
-      this.toDate = this.fromDate;
+      // this.toDate = this.fromDate;
+      this.toDate = new Date((this.fromDate.getMonth() + 1) + '/' + (this.fromDate.getDate() + 1) + '/' + (this.fromDate.getFullYear()));
     }
     console.log(this.fromDate);
     console.log(this.toDate);
@@ -367,7 +368,8 @@ export class SuperAdminReportsComponent implements OnInit {
       this.toDate = '';
     }
     if (!this.toDate && this.raId === 1) {
-      this.toDate = this.fromDate;
+      // this.toDate = this.fromDate;
+      this.toDate = new Date((this.fromDate.getMonth() + 1) + '/' + (this.fromDate.getDate() + 1) + '/' + (this.fromDate.getFullYear()));
     }
     let result = [];
     if (this.subArray.length > 0) {
