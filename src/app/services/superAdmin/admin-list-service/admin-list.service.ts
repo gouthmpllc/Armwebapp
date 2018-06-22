@@ -91,6 +91,10 @@ export class AdminListService {
       .map((res: Response) => res);
   }
 
+  getAllReportByCandidate() {
+    return this.httpClient.get(AppSettings.API_ENDPOINT + `TestResults/getTestResultsByCanditate`)
+      .map((res: Response) => res);
+  }
   getAllFilteredData(ranCatogs, ranks, subunits, testCategories, testTypes, fDate, tDate, resultArray) {
     return this.httpClient.get(AppSettings.API_ENDPOINT + `TestResults/getFilteredReport?rankCatogiries=`
       + JSON.stringify(ranCatogs) + `&ranks=` + JSON.stringify(ranks) + `&subUnit=` + JSON.stringify(subunits) +

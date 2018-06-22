@@ -63,11 +63,12 @@ export class SuperAdminReportsComponent implements OnInit {
   loadCategorywiseReports(catArray, rkArray) {
     this.loadingStatus = true;
     this.data = [];
-    this.adminListService.getAllCategoryWiseReports(catArray, rkArray).subscribe(
+    this.adminListService.getAllReportByCandidate().subscribe(
       (data: any) => {
-        // console.log(JSON.stringify(data));
         this.loadingStatus = false;
-        this.data = data.data.data;
+        this.data = data.data;
+        console.log(JSON.stringify(this.data));
+
         if (this.data.length > 0) {
           // alert('Generated successfully');
         } else {
@@ -97,19 +98,19 @@ export class SuperAdminReportsComponent implements OnInit {
     this.loadingStatus = true;
     this.adminListService.getAllFilteredData(ranCatogs, ranks, subunits, testCategories, testTypes,
       fDate, tDate, resultArray).subscribe(
-      (data: any) => {
-        // console.log(JSON.stringify(data));
-        this.loadingStatus = false;
-        this.data = data.data.data;
-        if (this.data.length > 0) {
-          // alert('Generated successfully');
-        } else {
-          // alert('No Data Found');
-        }
-      },
-      error => {
-        console.log(JSON.stringify(error));
-      });
+        (data: any) => {
+          // console.log(JSON.stringify(data));
+          this.loadingStatus = false;
+          this.data = data.data.data;
+          if (this.data.length > 0) {
+            // alert('Generated successfully');
+          } else {
+            // alert('No Data Found');
+          }
+        },
+        error => {
+          console.log(JSON.stringify(error));
+        });
   }
 
   resetAll(FilterForm: NgForm) {
@@ -348,7 +349,7 @@ export class SuperAdminReportsComponent implements OnInit {
     console.log(this.toDate);
     let result = [];
     if (this.subArray.length > 0) {
-      for (let i = 0; i < this.subArray.length; i++ ) {
+      for (let i = 0; i < this.subArray.length; i++) {
         result.push(this.subArray[i].id);
       }
     }
@@ -370,7 +371,7 @@ export class SuperAdminReportsComponent implements OnInit {
     }
     let result = [];
     if (this.subArray.length > 0) {
-      for (let i = 0; i < this.subArray.length; i++ ) {
+      for (let i = 0; i < this.subArray.length; i++) {
         result.push(this.subArray[i].id);
       }
     }
@@ -391,7 +392,7 @@ export class SuperAdminReportsComponent implements OnInit {
       useBom: true,
       noDownload: false,
       headers: ['armyNumber', 'Name', 'gender', 'age', 'sNo',
-        'rank', 'subunit', 'catogiryName', 'testName', 'testResult', 'conductedBy' , 'candTestDate', 'createdAt']
+        'rank', 'subunit', 'catogiryName', 'testName', 'testResult', 'conductedBy', 'candTestDate', 'createdAt']
     };
     new Angular5Csv(this.data, 'report', options);
   }

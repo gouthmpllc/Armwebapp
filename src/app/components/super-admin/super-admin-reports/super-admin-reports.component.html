@@ -50,148 +50,143 @@
       <div class="clearfix"></div>
 
       <div class="category cRank">
-<div class="col-lg-12 col-md-12 col-xs-12 padding0">
-<span class="col-lg-3 col-md-3" style="width: 22%;">
-  <!-- <input type="radio" (change)="setParticularDate(id.value)" [value]="id.value">{{id.name}} -->
-  <mat-radio-group class="example-radio-group" name="genderValueId" [(ngModel)]="raId" (change)="setParticularDate(raId)">
-    <mat-radio-button style="margin-left:10px;" class="example-radio-button" *ngFor="let id of dateRa" id={{id.name}} [value]="id.value">
-      {{id.name}}
-    </mat-radio-button>
-  </mat-radio-group>
-</span>
-
-<div class="col-lg-9 col-md-9 col-xs-12 padding0" style="    margin-top: -15px; ">
-  <form #dateWiseForm="ngForm">
-    <div class="col-lg-5" *ngIf="displayOneDate || displayTwoDate">
-      <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">
-        <mat-form-field class="width100 ">
-          <input matInput [matDatepicker]="picker" placeholder="Select From Date" name="fromDate" [max]="maxDate" [(ngModel)]="fromDate"
-            id="fromDate" #fDate='ngModel' required>
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker touchUi="true" [disabled]="disableDate" #picker></mat-datepicker>
-        </mat-form-field>
-      </div>
-    </div>
-    <div class="col-lg-5" *ngIf="displayTwoDate">
-      <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">
-        <mat-form-field class="width100 ">
-          <input matInput [matDatepicker]="picker1" placeholder="Select To Date" name="toDate" [max]="maxDate" [(ngModel)]="toDate"
-            id="toDate" #tDate='ngModel' required>
-          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-          <mat-datepicker touchUi="true" [disabled]="disableDate" #picker1></mat-datepicker>
-        </mat-form-field>
-      </div>
-    </div>
-    <div class="col-lg-2 col-md-2 col-xs-6 padding0" style="margin-top:10px;">
-<button class="btn" [disabled]="!dateWiseForm.form.valid" (click)="geneeateDateWiseFilterArray()">Generate Report</button>
-  </div>
-  </form>
-
-</div>
-
-</div>
-      <form #FilterForm="ngForm">
         <div class="col-lg-12 col-md-12 col-xs-12 padding0">
-          <div class="col-lg-2">
-            <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">
-              <mat-form-field style="display:block;">
-                <mat-select multiple placeholder="Select Rank Category" name="rankCategory" [(ngModel)]="rankCategory" (change)="setRanks(rankCategory)">
-                  <mat-option *ngFor="let categoryRank of allRankCategories;let i = index" [value]="categoryRank.id">
-                    {{categoryRank.name}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
+          <span class="col-lg-3 col-md-3" style="width: 22%;">
+            <!-- <input type="radio" (change)="setParticularDate(id.value)" [value]="id.value">{{id.name}} -->
+            <mat-radio-group class="example-radio-group" name="genderValueId" [(ngModel)]="raId" (change)="setParticularDate(raId)">
+              <mat-radio-button style="margin-left:10px;" class="example-radio-button" *ngFor="let id of dateRa" id={{id.name}} [value]="id.value">
+                {{id.name}}
+              </mat-radio-button>
+            </mat-radio-group>
+          </span>
+
+          <div class="col-lg-9 col-md-9 col-xs-12 padding0" style="    margin-top: -15px; ">
+            <form #dateWiseForm="ngForm">
+              <div class="col-lg-5" *ngIf="displayOneDate || displayTwoDate">
+                <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">
+                  <mat-form-field class="width100 ">
+                    <input matInput [matDatepicker]="picker" placeholder="Select From Date" name="fromDate" [max]="maxDate" [(ngModel)]="fromDate"
+                      id="fromDate" #fDate='ngModel' required>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker touchUi="true" [disabled]="disableDate" #picker></mat-datepicker>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="col-lg-5" *ngIf="displayTwoDate">
+                <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">
+                  <mat-form-field class="width100 ">
+                    <input matInput [matDatepicker]="picker1" placeholder="Select To Date" name="toDate" [max]="maxDate" [(ngModel)]="toDate"
+                      id="toDate" #tDate='ngModel' required>
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker touchUi="true" [disabled]="disableDate" #picker1></mat-datepicker>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="col-lg-2 col-md-2 col-xs-6 padding0" style="margin-top:10px;">
+                <button class="btn" [disabled]="!dateWiseForm.form.valid" (click)="geneeateDateWiseFilterArray()">Generate Report</button>
+              </div>
+            </form>
+
           </div>
 
-          <div class="col-lg-2">
-            <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">
-              <mat-form-field style="display:block;">
-                <mat-select multiple placeholder="Select Ranks" name="rankArray" [(ngModel)]="rankArray">
-                  <mat-option *ngFor="let rank of allRanks;let i = index" [value]="rank.id" checked>
-                    {{rank.name}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
+        </div>
+        <form #FilterForm="ngForm">
+          <div class="col-lg-12 col-md-12 col-xs-12 padding0">
+            <div class="col-lg-2">
+              <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">
+                <mat-form-field style="display:block;">
+                  <mat-select multiple placeholder="Select Rank Category" name="rankCategory" [(ngModel)]="rankCategory" (change)="setRanks(rankCategory)">
+                    <mat-option *ngFor="let categoryRank of allRankCategories;let i = index" [value]="categoryRank.id">
+                      {{categoryRank.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
             </div>
-          </div>
 
-
-
-          <div class="col-lg-2">
-            <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">
-              <mat-form-field style="display:block;">
-                <mat-select multiple placeholder="Select Test Category" name="selectedcCategoryId" [(ngModel)]="selectedcCategoryId" (change)="setTestTypes(selectedcCategoryId)">
-                  <mat-option *ngFor="let category of testCategories;let i = index" [value]="category.id">
-                    {{category.catogiryName}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
+            <div class="col-lg-2">
+              <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">
+                <mat-form-field style="display:block;">
+                  <mat-select multiple placeholder="Select Ranks" name="rankArray" [(ngModel)]="rankArray">
+                    <mat-option *ngFor="let rank of allRanks;let i = index" [value]="rank.id" checked>
+                      {{rank.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
             </div>
-          </div>
 
-          <div class="col-lg-2">
-            <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">
-              <mat-form-field style="display:block;">
-                <mat-select multiple placeholder="Select Test Type" name="typeArray" [(ngModel)]="typeArray">
-                  <mat-option *ngFor="let type of testTypes;let i = index" [value]="type.id">
-                    {{type.testName}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
+
+
+            <div class="col-lg-2">
+              <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">
+                <mat-form-field style="display:block;">
+                  <mat-select multiple placeholder="Select Test Category" name="selectedcCategoryId" [(ngModel)]="selectedcCategoryId" (change)="setTestTypes(selectedcCategoryId)">
+                    <mat-option *ngFor="let category of testCategories;let i = index" [value]="category.id">
+                      {{category.catogiryName}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
             </div>
-          </div>
 
-          <div class="col-lg-2">
-            <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">
-              <mat-form-field style="display:block;">
-                <mat-select multiple placeholder="Select SubUnits" name="subArray" [compareWith]="equals" [(ngModel)]="subArray" #yearSelect="ngModel">
-                  <button 
-                  mat-raised-button 
-                  class="mat-primary fill text-sm" 
-                  (click)="selectAll(yearSelect, allSubUnits)">
-                  1 EME Centre
-                </button>
-                <button 
-                  mat-raised-button 
-                  class="mat-accent fill text-sm" 
-                  (click)="deselectAll(yearSelect)">
-                  Deselect All
-                </button>
-                  <mat-option *ngFor="let subunit of allSubUnits;let i = index" [value]="subunit">
-                    {{subunit.name}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
+            <div class="col-lg-2">
+              <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">
+                <mat-form-field style="display:block;">
+                  <mat-select multiple placeholder="Select Test Type" name="typeArray" [(ngModel)]="typeArray">
+                    <mat-option *ngFor="let type of testTypes;let i = index" [value]="type.id">
+                      {{type.testName}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
             </div>
-          </div>
 
-          <div class="col-lg-2">
-            <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">
-              <mat-form-field style="display:block;">
-                <mat-select multiple placeholder="Select Results" name="resultArray" [(ngModel)]="resultArray">
-                  <mat-option *ngFor="let option of testTypeResultOptions;let i = index" [value]="option.id">
-                    {{option.name}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
+            <div class="col-lg-2">
+              <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">
+                <mat-form-field style="display:block;">
+                  <mat-select multiple placeholder="Select SubUnits" name="subArray" [compareWith]="equals" [(ngModel)]="subArray" #yearSelect="ngModel">
+                    <button mat-raised-button class="mat-primary fill text-sm" (click)="selectAll(yearSelect, allSubUnits)">
+                      1 EME Centre
+                    </button>
+                    <button mat-raised-button class="mat-accent fill text-sm" (click)="deselectAll(yearSelect)">
+                      Deselect All
+                    </button>
+                    <mat-option *ngFor="let subunit of allSubUnits;let i = index" [value]="subunit">
+                      {{subunit.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
             </div>
-          </div>
+
+            <div class="col-lg-2">
+              <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">
+                <mat-form-field style="display:block;">
+                  <mat-select multiple placeholder="Select Results" name="resultArray" [(ngModel)]="resultArray">
+                    <mat-option *ngFor="let option of testTypeResultOptions;let i = index" [value]="option.id">
+                      {{option.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
 
 
-          <!-- <div class="col-lg-9 col-md-9 col-xs-12 padding0">
+            <!-- <div class="col-lg-9 col-md-9 col-xs-12 padding0">
             <div class="col-lg-2 col-md-2 col-xs-6 padding0" style="margin-top:10px;">
               <button class="btn" (click)="geneeateCategoryWiseFilterArray()">Generate Reports</button>
             </div>
           </div> -->
-        </div>
-        <div class="col-lg-12 col-md-12 col-xs-12 padding0">
+          </div>
+          <div class="col-lg-12 col-md-12 col-xs-12 padding0">
             <div class="col-lg-2 col-md-2 col-xs-6 padding0 pull-right">
-                <button class="btn rt-btn" (click)="resetAll(FilterForm)">Reset</button>
-              <button class="btn pull-right rt-btn" [disabled]="fromDate == '' || fromDate == undefined || toDate == '' || toDate == undefined" (click)="geneeateCategoryWiseFilterArray()">Apply Filter</button>
+              <button class="btn rt-btn" (click)="resetAll(FilterForm)">Reset</button>
+              <button class="btn pull-right rt-btn" [disabled]="fromDate == '' || fromDate == undefined || toDate == '' || toDate == undefined"
+                (click)="geneeateCategoryWiseFilterArray()">Apply Filter</button>
             </div>
-        </div>
-      </form>
+          </div>
+        </form>
 
 
       </div>
@@ -201,63 +196,68 @@
         <div class="box-border">
           <div class="flexcroll table-scroll">
 
-              <div class="loader loader--style3 col-lg-12 col-md-12" title="2" *ngIf="loadingStatus">
-                  <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                     width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
-                  <path fill="#000" d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z">
-                    <animateTransform attributeType="xml"
-                      attributeName="transform"
-                      type="rotate"
-                      from="0 25 25"
-                      to="360 25 25"
-                      dur="0.6s"
-                      repeatCount="indefinite"/>
-                    </path>
-                  </svg>
+            <div class="loader loader--style3 col-lg-12 col-md-12" title="2" *ngIf="loadingStatus">
+              <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                <path fill="#000" d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z">
+                  <animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.6s" repeatCount="indefinite"
+                  />
+                </path>
+              </svg>
             </div>
 
-            <table class="table table-striped" *ngIf="!loadingStatus" id="myProgram" [mfData]="data | reportsSearch : searchQuery" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage"
-              [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+            <table class="table table-striped" *ngIf="!loadingStatus" id="myProgram" [mfData]="data | reportsSearch : searchQuery" #mf="mfDataTable"
+              [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
               <thead>
                 <tr>
                   <th colspan="2">
                     <mfDefaultSorter>S.No</mfDefaultSorter>
                   </th>
-                  <th colspan="2">
+                  <!-- <th colspan="2">
                     <mfDefaultSorter by="candTestDate">Test Date</mfDefaultSorter>
-                  </th>
+                  </th> -->
                   <th colspan="2">
                     <mfDefaultSorter by="armyNumber">Army Number</mfDefaultSorter>
-                  </th>
-                  <th colspan="2">
-                    <mfDefaultSorter by="name">Name</mfDefaultSorter>
-                  </th>
-                  <th colspan="2">
-                    <mfDefaultSorter by="testName">Test Name</mfDefaultSorter>
                   </th>
                   <th colspan="2">
                     <mfDefaultSorter by="rank">Rank</mfDefaultSorter>
 
                   </th>
                   <th colspan="2">
-                    <mfDefaultSorter by="subunit">Sub Unit</mfDefaultSorter>
+                    <mfDefaultSorter by="name">Name</mfDefaultSorter>
                   </th>
+                  <!-- <th colspan="2">
+                    <mfDefaultSorter by="testName">Test Name</mfDefaultSorter>
+                  </th> -->
                   <th colspan="2">
-                    <mfDefaultSorter by="testResult">Test Result</mfDefaultSorter>
+                    <mfDefaultSorter by="canditateDOB">DOB</mfDefaultSorter>
+
                   </th>
+
                   <th colspan="2">
                     <mfDefaultSorter by="age">Age</mfDefaultSorter>
                   </th>
-                  <th colspan="2">
+                  
+                  
+                  <!-- <th colspan="2">
+                    <mfDefaultSorter by="subunit">Sub Unit</mfDefaultSorter>
+                  </th> -->
+                  <!-- <th colspan="2">
+                    <mfDefaultSorter by="testResult">Test Result</mfDefaultSorter>
+                  </th> -->
+
+                  <!-- <th colspan="2">
                     <mfDefaultSorter by="catogiryName">Category Name</mfDefaultSorter>
                   </th>
                   <th colspan="2">
                       <mfDefaultSorter by="createdBy">Conducted By</mfDefaultSorter>
-                    </th>
+                    </th> -->
                   <!-- <th colspan="2">
                     <mfDefaultSorter by="createdAt">Created Date</mfDefaultSorter>
                   </th> -->
-                 
+                  <th colspan="2">
+                    <mfDefaultSorter>Remarks</mfDefaultSorter>
+                  </th>
                 </tr>
                 <tr>
 
@@ -270,39 +270,49 @@
                     {{i+1}}
                   </td>
                   <td colspan="2">
+                    {{admin.canditateArmyNum}}
+                  </td>
+                  <td colspan="2">
+                    {{admin.canditateRank}}
+                  </td>
+                  <td colspan="2">
+                    {{admin.canditateName}}
+                  </td>
+                  <td colspan="2">
+                    {{admin.canditateDOB|date:'shortTime'}}
+                  </td>
+
+                  <td colspan="2">
+                    {{admin.canditateAge}}
+                  </td>
+
+
+                  <!-- <td colspan="2">
                     {{admin.candTestDate | date}} | {{admin.candTestDate | date:'shortTime'}}
                   </td>
-                  <td colspan="2">
-                    {{admin.armyNumber}}
-                  </td>
-                  <td colspan="2">
-                    {{admin.name}}
-                  </td>
+
+
                   <td colspan="2">
                     {{admin.testName}}
                   </td>
-                  <td colspan="2">
-                    {{admin.rank}}
-                  </td>
+
                   <td colspan="2">
                     {{admin.subunit}}
                   </td>
                   <td colspan="2">
                     {{admin.testResult}}
                   </td>
-                  <td colspan="2">
-                    {{admin.age}}
-                  </td>
+                  
                   <td colspan="2">
                     {{admin.catogiryName}}
                   </td>
                   <td colspan="2">
-                      {{admin.conductedBy}}
-                    </td>
+                    {{admin.conductedBy}}
+                  </td> -->
                   <!-- <td colspan="2">
                     {{admin.createdAt | date}}
                   </td> -->
-                  
+
                 </tr>
               </tbody>
               <tfoot>
