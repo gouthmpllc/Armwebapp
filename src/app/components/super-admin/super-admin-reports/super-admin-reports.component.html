@@ -194,7 +194,7 @@
       <div class="col-lg-12 col-md-12 padding0 mTop10">
         <!-- table starts-->
         <div class="box-border">
-          <div class="flexcroll table-scroll">
+        <div class="flexcroll table-scroll" style="overflow: scroll;">
 
             <div class="loader loader--style3 col-lg-12 col-md-12" title="2" *ngIf="loadingStatus">
               <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -205,7 +205,7 @@
                 </path>
               </svg>
             </div>
-
+        
             <table class="table table-striped" *ngIf="!loadingStatus" id="myProgram" [mfData]="data | reportsSearch : searchQuery" #mf="mfDataTable"
               [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
               <thead>
@@ -220,24 +220,58 @@
                     <mfDefaultSorter by="armyNumber">Army Number</mfDefaultSorter>
                   </th>
                   <th colspan="2">
-                    <mfDefaultSorter by="rank">Rank</mfDefaultSorter>
+                    <mfDefaultSorter by="canditateRank">Rank</mfDefaultSorter>
 
                   </th>
                   <th colspan="2">
-                    <mfDefaultSorter by="name">Name</mfDefaultSorter>
+                    <mfDefaultSorter by="canditateName">Candidate Name</mfDefaultSorter>
                   </th>
                   <!-- <th colspan="2">
                     <mfDefaultSorter by="testName">Test Name</mfDefaultSorter>
                   </th> -->
                   <th colspan="2">
-                    <mfDefaultSorter by="canditateDOB">DOB</mfDefaultSorter>
+                    <mfDefaultSorter by="canditateDOB">Date Of Birth</mfDefaultSorter>
 
                   </th>
 
                   <th colspan="2">
-                    <mfDefaultSorter by="age">Age</mfDefaultSorter>
+                    <mfDefaultSorter by="canditateAge">Age</mfDefaultSorter>
                   </th>
-                  
+
+                  <th colspan="2">
+                    <mfDefaultSorter>9 Ft Ditch</mfDefaultSorter>
+                  </th>
+
+                  <th colspan="2">
+                    <mfDefaultSorter>5 KM</mfDefaultSorter>
+                  </th>
+                  <th colspan="2">
+                    <mfDefaultSorter>H Rope</mfDefaultSorter>
+                  </th>
+                  <th colspan="2">
+                    <mfDefaultSorter>2.4 KM</mfDefaultSorter>
+                  </th>
+                  <th colspan="2">
+                    <mfDefaultSorter>100 Mtr Sprint</mfDefaultSorter>
+                  </th>
+                  <th colspan="2">
+                    <mfDefaultSorter>5 M Shuttle</mfDefaultSorter>
+                  </th>
+                  <th colspan="2">
+                    <mfDefaultSorter>Chin Ups</mfDefaultSorter>
+                  </th>
+                  <th colspan="2">
+                    <mfDefaultSorter>Push Ups</mfDefaultSorter>
+                  </th>
+                  <th colspan="2">
+                    <mfDefaultSorter>Sit Ups</mfDefaultSorter>
+                  </th>
+                  <th colspan="2">
+                    <mfDefaultSorter>V Rope</mfDefaultSorter>
+                  </th>
+                  <th colspan="2">
+                    <mfDefaultSorter>60 Mtr</mfDefaultSorter>
+                  </th>
                   
                   <!-- <th colspan="2">
                     <mfDefaultSorter by="subunit">Sub Unit</mfDefaultSorter>
@@ -255,6 +289,9 @@
                   <!-- <th colspan="2">
                     <mfDefaultSorter by="createdAt">Created Date</mfDefaultSorter>
                   </th> -->
+                  <th colspan="2">
+                    <mfDefaultSorter>Outcome</mfDefaultSorter>
+                  </th>
                   <th colspan="2">
                     <mfDefaultSorter>Remarks</mfDefaultSorter>
                   </th>
@@ -279,14 +316,52 @@
                     {{admin.canditateName}}
                   </td>
                   <td colspan="2">
-                    {{admin.canditateDOB|date:'shortTime'}}
+                     {{admin.canditateDOB | date}}
                   </td>
 
                   <td colspan="2">
                     {{admin.canditateAge}}
                   </td>
-
-
+                  
+                  <td colspan="2">
+                    {{admin.nineFt?admin.nineFt:"NA"}}
+                  </td>
+                  <td colspan="2">
+                    {{admin.fiveKM?admin.fiveKM:"NA"}}
+                  </td>
+                  <td colspan="2">
+                    {{admin.hRope?admin.hRope:"NA"}}
+                  </td>
+                  <td colspan="2">
+                    {{admin.twoPfour?admin.twoPfour:"NA"}}
+                  </td>
+                  <td colspan="2">
+                    {{admin.hundrMT?admin.hundrMT:"NA"}}
+                  </td>
+                  <td colspan="2">
+                    {{admin.fiveMShut?admin.fiveMShut:"NA"}}
+                  </td>
+                  <td colspan="2">
+                    {{admin.chinUPs?admin.chinUPs:"NA"}}
+                  </td>
+                  <td colspan="2">
+                    {{admin.pushUps?admin.pushUps:"NA"}}
+                  </td>
+                  <td colspan="2">
+                    {{admin.sitUps?admin.sitUps:"NA"}}
+                  </td>
+                  <td colspan="2">
+                    {{admin.vRope?admin.vRope:"NA"}}
+                  </td>
+                  <td colspan="2">
+                    {{admin.sixtyMT?admin.sixtyMT:"NA"}}
+                  </td>
+                  <td colspan="2">
+                    
+                  </td>
+                  <td colspan="2">
+                    
+                  </td>
                   <!-- <td colspan="2">
                     {{admin.candTestDate | date}} | {{admin.candTestDate | date:'shortTime'}}
                   </td>
@@ -317,7 +392,7 @@
               </tbody>
               <tfoot>
                 <tr>
-                  <td colspan="22">
+                  <td colspan="38">
                     <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
                   </td>
                 </tr>

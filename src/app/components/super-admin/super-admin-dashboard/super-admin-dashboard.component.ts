@@ -73,7 +73,7 @@ export class SuperAdminDashboardComponent implements OnInit, OnDestroy {
   }
 
   loadPreviousDate() {
-    this.reportDate = (new Date().getMonth() + 1) + '-' + (new Date().getDate() - 1) + '-' + (new Date().getFullYear());
+    this.reportDate = (new Date().getMonth() + 1) + '-' + (new Date().getDate()) + '-' + (new Date().getFullYear());
   }
 
   loadCandidates() {

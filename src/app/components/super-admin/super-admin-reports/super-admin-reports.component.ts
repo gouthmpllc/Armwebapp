@@ -63,7 +63,14 @@ export class SuperAdminReportsComponent implements OnInit {
   loadCategorywiseReports(catArray, rkArray) {
     this.loadingStatus = true;
     this.data = [];
-    this.adminListService.getAllReportByCandidate().subscribe(
+    let result = [];
+    if (this.subArray.length > 0) {
+      for (let i = 0; i < this.subArray.length; i++) {
+        result.push(this.subArray[i].id);
+      }
+    }
+    this.adminListService.getAllReportByCandidate(this.rankCategory, this.rankArray, result, this.selectedcCategoryId,
+      this.typeArray, this.fromDate, this.toDate, this.resultArray).subscribe(
       (data: any) => {
         this.loadingStatus = false;
         this.data = data.data;
@@ -96,12 +103,12 @@ export class SuperAdminReportsComponent implements OnInit {
   loadFilteredData(ranCatogs, ranks, subunits, testCategories, testTypes, fDate, tDate, resultArray) {
     this.data = [];
     this.loadingStatus = true;
-    this.adminListService.getAllFilteredData(ranCatogs, ranks, subunits, testCategories, testTypes,
+    this.adminListService.getAllReportByCandidate(ranCatogs, ranks, subunits, testCategories, testTypes,
       fDate, tDate, resultArray).subscribe(
         (data: any) => {
           // console.log(JSON.stringify(data));
           this.loadingStatus = false;
-          this.data = data.data.data;
+          this.data = data.data;
           if (this.data.length > 0) {
             // alert('Generated successfully');
           } else {
@@ -248,6 +255,11 @@ export class SuperAdminReportsComponent implements OnInit {
       (data: any) => {
         // console.log(JSON.stringify(data));
         this.data = data.data.data;
+        const ecaxtData = data.data;
+        //console.log('134'+ JSON.stringify(this.data))
+        // for (let i = 0; i < this.testTypes.length; i++){
+        //   const getData = this.data.find(a=> a.) 
+        // }
         if (this.data.length > 0) {
           // alert('Generated successfully');
         } else {
@@ -344,7 +356,7 @@ export class SuperAdminReportsComponent implements OnInit {
     // this.loadCategorywiseReports(this.rankCategory, this.rankArray);
     if (!this.toDate && this.raId === 1) {
       // this.toDate = this.fromDate;
-      this.toDate = new Date((this.fromDate.getMonth() + 1) + '/' + (this.fromDate.getDate() + 1) + '/' + (this.fromDate.getFullYear()));
+      this.toDate = new Date((this.fromDate.getMonth() + 1) + '/' + (this.fromDate.getDate()) + '/' + (this.fromDate.getFullYear()));
     }
     console.log(this.fromDate);
     console.log(this.toDate);
@@ -369,7 +381,7 @@ export class SuperAdminReportsComponent implements OnInit {
     }
     if (!this.toDate && this.raId === 1) {
       // this.toDate = this.fromDate;
-      this.toDate = new Date((this.fromDate.getMonth() + 1) + '/' + (this.fromDate.getDate() + 1) + '/' + (this.fromDate.getFullYear()));
+      this.toDate = new Date((this.fromDate.getMonth() + 1) + '/' + (this.fromDate.getDate()) + '/' + (this.fromDate.getFullYear()));
     }
     let result = [];
     if (this.subArray.length > 0) {
@@ -384,20 +396,94 @@ export class SuperAdminReportsComponent implements OnInit {
     // this.loaddatewiseReports(this.fromDate, this.toDate);
   }
 
-  generateCsv() {
-    let options = {
-      fieldSeparator: ',',
-      quoteStrings: '"',
-      decimalseparator: '.',
-      showLabels: true,
-      showTitle: false,
-      useBom: true,
-      noDownload: false,
-      headers: ['armyNumber', 'Name', 'gender', 'age', 'sNo',
-        'rank', 'subunit', 'catogiryName', 'testName', 'testResult', 'conductedBy', 'candTestDate', 'createdAt']
-    };
-    new Angular5Csv(this.data, 'report', options);
-  }
+  // generateCsv() {
+  //   let options = {
+  //     fieldSeparator: ',',
+  //     quoteStrings: '"',
+  //     decimalseparator: '.',
+  //     showLabels: true,
+  //     showTitle: false,
+  //     useBom: true,
+  //     noDownload: false,
+  //     headers: ['armyNumber', 'Name', 'gender', 'age', 'sNo',
+  //       'rank', 'subunit', 'catogiryName', 'testName', 'testResult', 'conductedBy', 'candTestDate', 'createdAt']
+  //   };
+  //   new Angular5Csv(this.data, 'report', options);
+  // }
+
+
+// generateCsv() {
+//   var data, filename, link;
+
+//   var csv = this.convertArrayOfObjectsToCSV({
+//     data: this.data
+//   });
+//   if (csv == null) return;
+
+//   filename = 'export.csv';
+
+//   if (!csv.match(/^data:text\/csv/i)) {
+//     csv = 'data:text/csv;charset=utf-8,' + csv;
+//   }
+//   data = encodeURI(csv);
+
+//   link = document.createElement('a');
+//   link.setAttribute('href', data);
+//   link.setAttribute('download', filename);
+//   link.click();
+// }
+
+
+download_csv(csv, filename) {
+  var csvFile;
+  var downloadLink;
+
+  // CSV FILE
+  csvFile = new Blob([csv], { type: "text/csv" });
+
+  // Download link
+  downloadLink = document.createElement("a");
+
+  // File name
+  downloadLink.download = filename;
+
+  // We have to create a link to the file
+  downloadLink.href = window.URL.createObjectURL(csvFile);
+
+  // Make sure that the link is not displayed
+  downloadLink.style.display = "none";
+
+  // Add the link to your DOM
+  document.body.appendChild(downloadLink);
+
+  // Lanzamos
+  downloadLink.click();
+}
+
+      export_table_to_csv(html, filename) {
+        var csv = [];
+        var rows =  document.querySelectorAll("table tr");
+
+        for (var i = 0; i < rows.length-1; i++) {
+          var row = [], cols = rows[i].querySelectorAll("td, th");
+
+          for (var j = 0; j < cols.length; j++){
+            row.push(cols[j].innerText);
+          }
+            // row.push(cols[j].firstChild.ELEMENT_NODE.valueOf());
+            
+
+
+          csv.push(row.join(","));
+        }
+
+        this.download_csv(csv.join("\n"), filename);
+      }
+
+        generateCsv() {
+          var html = document.querySelector("table").outerHTML;
+          this.export_table_to_csv(html, "reports.csv");
+        }
 
   filterByRank() {
     console.log('clicked on filter By Rank');
