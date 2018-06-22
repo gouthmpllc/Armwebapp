@@ -194,7 +194,7 @@
       <div class="col-lg-12 col-md-12 padding0 mTop10">
         <!-- table starts-->
         <div class="box-border">
-        <div class="flexcroll table-scroll" style="overflow: scroll;">
+        <div class="flexcroll table-scroll" style="overflow: scroll;overflow-y: hidden;">
 
             <div class="loader loader--style3 col-lg-12 col-md-12" title="2" *ngIf="loadingStatus">
               <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -217,7 +217,7 @@
                     <mfDefaultSorter by="candTestDate">Test Date</mfDefaultSorter>
                   </th> -->
                   <th colspan="2">
-                    <mfDefaultSorter by="armyNumber">Army Number</mfDefaultSorter>
+                    <mfDefaultSorter by="canditateArmyNum">Army Number</mfDefaultSorter>
                   </th>
                   <th colspan="2">
                     <mfDefaultSorter by="canditateRank">Rank</mfDefaultSorter>
@@ -239,40 +239,42 @@
                   </th>
 
                   <th colspan="2">
-                    <mfDefaultSorter>9 Ft Ditch</mfDefaultSorter>
+                    <mfDefaultSorter by="nineFt">9 Ft Ditch</mfDefaultSorter>
                   </th>
 
                   <th colspan="2">
-                    <mfDefaultSorter>5 KM</mfDefaultSorter>
+                    <mfDefaultSorter by="fiveKM">5 KM</mfDefaultSorter>
                   </th>
                   <th colspan="2">
-                    <mfDefaultSorter>H Rope</mfDefaultSorter>
+                    <mfDefaultSorter by="hRope">H Rope</mfDefaultSorter>
                   </th>
                   <th colspan="2">
-                    <mfDefaultSorter>2.4 KM</mfDefaultSorter>
+                    <mfDefaultSorter by="twoPfour">2.4 KM</mfDefaultSorter>
                   </th>
                   <th colspan="2">
-                    <mfDefaultSorter>100 Mtr Sprint</mfDefaultSorter>
+                    <mfDefaultSorter by="hundrMT">100 Mtr Sprint</mfDefaultSorter>
                   </th>
                   <th colspan="2">
-                    <mfDefaultSorter>5 M Shuttle</mfDefaultSorter>
+                    <mfDefaultSorter by="fiveMShut">5 M Shuttle</mfDefaultSorter>
                   </th>
                   <th colspan="2">
-                    <mfDefaultSorter>Chin Ups</mfDefaultSorter>
+                    <mfDefaultSorter by="chinUPs">Chin Ups</mfDefaultSorter>
                   </th>
                   <th colspan="2">
-                    <mfDefaultSorter>Push Ups</mfDefaultSorter>
+                    <mfDefaultSorter by="pushUps">Push Ups</mfDefaultSorter>
                   </th>
                   <th colspan="2">
-                    <mfDefaultSorter>Sit Ups</mfDefaultSorter>
+                    <mfDefaultSorter by="sitUps">Sit Ups</mfDefaultSorter>
                   </th>
                   <th colspan="2">
-                    <mfDefaultSorter>V Rope</mfDefaultSorter>
+                    <mfDefaultSorter by="vRope">V Rope</mfDefaultSorter>
                   </th>
                   <th colspan="2">
-                    <mfDefaultSorter>60 Mtr</mfDefaultSorter>
+                    <mfDefaultSorter by="sixtyMT">60 Mtr</mfDefaultSorter>
                   </th>
-                  
+                  <th colspan="2">
+                    <mfDefaultSorter by="threeKM">3 KM</mfDefaultSorter>
+                  </th>
                   <!-- <th colspan="2">
                     <mfDefaultSorter by="subunit">Sub Unit</mfDefaultSorter>
                   </th> -->
@@ -316,7 +318,7 @@
                     {{admin.canditateName}}
                   </td>
                   <td colspan="2">
-                     {{admin.canditateDOB | date}}
+                     {{admin.canditateDOB | date: 'shortDate'}}
                   </td>
 
                   <td colspan="2">
@@ -357,10 +359,13 @@
                     {{admin.sixtyMT?admin.sixtyMT:"NA"}}
                   </td>
                   <td colspan="2">
-                    
+                    {{admin.sixtyMT?admin.threeKM:"NA"}}
                   </td>
                   <td colspan="2">
-                    
+                    {{admin.outCome}}
+                  </td>
+                  <td colspan="2">
+                    {{admin.remarks}}
                   </td>
                   <!-- <td colspan="2">
                     {{admin.candTestDate | date}} | {{admin.candTestDate | date:'shortTime'}}

@@ -7,7 +7,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class ReportsSearchPipe implements PipeTransform {
 
   transform(reports: any, args?: any): any {
-    const searchableList = ['armyNumber', 'name', 'catogiryName'];
+    const searchableList = ['canditateArmyNum', 'canditateName', 'canditateRank'];
     if (!reports) {
       return [];
     }

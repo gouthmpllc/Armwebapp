@@ -3,6 +3,7 @@ import { AdminListService } from '../../../services/superAdmin/admin-list-servic
 import { SuperAdminSettingsService } from '../../../services/superAdmin/settings-service/super-admin-settings.service';
 import { Angular5Csv } from 'angular5-csv/Angular5-csv';
 import { NgForm, NgModel } from '@angular/forms';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-super-admin-reports',
@@ -64,13 +65,7 @@ export class SuperAdminReportsComponent implements OnInit {
     this.loadingStatus = true;
     this.data = [];
     let result = [];
-    if (this.subArray.length > 0) {
-      for (let i = 0; i < this.subArray.length; i++) {
-        result.push(this.subArray[i].id);
-      }
-    }
-    this.adminListService.getAllReportByCandidate(this.rankCategory, this.rankArray, result, this.selectedcCategoryId,
-      this.typeArray, this.fromDate, this.toDate, this.resultArray).subscribe(
+    this.adminListService.getAllReportByCandidateFirst().subscribe(
       (data: any) => {
         this.loadingStatus = false;
         this.data = data.data;
@@ -411,79 +406,114 @@ export class SuperAdminReportsComponent implements OnInit {
   //   new Angular5Csv(this.data, 'report', options);
   // }
 
+  convertArrayOfObjectsToCSV(args) {
+    var result, ctr, keys, dupKeys, columnDelimiter, lineDelimiter, data;
+
+    data = args.data || null;
+    if (data == null || !data.length) {
+        return null;
+    }
+
+    columnDelimiter = args.columnDelimiter || ',';
+    lineDelimiter = args.lineDelimiter || '\n';
+
+    // keys = Object.keys(data[0]);
+    keys = ["canditateArmyNum","canditateRank","canditateName","canditateDOB",,"canditateAge","nineFt","fiveKM","hRope","twoPfour","hundrMT","fiveMShut","chinUPs","pushUps","sitUps","vRope","sixtyMT","threeKM","outCome","remarks"]
+
+    dupKeys = ["Army Number","Rank","Canditate Name","Date of Birth","Age","9 Ft Ditch","5 KM","H Rope","2.4 KM","100 Mtr Sprint","5M Shuttle","Chin Ups","Push Ups","Sit Ups","V Rope","60 Mtr","3 KM","Outcome","Remarks"]
+    // keys = keys.Skip(1).ToArray();
+    console.log(JSON.stringify(keys));
+
+    result = '';
+    result += dupKeys.join(columnDelimiter);
+    result += lineDelimiter;
+
+    data.forEach(function(item) {
+      delete item.data;
+      delete item.canditateTestDate;
+        ctr = 0;
+        // delete keys[0];
+        keys.forEach(function(key) {
+            if (ctr > 0) result += columnDelimiter;
+
+            result += item[key];
+            ctr++;
+        });
+        result += lineDelimiter;
+    });
+
+    return result;
+}
+
+generateCsv() {
+  var data, filename, link;
+
+  var csv = this.convertArrayOfObjectsToCSV({
+    data: this.data
+  });
+  if (csv == null) return;
+
+  filename = 'export.csv';
+
+  if (!csv.match(/^data:text\/csv/i)) {
+    csv = 'data:text/csv;charset=utf-8,' + csv;
+  }
+  data = encodeURI(csv);
+
+  link = document.createElement('a');
+  link.setAttribute('href', data);
+  link.setAttribute('download', filename);
+  link.click();
+}
+
+
+// download_csv(csv, filename) {
+//   var csvFile;
+//   var downloadLink;
+
+//   csvFile = new Blob([csv], { type: "text/csv" });
+
+//   downloadLink = document.createElement("a");
+
+
+//   downloadLink.download = filename;
+
+
+//   downloadLink.href = window.URL.createObjectURL(csvFile);
+
+
+//   downloadLink.style.display = "none";
+
+
+//   document.body.appendChild(downloadLink);
+
+
+//   downloadLink.click();
+// }
+
+// export_table_to_csv(html, filename) {
+//   var csv = [];
+//   var rows =  document.querySelectorAll("table tr");
+
+//   for (var i = 0; i < rows.length-1; i++) {
+//     var row = [], cols = rows[i].querySelectorAll("td, th");
+
+//     for (var j = 0; j < cols.length; j++){
+//       row.push(cols[j].nodeValue);
+//     }
+
+//     csv.push(row.join(","));
+//   }
+
+//   this.download_csv(csv.join("\n"), filename);
+// }
 
 // generateCsv() {
-//   var data, filename, link;
-
-//   var csv = this.convertArrayOfObjectsToCSV({
-//     data: this.data
-//   });
-//   if (csv == null) return;
-
-//   filename = 'export.csv';
-
-//   if (!csv.match(/^data:text\/csv/i)) {
-//     csv = 'data:text/csv;charset=utf-8,' + csv;
-//   }
-//   data = encodeURI(csv);
-
-//   link = document.createElement('a');
-//   link.setAttribute('href', data);
-//   link.setAttribute('download', filename);
-//   link.click();
+//   var html = document.querySelector("table").outerHTML;
+//   this.export_table_to_csv(html, "reports.csv");
 // }
 
 
-download_csv(csv, filename) {
-  var csvFile;
-  var downloadLink;
-
-  // CSV FILE
-  csvFile = new Blob([csv], { type: "text/csv" });
-
-  // Download link
-  downloadLink = document.createElement("a");
-
-  // File name
-  downloadLink.download = filename;
-
-  // We have to create a link to the file
-  downloadLink.href = window.URL.createObjectURL(csvFile);
-
-  // Make sure that the link is not displayed
-  downloadLink.style.display = "none";
-
-  // Add the link to your DOM
-  document.body.appendChild(downloadLink);
-
-  // Lanzamos
-  downloadLink.click();
-}
-
-      export_table_to_csv(html, filename) {
-        var csv = [];
-        var rows =  document.querySelectorAll("table tr");
-
-        for (var i = 0; i < rows.length-1; i++) {
-          var row = [], cols = rows[i].querySelectorAll("td, th");
-
-          for (var j = 0; j < cols.length; j++){
-            row.push(cols[j].innerText);
-          }
-            // row.push(cols[j].firstChild.ELEMENT_NODE.valueOf());
-            
-
-
-          csv.push(row.join(","));
-        }
-
-        this.download_csv(csv.join("\n"), filename);
-      }
-
-        generateCsv() {
-          var html = document.querySelector("table").outerHTML;
-          this.export_table_to_csv(html, "reports.csv");
-        }
 
   filterByRank() {
     console.log('clicked on filter By Rank');
