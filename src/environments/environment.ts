@@ -8,6 +8,6 @@ export const environment = {
 
   // Dev
   //apiendpoint: 'http://127.0.0.1:3000/api/',
-  apiendpoint: 'http://139.162.60.164:3000/api/',
+  apiendpoint: 'http://139.162.60.164:6500/api/',
 
 };
