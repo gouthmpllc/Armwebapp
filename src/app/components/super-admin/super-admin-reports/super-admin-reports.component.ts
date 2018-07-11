@@ -11,6 +11,14 @@ import * as $ from 'jquery';
   styleUrls: ['./super-admin-reports.component.css']
 })
 export class SuperAdminReportsComponent implements OnInit {
+  agerangeSelectAll: boolean;
+  tResultSelectAll: boolean;
+  rcatgrySelectAll: boolean;
+  rankSelectAll: boolean;
+  tcategrySelectAll: boolean;
+  tTypeSelectAll: boolean;
+  sUnitSelectAll: boolean;
+  statusSelectAll: boolean;
   testTypeResultOptions: any = [];
   dupTestTypeOption: any = [];
   displayTwoDate: boolean;
@@ -40,12 +48,16 @@ export class SuperAdminReportsComponent implements OnInit {
   dateRa = [{ name: 'Date', value: 1 }, { name: 'Date Range', value: 2 }];
   raId: any;
   public rowsOnPage = 10;
-  public sortBy = 'createdAt';
+  public sortBy = 'canditateTestDate';
   public sortOrder = 'desc';
   searchQuery: string;
   resultArray: any = [];
   loadingStatus: boolean;
-
+  ageRangeFilter:any= [];
+  ageRange =[
+    {min:"30",max:"40"},
+    {min:"41",max:"50"}
+  ]
   constructor(private adminListService: AdminListService, private superAdminSettingsService: SuperAdminSettingsService) { }
 
   ngOnInit() {
@@ -418,9 +430,9 @@ export class SuperAdminReportsComponent implements OnInit {
     lineDelimiter = args.lineDelimiter || '\n';
 
     // keys = Object.keys(data[0]);
-    keys = ["canditateArmyNum","canditateRank","canditateName","canditateDOB",,"canditateAge","nineFt","fiveKM","hRope","twoPfour","hundrMT","fiveMShut","chinUPs","pushUps","sitUps","vRope","sixtyMT","threeKM","outCome","remarks"]
+    keys = ["canditateTestDate","canditateArmyNum","canditateRank","canditateName","canditateDOB",,"canditateAge","nineFt","fiveKM","hRope","twoPfour","hundrMT","fiveMShut","chinUPs","pushUps","sitUps","vRope","sixtyMT","threeKM","outCome","remarks"]
 
-    dupKeys = ["Army Number","Rank","Canditate Name","Date of Birth","Age","9 Ft Ditch","5 KM","H Rope","2.4 KM","100 Mtr Sprint","5M Shuttle","Chin Ups","Push Ups","Sit Ups","V Rope","60 Mtr","3 KM","Outcome","Remarks"]
+    dupKeys = ["Canditate Test Date","Army Number","Rank","Canditate Name","Date of Birth","Age","9 Ft Ditch","5 KM","H Rope","2.4 KM","100 Mtr Sprint","5M Shuttle","Chin Ups","Push Ups","Sit Ups","V Rope","60 Mtr","3 KM","Outcome","Remarks"]
     // keys = keys.Skip(1).ToArray();
     console.log(JSON.stringify(keys));
 
@@ -430,7 +442,7 @@ export class SuperAdminReportsComponent implements OnInit {
 
     data.forEach(function(item) {
       delete item.data;
-      delete item.canditateTestDate;
+      // delete item.canditateTestDate;
         ctr = 0;
         // delete keys[0];
         keys.forEach(function(key) {
@@ -525,12 +537,55 @@ generateCsv() {
     }
   }
 
-  selectAll(select: NgModel, values, array) {
-    select.update.emit(values);
+  selectAll(select: NgModel, values, name?) {
+    if (name === 'sUnit') {
+      this.sUnitSelectAll = true;
+      select.update.emit(values);
+    } else if (name === 'tType'){
+      this.tTypeSelectAll = true;
+      select.update.emit(values);
+    }else if(name === 'tCategry'){
+      this.tcategrySelectAll = true;
+      select.update.emit(values);
+    } else if(name === 'tRank'){
+      this.rankSelectAll = true;
+      select.update.emit(values);
+    } else if(name === 'rCatgry'){
+      this.rcatgrySelectAll = true;
+      select.update.emit(values);
+    } else if(name === 'tResult'){
+      this.tResultSelectAll = true;
+      select.update.emit(values);
+    } else if(name === 'aRange'){
+      this.agerangeSelectAll = true;
+      select.update.emit(values);
+    }    
   }
 
-  deselectAll(select: NgModel) {
-    select.update.emit([]);
+  deselectAll(select: NgModel, name) {
+    if (name === 'sUnit') {
+      this.sUnitSelectAll = false;
+      select.update.emit([]);
+    } else if (name === 'tType') {
+      this.tTypeSelectAll = false;
+      select.update.emit([]);
+    }else if(name === 'tCategry'){
+      this.tcategrySelectAll = false;
+      select.update.emit([]);
+    }else if(name === 'tRank'){
+      this.rankSelectAll = false;
+      select.update.emit([]);
+    } else if(name === 'rCatgry'){
+      this.rcatgrySelectAll = false;
+      select.update.emit([]);
+    } else if(name === 'tResult'){
+      this.tResultSelectAll = false;
+      select.update.emit([]);
+    } else if(name === 'aRange'){
+      this.agerangeSelectAll = false;
+      select.update.emit([]);
+    }  
+    
   }
 
 }

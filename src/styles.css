@@ -122,3 +122,6 @@
 .loader--style3 svg rect{
   fill: #FF6700;
 }
+.mat-form-field-infix {
+    width: 160px !important;
+}

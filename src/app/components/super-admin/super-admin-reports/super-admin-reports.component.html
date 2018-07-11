@@ -92,85 +92,137 @@
         </div>
         <form #FilterForm="ngForm">
           <div class="col-lg-12 col-md-12 col-xs-12 padding0">
-            <div class="col-lg-2">
-              <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">
-                <mat-form-field style="display:block;">
-                  <mat-select multiple placeholder="Select Rank Category" name="rankCategory" [(ngModel)]="rankCategory" (change)="setRanks(rankCategory)">
-                    <mat-option *ngFor="let categoryRank of allRankCategories;let i = index" [value]="categoryRank.id">
-                      {{categoryRank.name}}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
+            <div>
+              <ul style="list-style:none;margin-left: -25px;">
+                <li style="float:left;margin-right:15px;">
+                    <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">
+                        <mat-form-field style="display:block;">
+                          <mat-select multiple placeholder="Select Rank Category" name="rankCategory" [(ngModel)]="rankCategory" (change)="setRanks(rankCategory)"
+                          [compareWith]="equals" #rcatgrySelect="ngModel">
+                              <button *ngIf="!rcatgrySelectAll" mat-raised-button class="mat-primary fill text-sm" (click)="selectAll(rcatgrySelect, allRankCategories, 'rCatgry')">
+                                  Select All
+                                </button>
+                                <button *ngIf="rcatgrySelectAll" mat-raised-button class="mat-accent fill text-sm" (click)="deselectAll(rcatgrySelect, 'rCatgry')">
+                                  Deselect All
+                                </button>
+                            <mat-option *ngFor="let categoryRank of allRankCategories;let i = index" [value]="categoryRank">
+                              {{categoryRank.name}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                </li>
+                <li style="float:left;margin-right:15px;">
+                    <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">
+                        <mat-form-field style="display:block;">
+                          <mat-select multiple placeholder="Select Ranks" name="rankArray" [(ngModel)]="rankArray"  [compareWith]="equals" #rankSelect="ngModel">
+                                <button *ngIf="!rankSelectAll" mat-raised-button class="mat-primary fill text-sm" (click)="selectAll(rankSelect, allRanks, 'tRank')">
+                                  Select All
+                                </button>
+                                <button *ngIf="rankSelectAll" mat-raised-button class="mat-accent fill text-sm" (click)="deselectAll(rankSelect, 'tRank')">
+                                  Deselect All
+                                </button>
+                            <mat-option *ngFor="let rank of allRanks;let i = index" [value]="rank" checked>
+                              {{rank.name}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                </li>
+                <li style="float:left;margin-right:15px;">
+                    <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">
+                        <mat-form-field style="display:block;">
+                          <mat-select multiple placeholder="Select Test Category" name="selectedcCategoryId" [(ngModel)]="selectedcCategoryId" (change)="setTestTypes(selectedcCategoryId)" [compareWith]="equals" #testcategrySelect="ngModel">
+                              <button *ngIf="!tcategrySelectAll" mat-raised-button class="mat-primary fill text-sm" (click)="selectAll(testcategrySelect, testCategories, 'tCategry')">
+                                  Select All
+                                </button>
+                                <button *ngIf="tcategrySelectAll" mat-raised-button class="mat-accent fill text-sm" (click)="deselectAll(testcategrySelect, 'tCategry')">
+                                  Deselect All
+                                </button>
+                            <mat-option *ngFor="let category of testCategories;let i = index" [value]="category">
+                              {{category.catogiryName}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                </li>
+                <li style="float:left;margin-right:15px;">
+                    <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">
+                        <mat-form-field style="display:block;">
+                          <mat-select multiple placeholder="Select Test Type" name="typeArray" [(ngModel)]="typeArray" [compareWith]="equals" #testTypeSelect="ngModel">
+                              <button *ngIf="!tTypeSelectAll" mat-raised-button class="mat-primary fill text-sm" (click)="selectAll(testTypeSelect, testTypes, 'tType')">
+                                  Select All
+                                </button>
+                                <button *ngIf="tTypeSelectAll" mat-raised-button class="mat-accent fill text-sm" (click)="deselectAll(testTypeSelect, 'tType')">
+                                  Deselect All
+                                </button>
+                            <mat-option *ngFor="let type of testTypes;let i = index" [value]="type">
+                              {{type.testName}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                </li>
+                <li style="float:left;margin-right:15px;">
+                    <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">
+                        <mat-form-field style="display:block;">
+                          <mat-select multiple placeholder="Select SubUnits" name="subArray" [compareWith]="equals" [(ngModel)]="subArray" #yearSelect="ngModel">
+                            <button *ngIf="!sUnitSelectAll" mat-raised-button class="mat-primary fill text-sm" (click)="selectAll(yearSelect, allSubUnits,'sUnit')">
+                              1 EME Centre
+                            </button>
+                            <button *ngIf="sUnitSelectAll" mat-raised-button class="mat-accent fill text-sm" (click)="deselectAll(yearSelect, 'sUnit')">
+                              Deselect All
+                            </button>
+                            <mat-option *ngFor="let subunit of allSubUnits;let i = index" [value]="subunit">
+                              {{subunit.name}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div> 
+                </li>
+                <li style="float:left;margin-right:15px;">
+                    <div class="input-group mb-3" style="width:80% !important;margin-bottom:10px;">
+                        <mat-form-field style="display:block;">
+                          <mat-select multiple placeholder="Select Results" name="resultArray" [(ngModel)]="resultArray"  [compareWith]="equals" #tResultSelect="ngModel">
+                              <button *ngIf="!tResultSelectAll" mat-raised-button class="mat-primary fill text-sm" (click)="selectAll(tResultSelect, testTypeResultOptions, 'tResult')">
+                                  Select All
+                                </button>
+                                <button *ngIf="tResultSelectAll" mat-raised-button class="mat-accent fill text-sm" (click)="deselectAll(tResultSelect, 'tResult')">
+                                  Deselect All
+                                </button>
+                            <mat-option *ngFor="let option of testTypeResultOptions;let i = index" [value]="option">
+                              {{option.name}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                </li>
+                <li style="float:left">
+                    <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">
+                        <mat-form-field style="display:block;">
+                          <mat-select multiple placeholder="Select Age Range" name="ageArray" [(ngModel)]="ageRangeFilter"  [compareWith]="equals" #agerangSelect="ngModel">
+                              <!-- <button *ngIf="!agerangeSelectAll" mat-raised-button class="mat-primary fill text-sm" (click)="selectAll(agerangSelect, ageRange, 'aRange')">
+                                  Select All
+                                </button>
+                                <button *ngIf="agerangeSelectAll" mat-raised-button class="mat-accent fill text-sm" (click)="deselectAll(agerangSelect, 'aRange')">
+                                  Deselect All
+                                </button> -->
+                            <mat-option *ngFor="let option of ageRange;let i = index" [value]="option">
+                              {{option.min}} - {{option.max}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                      {{ageRangeFilter | json}}
+
+                </li>
+              </ul>
             </div>
 
-            <div class="col-lg-2">
-              <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">
-                <mat-form-field style="display:block;">
-                  <mat-select multiple placeholder="Select Ranks" name="rankArray" [(ngModel)]="rankArray">
-                    <mat-option *ngFor="let rank of allRanks;let i = index" [value]="rank.id" checked>
-                      {{rank.name}}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
-            </div>
 
 
 
-            <div class="col-lg-2">
-              <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">
-                <mat-form-field style="display:block;">
-                  <mat-select multiple placeholder="Select Test Category" name="selectedcCategoryId" [(ngModel)]="selectedcCategoryId" (change)="setTestTypes(selectedcCategoryId)">
-                    <mat-option *ngFor="let category of testCategories;let i = index" [value]="category.id">
-                      {{category.catogiryName}}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
-            </div>
 
-            <div class="col-lg-2">
-              <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">
-                <mat-form-field style="display:block;">
-                  <mat-select multiple placeholder="Select Test Type" name="typeArray" [(ngModel)]="typeArray">
-                    <mat-option *ngFor="let type of testTypes;let i = index" [value]="type.id">
-                      {{type.testName}}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
-            </div>
-
-            <div class="col-lg-2">
-              <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">
-                <mat-form-field style="display:block;">
-                  <mat-select multiple placeholder="Select SubUnits" name="subArray" [compareWith]="equals" [(ngModel)]="subArray" #yearSelect="ngModel">
-                    <button mat-raised-button class="mat-primary fill text-sm" (click)="selectAll(yearSelect, allSubUnits)">
-                      1 EME Centre
-                    </button>
-                    <button mat-raised-button class="mat-accent fill text-sm" (click)="deselectAll(yearSelect)">
-                      Deselect All
-                    </button>
-                    <mat-option *ngFor="let subunit of allSubUnits;let i = index" [value]="subunit">
-                      {{subunit.name}}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
-            </div>
-
-            <div class="col-lg-2">
-              <div class="input-group mb-3" style="width:100%;margin-bottom:10px;">
-                <mat-form-field style="display:block;">
-                  <mat-select multiple placeholder="Select Results" name="resultArray" [(ngModel)]="resultArray">
-                    <mat-option *ngFor="let option of testTypeResultOptions;let i = index" [value]="option.id">
-                      {{option.name}}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
-            </div>
 
 
             <!-- <div class="col-lg-9 col-md-9 col-xs-12 padding0">
@@ -194,7 +246,7 @@
       <div class="col-lg-12 col-md-12 padding0 mTop10">
         <!-- table starts-->
         <div class="box-border">
-        <div class="flexcroll table-scroll" style="overflow: scroll;overflow-y: hidden;">
+        <div class="flexcroll table-scroll" style="overflow: auto;height: 375px;">
 
             <div class="loader loader--style3 col-lg-12 col-md-12" title="2" *ngIf="loadingStatus">
               <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -213,9 +265,9 @@
                   <th colspan="2">
                     <mfDefaultSorter>S.No</mfDefaultSorter>
                   </th>
-                  <!-- <th colspan="2">
-                    <mfDefaultSorter by="candTestDate">Test Date</mfDefaultSorter>
-                  </th> -->
+                  <th colspan="2">
+                    <mfDefaultSorter by="canditateTestDate">Test Date</mfDefaultSorter>
+                  </th>
                   <th colspan="2">
                     <mfDefaultSorter by="canditateArmyNum">Army Number</mfDefaultSorter>
                   </th>
@@ -309,6 +361,10 @@
                     {{i+1}}
                   </td>
                   <td colspan="2">
+                    {{admin.canditateTestDate | date: 'shortDate'}}
+                    <!--  | {{admin.canditateTestDate | date: 'shortTime'}} -->
+                  </td>
+                  <td colspan="2">
                     {{admin.canditateArmyNum}}
                   </td>
                   <td colspan="2">
@@ -397,7 +453,7 @@
               </tbody>
               <tfoot>
                 <tr>
-                  <td colspan="38">
+                  <td colspan="40">
                     <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
                   </td>
                 </tr>

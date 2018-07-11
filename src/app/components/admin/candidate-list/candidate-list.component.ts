@@ -125,6 +125,30 @@ export class CandidateListComponent implements OnInit {
       });
   }
 
+  printAllCandidat() {
+    if (this.data) {
+      var div = '';
+      let win = window.open('');
+      for(var i=0; i < this.data.length; i++) {
+        console.log(this.data[i].candArmyNum);
+        debugger;
+        div +=  '<p style="font-size:24px;">' + this.data[i].candArmyNum + '</p><br>' + '<img src="' + this.data[i].barcodeUrl + '" />';
+      };
+      // div = div + '<p style="font-size:24px;"' + 'onload=window.print();window.close()>' + '</p>';
+      win.document.write(div);
+      win.document.close(); //missing code
+
+
+      win.focus();
+      win.print();
+      
+      // win.document.write('<p style="font-size:24px;">' + candidate.candArmyNum + '</p><br><br>' + '<img src="' + candidate.barcodeUrl + '" onload="window.print();window.close()" />');
+      
+      
+    }
+  }
+
+
 }
 
 @Component({
@@ -143,4 +167,6 @@ export class CandidateConfirmDialogComponent {
     this.dialogRef.close();
 
   }
+
+
 }

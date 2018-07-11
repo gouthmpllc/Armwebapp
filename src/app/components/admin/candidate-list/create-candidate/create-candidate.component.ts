@@ -3,6 +3,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { AdminListService } from '../../../../services/superAdmin/admin-list-service/admin-list.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CandidateListService } from '../../../../services/admin/candidate-list-service/candidate-list.service';
+import { WSAECONNREFUSED } from 'constants';
 
 @Component({
   selector: 'app-create-candidate',
@@ -269,13 +270,27 @@ export class CreateCandidateComponent implements OnInit {
 
   calculateAge(dob) {
     let ageDifMs = Date.now() - dob.getTime();
+    console.log("ageDifms"+JSON.stringify(ageDifMs));
     let ageDate = new Date(ageDifMs); // miliseconds from epoch
-    return Math.abs(ageDate.getUTCFullYear() - 1970);
+    console.log("ageDifms1111"+JSON.stringify(ageDate));
+    if(ageDate.getMonth()+1 >= 6){
+      return Math.round(Math.abs(ageDate.getUTCFullYear()+1 - 1970));
+    }else{
+      return Math.round(Math.abs(ageDate.getUTCFullYear() - 1970));
+    }
+    // return Math.abs(ageDate.getUTCFullYear() - 1970);
+  
+    
+    // alert(this.newCandidate.candDob)
+  //  if(this.newCandidate.candDob.getMonth()+1 >= 6){
+
+  //  }
+
   }
 
   enableEditFields() {
     this.editable = !this.editable;
-    this.rankEnable = !this.rankEnable;
+    this.rankEnable = !this.rankEnable;6
   }
 
   editCandidate() {
@@ -451,6 +466,7 @@ export class CreateCandidateComponent implements OnInit {
       if (!groups[groupName]) {
         groups[groupName] = [];
       }
+     // alert(JSON.stringify (resultWiseData[i]))
       groups[groupName].push({ 'name': resultWiseData[i].testResult, 'value': resultWiseData[i].value });
     }
     resultWiseData = [];
@@ -463,10 +479,10 @@ export class CreateCandidateComponent implements OnInit {
     return resultWiseData;
   }
 
-  printImage(imgUrl) {
-    if (imgUrl) {
+  printImage(candidate) {
+    if (candidate.barcodeUrl) {
       let win = window.open('');
-      win.document.write('<img src="' + imgUrl + '" onload="window.print();window.close()" />');
+      win.document.write('<p style="font-size:24px;">' + candidate.candArmyNum + '</p><br><br>' + '<img src="' + candidate.barcodeUrl + '" onload="window.print();window.close()" />');
       win.focus();
     }
   }
