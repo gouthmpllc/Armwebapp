@@ -3,7 +3,6 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { AdminListService } from '../../../../services/superAdmin/admin-list-service/admin-list.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CandidateListService } from '../../../../services/admin/candidate-list-service/candidate-list.service';
-import { WSAECONNREFUSED } from 'constants';
 
 @Component({
   selector: 'app-create-candidate',
