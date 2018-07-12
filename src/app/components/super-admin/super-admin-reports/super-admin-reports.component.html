@@ -208,7 +208,8 @@
                                   Deselect All
                                 </button>
                             <mat-option *ngFor="let option of ageRange;let i = index" [value]="option">
-                              {{option.min}} - {{option.max}}
+                              <span *ngIf="option.min == 16">Under</span>
+                              <span *ngIf="option.min != 16">{{option.min}}</span> - {{option.max}}
                             </mat-option>
                           </mat-select>
                         </mat-form-field>

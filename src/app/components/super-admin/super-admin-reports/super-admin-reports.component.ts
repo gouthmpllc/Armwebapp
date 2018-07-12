@@ -55,7 +55,7 @@ export class SuperAdminReportsComponent implements OnInit {
   loadingStatus: boolean;
   ageRangeFilter:any= [];
   ageRange =[
-    {min:20,max:30},
+    {min:16,max:30},
     {min:30,max:40},
     {min:41,max:45},
     {min:46,max:50},
