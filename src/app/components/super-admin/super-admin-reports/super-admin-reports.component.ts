@@ -55,8 +55,12 @@ export class SuperAdminReportsComponent implements OnInit {
   loadingStatus: boolean;
   ageRangeFilter:any= [];
   ageRange =[
-    {min:"30",max:"40"},
-    {min:"41",max:"50"}
+    {min:20,max:30},
+    {min:30,max:40},
+    {min:41,max:45},
+    {min:46,max:50},
+    {min:51,max:55},
+    {min:56,max:60},
   ]
   constructor(private adminListService: AdminListService, private superAdminSettingsService: SuperAdminSettingsService) { }
 
@@ -107,11 +111,11 @@ export class SuperAdminReportsComponent implements OnInit {
       });
   }
 
-  loadFilteredData(ranCatogs, ranks, subunits, testCategories, testTypes, fDate, tDate, resultArray) {
+  loadFilteredData(ranCatogs, ranks, subunits, testCategories, testTypes, fDate, tDate, resultArray,agesArray) {
     this.data = [];
     this.loadingStatus = true;
     this.adminListService.getAllReportByCandidate(ranCatogs, ranks, subunits, testCategories, testTypes,
-      fDate, tDate, resultArray).subscribe(
+      fDate, tDate, resultArray,agesArray).subscribe(
         (data: any) => {
           // console.log(JSON.stringify(data));
           this.loadingStatus = false;
@@ -374,7 +378,7 @@ export class SuperAdminReportsComponent implements OnInit {
       }
     }
     this.loadFilteredData(this.rankCategory, this.rankArray, result, this.selectedcCategoryId,
-      this.typeArray, this.fromDate, this.toDate, this.resultArray);
+      this.typeArray, this.fromDate, this.toDate, this.resultArray,this.ageRangeFilter);
 
   }
 
@@ -398,7 +402,7 @@ export class SuperAdminReportsComponent implements OnInit {
     }
 
     this.loadFilteredData(this.rankCategory, this.rankArray, result, this.selectedcCategoryId,
-      this.typeArray, this.fromDate, this.toDate, this.resultArray);
+      this.typeArray, this.fromDate, this.toDate, this.resultArray, this.ageRangeFilter);
 
     // this.loaddatewiseReports(this.fromDate, this.toDate);
   }
@@ -559,7 +563,8 @@ generateCsv() {
     } else if(name === 'aRange'){
       this.agerangeSelectAll = true;
       select.update.emit(values);
-    }    
+    } 
+     
   }
 
   deselectAll(select: NgModel, name) {
@@ -584,7 +589,7 @@ generateCsv() {
     } else if(name === 'aRange'){
       this.agerangeSelectAll = false;
       select.update.emit([]);
-    }  
+    } 
     
   }
 

@@ -61,7 +61,7 @@
           <mat-form-field class="width100 ">
             <input matInput [matDatepicker]="picker" [disabled]="readOnly" placeholder="Select Date Of Birth"
             name="establishedDate" [max]="maxDate"
-            [(ngModel)]="newCandidate.candDob" id="candDob" #candDob='ngModel' required> {{newCandidate.candDob}}
+            [(ngModel)]="newCandidate.candDob" id="candDob" #candDob='ngModel' required> 
             <mat-datepicker-toggle matSuffix [for]="picker" [disabled]="readOnly"></mat-datepicker-toggle>
             <mat-datepicker touchUi="true" [disabled]="disableDate" #picker></mat-datepicker>
           </mat-form-field>

@@ -131,7 +131,7 @@ export class CandidateListComponent implements OnInit {
       let win = window.open('');
       for(var i=0; i < this.data.length; i++) {
         console.log(this.data[i].candArmyNum);
-        debugger;
+        //debugger;
         div +=  '<p style="font-size:24px;">' + this.data[i].candArmyNum + '</p><br>' + '<img src="' + this.data[i].barcodeUrl + '" />';
       };
       // div = div + '<p style="font-size:24px;"' + 'onload=window.print();window.close()>' + '</p>';

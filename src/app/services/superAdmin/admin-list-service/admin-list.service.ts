@@ -91,12 +91,12 @@ export class AdminListService {
       .map((res: Response) => res);
   }
 
-  getAllReportByCandidate(ranCatogs, ranks, subunits, testCategories, testTypes, fDate, tDate, resultArray) {
+  getAllReportByCandidate(ranCatogs, ranks, subunits, testCategories, testTypes, fDate, tDate, resultArray,agesArray) {
     return this.httpClient.get(AppSettings.API_ENDPOINT + `TestResults/getTestResultsByCanditate?rankCatogiries=`
       + JSON.stringify(ranCatogs) + `&ranks=` + JSON.stringify(ranks) + `&subUnit=` + JSON.stringify(subunits) +
       '&testCatogiries=' + JSON.stringify(testCategories) +
       '&testTypes=' + JSON.stringify(testTypes) + '&testResult=' + JSON.stringify(resultArray) +
-      `&startDate=` + fDate + `&endDate=` + tDate)
+      `&startDate=` + fDate + `&endDate=` + tDate +'&ageRanges='+JSON.stringify(agesArray))
       .map((res: Response) => res);
   }
 
