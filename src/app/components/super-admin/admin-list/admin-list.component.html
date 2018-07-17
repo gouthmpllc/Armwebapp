@@ -75,7 +75,7 @@
                           {{admin.username}}
                         </td>
                         <td colspan="2">
-                          {{admin.name}} 
+                          {{admin.name | titlecase}} 
                         </td>
                         <td colspan="2">
                           {{admin.rank}} 
@@ -89,10 +89,11 @@
                             {{admin.createdAt | date}}
                           </td>
                         <td colspan="3">
-                          <button *ngIf="admin.status == 'inactive'" class="btn btn-sm btn-active" (click)="setActiveAdmin(admin)">Active</button>
-                          <button *ngIf="admin.status == 'active'" class="btn btn-sm btn-Inactive" (click)="setInActiveAdmin(admin)">In Active</button>
+                          <button *ngIf="admin.status == 'inactive'" class="btn btn-sm btn-Inactive" (click)="setActiveAdmin(admin)">Active</button>
+                          <button *ngIf="admin.status == 'active'" class="btn btn-sm btn-active " (click)="setInActiveAdmin(admin)">In Active</button>
                           <button class="btn btn-sm btn-edit" (click)="adminEdit(admin)">view Details</button>
-                          <button class="btn btn-sm btn-remove" (click)="removeAdmin(admin)">Remove</button>
+                          <i class="fa fa-2x fa-trash vertical_btm cursor-pointer" aria-hidden="true"  
+                          (click)="removeAdmin(admin)"></i>
                         </td>
                       </tr>
                 </tbody>
@@ -116,7 +117,7 @@
       <h4>Create Admin</h4>
     </div>
     <div class="col-lg-6" style="padding: 3px;">
-      <a class="btn text-center btn-horizontal pull-right createadmin-btn" (click)="setAdminStatus()"><span>X</span></a>
+      <a class="btn text-center btn-horizontal pull-right createadmin-btn" (click)="setAdminStatus()"><span>Back</span></a>
     </div>
   </div>
   <div class="clearfix"></div>

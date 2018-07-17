@@ -357,6 +357,9 @@
 
               <tbody>
                 <tr *ngFor="let admin of mf.data;let i =index" class="notfirst cursor-pointer">
+                  <!-- <td>
+                    {{admin | json}}
+                  </td> -->
                   <td colspan="2">
                     {{i+1}}
                   </td>
@@ -371,7 +374,7 @@
                     {{admin.canditateRank}}
                   </td>
                   <td colspan="2">
-                    {{admin.canditateName}}
+                    {{admin.canditateName | titlecase}}
                   </td>
                   <td colspan="2">
                      {{admin.canditateDOB | date: 'shortDate'}}

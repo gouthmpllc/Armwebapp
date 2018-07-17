@@ -125,3 +125,10 @@
 .mat-form-field-infix {
     width: 160px !important;
 }
+.vertical_btm{
+    vertical-align: bottom;
+}
+.cursor-pointer{cursor: pointer;}
+.mat-select-panel{
+    margin-top: 15px;
+}

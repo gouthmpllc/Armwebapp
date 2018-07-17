@@ -39,10 +39,11 @@
                       <span *ngIf="testCategory">{{testCategory.catogiryName}}</span>
                     </td>
                     <td>
-                      <button *ngIf="testCategory.status == 'inactive'" class="btn btn-sm btn-active" (click)="setCategoryActive(testCategory)">Active</button>
-                      <button *ngIf="testCategory.status == 'active'" class="btn btn-sm btn-Inactive" (click)="setCategoryInActive(testCategory)">In Active</button>
+                      <button *ngIf="testCategory.status == 'inactive'" class="btn btn-sm btn-Inactive" (click)="setCategoryActive(testCategory)">Active</button>
+                      <button *ngIf="testCategory.status == 'active'" class="btn btn-sm btn-active" (click)="setCategoryInActive(testCategory)">In Active</button>
                       <button class="btn btn-sm btn-edit" (click)="setEditObj(testCategory)">Edit</button>
-                      <button class="btn btn-sm btn-remove" (click)="removeCategory(testCategory)">Remove</button>
+                      <i class="fa fa-2x fa-trash vertical_btm cursor-pointer" aria-hidden="true"  
+                      (click)="removeCategory(testCategory)"></i>
                     </td>
                   </tr>
             </tbody>
@@ -119,10 +120,11 @@
                     <span *ngIf="testType">{{testType.catogiryName}}</span>
                   </td>
                 <td>
-                  <button *ngIf="testType.status == 'inactive'" class="btn btn-sm btn-active" (click)="setActiveTestType(testType)">Active</button>
-                  <button *ngIf="testType.status == 'active'" class="btn btn-sm btn-Inactive" (click)="setInActiveTestType(testType)">In Active</button>
+                  <button *ngIf="testType.status == 'inactive'" class="btn btn-sm btn-Inactive" (click)="setActiveTestType(testType)">Active</button>
+                  <button *ngIf="testType.status == 'active'" class="btn btn-sm btn-active " (click)="setInActiveTestType(testType)">In Active</button>
                   <button class="btn btn-sm btn-edit" (click)="setEditTestType(testType, AddTestTypeForm)">Edit</button>
-                  <button class="btn btn-sm btn-remove" (click)="removeTestType(testType)">Remove</button>
+                  <i class="fa fa-2x fa-trash vertical_btm cursor-pointer" aria-hidden="true"  
+                  (click)="removeTestType(testType)"></i>
                 </td>
               </tr>
             </tbody>

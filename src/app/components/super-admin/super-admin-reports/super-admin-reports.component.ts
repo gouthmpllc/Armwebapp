@@ -11,6 +11,7 @@ import * as $ from 'jquery';
   styleUrls: ['./super-admin-reports.component.css']
 })
 export class SuperAdminReportsComponent implements OnInit {
+  subRanks: any;
   agerangeSelectAll: boolean;
   tResultSelectAll: boolean;
   rcatgrySelectAll: boolean;
@@ -371,15 +372,35 @@ export class SuperAdminReportsComponent implements OnInit {
     }
     console.log(this.fromDate);
     console.log(this.toDate);
+    
+    let rankCategoryModifyArray = this.formatToIds(this.rankCategory);
+    let selectedCatgryModifyArray = this.formatToIds(this.selectedcCategoryId);
+    let typeArrayModify = this.formatToIds(this.typeArray);
+    let resultArrayModify = this.formatToIds(this.resultArray);
+
+    // let agrRangeModifyArray = [];
+    // if (array.length > 0) {
+    //   for (let i = 0; i < array.length; i++) {
+    //     result.push(array[i].id);
+    //   }
+    // }
+    
+    let subUnitsModifyArray = this.formatToIds(this.subArray);
+    let rankModifyArray = this.formatToIds(this.rankArray);
+    
+    this.loadFilteredData(rankCategoryModifyArray, rankModifyArray, subUnitsModifyArray, selectedCatgryModifyArray,
+      typeArrayModify, this.fromDate, this.toDate, resultArrayModify,this.ageRangeFilter);
+
+  }
+
+  formatToIds(array) {
     let result = [];
-    if (this.subArray.length > 0) {
-      for (let i = 0; i < this.subArray.length; i++) {
-        result.push(this.subArray[i].id);
+    if (array.length > 0) {
+      for (let i = 0; i < array.length; i++) {
+        result.push(array[i].id);
       }
     }
-    this.loadFilteredData(this.rankCategory, this.rankArray, result, this.selectedcCategoryId,
-      this.typeArray, this.fromDate, this.toDate, this.resultArray,this.ageRangeFilter);
-
+    return result;
   }
 
   geneeateTestTypeWiseFilterArray() {
@@ -542,6 +563,7 @@ generateCsv() {
   }
 
   selectAll(select: NgModel, values, name?) {
+  
     if (name === 'sUnit') {
       this.sUnitSelectAll = true;
       select.update.emit(values);

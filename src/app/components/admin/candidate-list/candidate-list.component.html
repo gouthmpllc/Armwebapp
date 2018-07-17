@@ -75,6 +75,7 @@
   
                   <tbody>
                       <tr *ngFor="let candidate of mf.data;let i=index;" class="notfirst">
+                        <!-- <td>{{candidate | json}}</td> -->
                           <td colspan="2">
                               {{i+1}}
                           </td>
@@ -85,7 +86,7 @@
                           </td>
                           <td colspan="2">
                             <span *ngIf="candidate.candName">
-                                {{candidate.candName}}
+                                {{candidate.candName | titlecase}}
                             </span> 
                           </td>
                           <td colspan="2">
@@ -105,8 +106,8 @@
                           </td>
                           
                           <td colspan="2">
-                              <span *ngIf="candidate.createdAt">
-                                  {{candidate.createdAt | date}}
+                              <span *ngIf="candidate">
+                                  {{candidate.createdTime | date}}
                               </span>
                           </td>
 
@@ -117,10 +118,11 @@
                           </td>
 
                           <td colspan="2">
-                            <button *ngIf="candidate.status == 'inactive'" class="btn btn-sm btn-active" (click)="setActiveCandidate(candidate)">Active</button>
-                            <button *ngIf="candidate.status == 'active'" class="btn btn-sm btn-Inactive" (click)="setInActiveCandidate(candidate)">In Active</button>
+                            <button *ngIf="candidate.status == 'inactive'" class="btn btn-sm btn-Inactive" (click)="setActiveCandidate(candidate)">Active</button>
+                            <button *ngIf="candidate.status == 'active'" class="btn btn-sm btn-active" (click)="setInActiveCandidate(candidate)">In Active</button>
                             <button class="btn btn-sm btn-edit" (click)="candidateEdit(candidate)">View Profile</button>
-                            <button class="btn btn-sm btn-remove" (click)="removeCandidate(candidate)">Remove</button>
+                            <i class="fa fa-2x fa-trash vertical_btm cursor-pointer" aria-hidden="true"  (click)="removeCandidate(candidate)"></i>
+                            <!-- <button class="btn btn-sm btn-remove">Remove</button> -->
                           </td>
                         </tr>
                   </tbody>
@@ -144,7 +146,7 @@
         <h4>Create Candidate</h4>
       </div>
       <div class="col-lg-6" style="padding: 3px;">
-        <a class="btn text-center btn-horizontal pull-right createadmin-btn" (click)="setAdminStatus()"><span>X</span></a>
+        <a class="btn text-center btn-horizontal pull-right createadmin-btn" (click)="setAdminStatus()"><span>Back</span></a>
       </div>
     </div>
     <div class="clearfix"></div>

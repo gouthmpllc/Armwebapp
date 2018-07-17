@@ -5,7 +5,9 @@
   </div>
 
   <div class="col-lg-6" style="padding: 3px;">
-    <a class="btn text-center btn-horizontal pull-right createadmin-btn" (click)="editToListView()"><span>X</span></a>
+    <a class="btn text-center btn-horizontal pull-right createadmin-btn" (click)="editToListView()">
+      <span>Back</span>
+    </a>
   </div>
 
 </div>
@@ -24,6 +26,16 @@
           [(ngModel)]="newAdmin.username" [disabled]="readOnly" required>
         </mat-form-field>
       </div>
+      <div>   
+          <mat-radio-group  class="example-radio-group" name="genderq" [disabled]="readOnly" [(ngModel)]="newCandidate.genderCode" (change)="onSelectionChange(newCandidate.genderCode)" #gender='ngModel' required>
+              <mat-radio-button style="margin-left:10px;"  class="example-radio-button"  *ngFor="let gender of genders" id={{gender.name}} [value]="gender.value">
+                  {{gender.name}}
+            </mat-radio-button>
+          </mat-radio-group>
+          <div *ngIf="gender.errors && (gender.dirty || gender.touched)" class="color-red m-btm5" >
+            <div [hidden]="!gender.errors.required"> Gender Must be Required.</div>
+          </div>
+        </div>
       <div class="input-group sign-in-input" style="width:100%;margin-bottom:10px;">
           <!-- <label *ngIf="userName">Enter Admin Name</label> <input type="text" class="form-control" name="name" [(ngModel)]="newAdmin.name" placeholder="Enter Admin Name" required> -->
           <mat-form-field class="width100">
